@@ -1,0 +1,7 @@
+{
+  "name": "kazan-app2",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
