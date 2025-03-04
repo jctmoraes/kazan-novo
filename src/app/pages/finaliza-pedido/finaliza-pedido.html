@@ -1,0 +1,106 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>
+      RESUMO PEDIDO Nº {{ _pedido.codigo}}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-item-divider color="primary">
+    <h2>CLIENTE</h2>
+  </ion-item-divider>
+  <ion-list>
+
+    <ion-item>
+      <p>NOME</p>
+      <h2>{{ _pedido.cliente.codigo }} - {{ _pedido.cliente.nome }}</h2>
+    </ion-item>
+
+    <ion-item>
+      <p>ENDEREÇO</p>
+      <h2>{{ _pedido.cliente.endereco }}</h2>
+      <h2>{{ _pedido.cliente.bairro }}, {{ _pedido.cliente.cidade }} - {{ _pedido.cliente.estado }} - {{ _pedido.cliente.cep }}</h2>
+    </ion-item>
+  </ion-list>
+ <!--  <ng-container>
+    <ion-item-divider color="primary">
+      <h2>PESQUISAR CLIENTE</h2>
+    </ion-item-divider>
+    <ion-input type="text" [(ngModel)]="_pedido.cliProspec"></ion-input>
+    <ion-select (ionChange)="selCadEmp($event)" [ngModel]="_pedido.cliProspec" placeholder="Pesquise o Cliente" cancelText="Cancelar" okText="Selecionar" class="empCad">
+      <ion-option *ngFor="let item of _cliCad" [value]="item.cgcCpf">{{ item.razao }}</ion-option>
+    </ion-select>
+
+  </ng-container> -->
+
+  <ion-item-divider color="primary">
+    <h2>FORMA DE PAGAMENTO</h2>
+  </ion-item-divider>
+
+  <ion-item>
+    <h2 (click)="mudarCondicao()">{{ _pedido.condicaoPagto.descricao }}</h2>
+  </ion-item>
+
+  <ion-item-divider color="primary">
+    <h2>TRANSPORTADORA</h2>
+  </ion-item-divider>
+
+  <ion-item>
+    <h2 (click)="mudarTransportadora()">{{ _pedido.transportadora.nome }}</h2>
+  </ion-item>
+
+  <ion-item-divider color="primary">
+    <h2>FRETE</h2>
+  </ion-item-divider>
+
+  <ion-item>
+    <ion-select [(ngModel)]="_pedido.frete" cancelText="Cancelar" okText="Selecionar" class="empCad">
+      <ion-select-option value="C">Cif</ion-select-option>
+      <ion-select-option value="F">Fob</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item-divider color="primary">
+    <h2>VALOR</h2>
+  </ion-item-divider>
+
+  <ion-list>
+    <ion-item>
+      <ion-label floating>SUB-TOTAL (R$)</ion-label>
+      <ion-input type="text" [(ngModel)]="_valorSubTotalFormat" disabled></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>IPI (R$)</ion-label>
+      <ion-input type="text" [(ngModel)]="_valorIpiFormat" disabled></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>ST (R$)</ion-label>
+      <ion-input type="text" [(ngModel)]="_valorStFormat" disabled></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>TOTAL (R$)</ion-label>
+      <ion-input type="text" [(ngModel)]="_valorTotalFormat" disabled></ion-input>
+    </ion-item>
+  </ion-list>
+
+  <ion-item-divider color="primary">
+    <h2>OBSERVAÇÕES</h2>
+  </ion-item-divider>
+
+  <ion-item>
+    <ion-textarea type="text" placeholder="DIGITE AQUI" [(ngModel)]="_pedido.observacao"></ion-textarea>
+  </ion-item>
+
+  <ion-buttons padding>
+    <button color="primary" padding ion-button icon-left block (click)="salvar()">
+      <ion-icon name="checkbox"></ion-icon>GRAVAR
+    </button>
+
+    <button color="primary" padding ion-button icon-left block outline (click)="voltar()">
+      <ion-icon name="return-left"></ion-icon>CANCELAR
+    </button>
+  </ion-buttons>
+</ion-content>

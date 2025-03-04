@@ -1,0 +1,197 @@
+// @mixin mudarCor($primary, $secondary) {
+//   $colors: (
+//       primary:    $primary,
+//       secondary:  $secondary
+//   );
+//   .item-md-primary, .item-divider-md-primary {
+//     background-color: map-get($colors, primary);
+//   }
+//   .fab-md-primary {
+//     background-color: map-get($colors, primary);
+//   }
+//   .button-md-primary {
+//     background-color: map-get($colors, primary);
+//   }
+//   .button-md-secondary {
+//     background-color: map-get($colors, secondary);
+//   }
+//   .button-outline-md-primary {
+//     border-color: map-get($colors, primary);
+//     color: map-get($colors, primary);
+//     background-color: transparent;
+//   }
+//   .button-outline-md-secondary {
+//     border-color: map-get($colors, secondary);
+//     color: map-get($colors, secondary);
+//     background-color: transparent;
+//   }
+//   h2[color="primary"],
+//   ion-icon[color="primary"] {
+//       color: map-get($colors, primary);
+//   }
+//   h2[color="secondary"],
+//   ion-icon[color="secondary"] {
+//       color: map-get($colors, secondary);
+//   }
+//   // [color="secondary"] {
+//   //     background-color: map-get($colors, secondary);
+//   // }
+//   //personalização
+//   ion-header {
+//     background-color: map-get($colors, primary);
+//   }
+//   ion-menu .content-md,
+//   ion-menu .item-md {
+//     color: map-get($colors, primary);
+//   }
+// }
+// .item-md-primary, .item-divider-md-primary {
+//   background-color: map-get($colors, primary);
+// }
+// .fab-md-primary {
+// background-color: map-get($colors, primary);
+// }
+// .button-md-primary {
+// background-color: map-get($colors, primary);
+// }
+// .button-md-secondary {
+// background-color: map-get($colors, secondary);
+// }
+// .button-outline-md-primary {
+// border-color: map-get($colors, primary);
+// color: map-get($colors, primary);
+// background-color: transparent;
+// }
+// .button-outline-md-secondary {
+// border-color: map-get($colors, secondary);
+// color: map-get($colors, secondary);
+// background-color: transparent;
+// }
+// h2[color="primary"],
+// ion-icon[color="primary"] {
+//   color: map-get($colors, primary);
+// }
+// h2[color="secondary"],
+// ion-icon[color="secondary"] {
+//   color: map-get($colors, secondary);
+// }
+// // [color="secondary"] {
+// //     background-color: map-get($colors, secondary);
+// // }
+// //personalização
+// ion-header {
+// background-color: map-get($colors, primary);
+// }
+// ion-menu .content-md,
+// ion-menu .item-md {
+// color: map-get($colors, primary);
+// }
+.tbl-cabecalho {
+  background: #02A8B1;
+  color: #fff;
+}
+.tbl-linha {
+  border-bottom: 1px solid #f5f5f5;
+}
+  .tbl-linha .col {
+      text-overflow: ellipsis;
+      overflow: hidden;
+  }
+.carrinho-qtd {
+  top: -10px;
+  right: -4px;
+  width: 24px;
+  height: 24px;
+  border-radius: 20px;
+  line-height: 18px;
+  position: absolute;
+  font-size: 12px;
+}
+.item-md h2.titulo,
+.card-md .titulo h2 {
+  font-weight: bold;
+  color: #003960;
+}
+.card-md .titulo {
+  background-color: #f4f4f4;
+}
+.label-md {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.input-borda {
+  border: 1px solid #8f8f8f;
+}
+/* menu */
+.menu-principal ion-header {
+  height: 150px;
+  text-align: center;
+  color: #fff;
+}
+// ion-menu .content-md,
+// ion-menu .item-md {
+//   color: map-get($colors, primary);
+// }
+.menu-principal ion-header ion-icon {
+  font-size: 80px;
+  margin-top: 20px;
+}
+ion-menu .item-md {
+  padding-left: 0;
+  border-bottom: #fff;
+}
+ion-menu .item-md .item-inner {
+  padding-left: 15px;
+}
+ion-menu ion-icon {
+  margin-right: 5px;
+}
+.versao {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+}
+/* menu */
+@media
+only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1023px)  {
+  /* Force table to not be like tables anymore */
+  ion-row, ion-col {
+      display: block;
+  }
+
+  /* Hide table headers (but not display: none;, for accessibility) */
+  .tbl-responsiva .tbl-cabecalho {
+      position: absolute;
+      top: -9999px;
+      left: -9999px;
+  }
+
+  .tbl-responsiva .tbl-linha {
+      margin: 5px;
+      border-radius: 2px;
+      width: calc(100% - 10px);
+      font-size: 1.4rem;
+      background: #f8f8f8;
+      box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  }
+
+  .tbl-responsiva .tbl-linha ion-col {
+      /* Behave  like a "row" */
+      border: none;
+      border-bottom: 1px solid #fff;
+      position: relative;
+      padding-left: 50%;
+  }
+
+  .tbl-responsiva .tbl-linha ion-col:before {
+      /* Now like a table header */
+      position: absolute;
+      /* Top/left values mimic padding */
+      top: 6px;
+      left: 6px;
+      width: 45%;
+      padding-right: 10px;
+      white-space: nowrap;
+  }
+}

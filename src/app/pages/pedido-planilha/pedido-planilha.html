@@ -1,0 +1,21 @@
+<ion-content>
+  <ion-item-divider color="primary">
+    <h2>E-MAIL PARA ENVIO DO PEDIDO</h2>
+  </ion-item-divider>
+  <ion-list>
+    <ion-item>
+      <ion-label floating>E-MAIL</ion-label>
+      <ion-input type="email" [(ngModel)]="_email"></ion-input>
+    </ion-item>
+  </ion-list>
+
+  <ion-buttons padding>
+    <button color="primary" padding ion-button icon-left block (click)="enviar()">
+      <ion-icon name="cloud-upload"></ion-icon>ENVIAR PEDIDO
+    </button>
+
+    <button color="primary" padding ion-button icon-left block outline (click)="cancelar()">
+      <ion-icon name="close-circle"></ion-icon>CANCELAR
+    </button>
+  </ion-buttons>
+</ion-content>

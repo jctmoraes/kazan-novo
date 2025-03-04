@@ -1,0 +1,156 @@
+<ion-header>
+  <ion-toolbar primary>
+    <ion-buttons slot="start"> </ion-buttons>
+    <ion-title>CADASTRO DE CLIENTE</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content padding>
+  <form [formGroup]="_formGroup" (ngSubmit)="cadastrar()">
+    <ion-segment formControlName="fisJur">
+      <ion-segment-button value="F"> Física </ion-segment-button>
+      <ion-segment-button value="J"> Jurídica </ion-segment-button>
+    </ion-segment>
+
+    <ion-list margin-top>
+      <ion-item>
+        <ion-label stacked>{{ _fisJur == 'F' ? 'CPF*' : 'CNPJ*' }}</ion-label>
+        <ion-input
+          type="tel"
+          formControlName="cgcCpf"
+          (ionBlur)="onBlur()"
+          [maskito]="{ mask: _fisJur == 'F' ? '000.000.000-00' : '00.000.000/0000-00' }"
+        >
+        </ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked
+          >{{ _fisJur == 'F' ? 'Nome*' : 'Razão social*' }}</ion-label
+        >
+        <ion-input type="text" formControlName="razao"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>{{ _fisJur == 'F' ? 'RG*' : 'IE*' }}</ion-label>
+        <ion-input type="text" formControlName="inscRg"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>Endereço*</ion-label>
+        <ion-input type="text" formControlName="endereco"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>Número*</ion-label>
+        <ion-input type="number" formControlName="numEnd"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>Bairro*</ion-label>
+        <ion-input type="text" formControlName="bairro"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>Cidade*</ion-label>
+        <ion-input type="text" formControlName="cidade"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>Estado*</ion-label>
+        <ion-select formControlName="estado">
+          <ion-option value="AC">Acre</ion-option>
+          <ion-option value="AL">Alagoas</ion-option>
+          <ion-option value="AP">Amapá</ion-option>
+          <ion-option value="AM">Amazonas</ion-option>
+          <ion-option value="BA">Bahia</ion-option>
+          <ion-option value="CE">Ceará</ion-option>
+          <ion-option value="DF">Distrito Federal</ion-option>
+          <ion-option value="ES">Espírito Santo</ion-option>
+          <ion-option value="GO">Goiás</ion-option>
+          <ion-option value="MA">Maranhão</ion-option>
+          <ion-option value="MT">Mato Grosso</ion-option>
+          <ion-option value="MS">Mato Grosso do Sul</ion-option>
+          <ion-option value="MG">Minas Gerais</ion-option>
+          <ion-option value="PA">Pará</ion-option>
+          <ion-option value="PB">Paraíba</ion-option>
+          <ion-option value="PR">Paraná</ion-option>
+          <ion-option value="PE">Pernambuco</ion-option>
+          <ion-option value="PI">Piauí</ion-option>
+          <ion-option value="RJ">Rio de Janeiro</ion-option>
+          <ion-option value="RN">Rio Grande do Norte</ion-option>
+          <ion-option value="RS">Rio Grande do Sul</ion-option>
+          <ion-option value="RO">Rondônia</ion-option>
+          <ion-option value="RR">Roraima</ion-option>
+          <ion-option value="SC">Santa Catarina</ion-option>
+          <ion-option value="SP">São Paulo</ion-option>
+          <ion-option value="SE">Sergipe</ion-option>
+          <ion-option value="TO">Tocantins</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>CEP*</ion-label>
+        <ion-input
+          type="tel"
+          formControlName="cep"
+          [maskito]="{ mask: '00.000-000' }"
+        ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>Complemento</ion-label>
+        <ion-input type="text" formControlName="complemento"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>Telefone*</ion-label>
+        <ion-input
+          type="tel"
+          formControlName="fone1"
+          [maskito]="{ mask: '(00) 0000-0000' }"
+        ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>Celular</ion-label>
+        <ion-input
+          type="tel"
+          formControlName="fone2"
+          [maskito]="{ mask: '(00) 00000-0000' }"
+        ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>Fax</ion-label>
+        <ion-input
+          type="tel"
+          formControlName="fax"
+          [maskito]="{ mask: '(00) 0000-0000' }"
+        ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>Contato</ion-label>
+        <ion-input type="text" formControlName="contato"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>Código do Representante*</ion-label>
+        <ion-input type="text" formControlName="codVen"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>E-mail*</ion-label>
+        <ion-input type="email" formControlName="email"></ion-input>
+      </ion-item>
+    </ion-list>
+    <ion-buttons padding>
+      <button
+        ion-button
+        block
+        icon-left
+        item-right
+        [disabled]="_formGroup.invalid || isLoading"
+      >
+        <ion-icon name="checkmark"></ion-icon>
+        CADASTRAR
+      </button>
+      <button
+        color="secondary"
+        ion-button
+        block
+        icon-left
+        item-right
+        (click)="sair()"
+      >
+        <ion-icon name="close-circle"></ion-icon>
+        FECHAR
+      </button>
+    </ion-buttons>
+  </form>
+</ion-content>

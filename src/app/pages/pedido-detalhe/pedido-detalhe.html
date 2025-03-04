@@ -1,0 +1,122 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons left>
+      <button ion-button icon-only navPop>
+        <ion-icon name="ios-arrow-dropleft"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>PEDIDO {{ _pedido.codigo }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <h2>{{ _pedido.numero }}</h2>
+      <p>NUMERO SERVIDOR</p>
+    </ion-item>
+
+    <ion-item>
+      <h2>{{ _pedido.cliente.codigo }} - {{ _pedido.cliente.nome }}</h2>
+      <p>CLIENTE</p>
+    </ion-item>
+
+    <!-- <ion-item *ngIf="_pedido.cliProspec != ''" >
+      <h2>{{ _pedido.cliProspec }}</h2>
+      <p>CLIENTE</p>
+    </ion-item> -->
+
+    <ion-item>
+      <h2>{{ utilProvider.formatarDataHora(_pedido.data) }}</h2>
+      <p>DATA</p>
+    </ion-item>
+
+    <ion-item>
+      <h2>{{ _status }}</h2>
+      <p>STATUS</p>
+    </ion-item>
+
+    <ion-item *ngIf="_pedido.status != 1">
+      <h2>{{ utilProvider.formatarDataHora(_pedido.dtEnvio) }}</h2>
+      <p>DATA DE ENVIO</p>
+    </ion-item>
+
+    <ion-item>
+      <h2>{{ _condicaoPagto }}</h2>
+      <p>CONDIÇÃO DE PAGAMENTO</p>
+    </ion-item>
+
+    <ion-item>
+      <h2>{{ _pedido.frete == 'C' ? 'Cif' : 'Fob' }}</h2>
+      <p>FRETE</p>
+    </ion-item>
+
+    <ion-item>
+      <h2>{{ _pedido.observacao }}</h2>
+      <p>OBSERVAÇÃO</p>
+    </ion-item>
+
+    <ion-item>
+      <h2>{{ _transportadora }}</h2>
+      <p>TRANSPORTADORA</p>
+    </ion-item>
+
+    <ion-item>
+      <h2>{{ _valorSubTotalFormat }}</h2>
+      <p>SUB-TOTAL (R$)</p>
+    </ion-item>
+
+    <ion-item>
+      <h2>{{ _valorIpiFormat }}</h2>
+      <p>IPI (R$)</p>
+    </ion-item>
+
+    <ion-item>
+      <h2>{{ _valorStFormat }}</h2>
+      <p>ST (R$)</p>
+    </ion-item>
+
+    <ion-item>
+      <h2>{{ utilProvider.formatarMoeda(_pedido.valor) }}</h2>
+      <p>TOTAL (R$)</p>
+    </ion-item>
+
+    <ion-item>
+      <ion-grid class="tabela tbl-responsiva">
+        <ion-row class="tbl-cabecalho">
+          <ion-col>PRODUTO</ion-col>
+          <ion-col>QTDE</ion-col>
+          <ion-col>CORTE FAT</ion-col>
+          <ion-col>DESC. (%)</ion-col>
+          <ion-col>UNITÁRIO (R$)</ion-col>
+          <ion-col>TOTAL (R$)</ion-col>
+          <ion-col>IPI (R$)</ion-col>
+          <ion-col>ST (R$)</ion-col>
+        </ion-row>
+
+        <ion-row class="tbl-linha" *ngFor="let cada of _lstPedidosItens">
+          <ion-col>{{ cada.item.codigo + ' - ' + cada.item.nome }}</ion-col>
+          <ion-col>{{ cada.quantidade }}</ion-col>
+          <ion-col>
+            <span *ngIf="_pedido.status >= 11; else zero">
+              {{ cada.quantidade - (cada?.qtdFat || 0) }}
+            </span>
+          </ion-col>
+          <ion-col>{{ utilProvider.formatarMoeda(cada.desconto) }}</ion-col>
+          <ion-col>{{
+            utilProvider.formatarMoeda(cada.valorUnitario)
+          }}</ion-col>
+          <ion-col>{{ utilProvider.formatarMoeda(cada.total) }}</ion-col>
+          <ion-col>{{ utilProvider.formatarMoeda(cada.valorIpi) }}</ion-col>
+          <ion-col>{{ utilProvider.formatarMoeda(cada.valorSt) }}</ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <button color="secondary" padding ion-button icon-left block (click)="sair()">
+        <ion-icon name="close"></ion-icon>FECHAR
+      </button>
+    </ion-item>
+  </ion-list>
+  <ng-template #zero>
+    -
+  </ng-template>
+</ion-content>

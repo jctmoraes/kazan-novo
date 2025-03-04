@@ -1,0 +1,29 @@
+export class IClientes {
+  codigo: number = 0;
+  nome: string = '';
+  endereco: string = '';
+  numero: string = '';
+  bairro: string = '';
+  cidade: string = '';
+  estado: string = '';
+  cep: string = '';
+  cnpj: string = '';
+  ie: string = '';
+  tipoPessoa: string = '';//J ou F
+  venCodigo: number = 0;
+  limite: number = 0;
+  email: string = '';
+  telefone: string = '';
+  telefone2: string = '';
+  fax: string = '';
+  contato: string = '';
+  telefoneContato: string = '';
+  traCodigo: number = 0; //código transportadora
+  cpgCodigo: string = ''; //código da condição de pagamento
+  bloqueado: number = 0;
+  tipo: string = '';//J ou F
+  totalReceber: number = 0;
+  totalCheque: number = 0;
+  vencidoReceber: number = 0;
+  vencidoCheque: number = 0;
+}

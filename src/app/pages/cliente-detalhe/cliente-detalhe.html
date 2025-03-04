@@ -1,0 +1,77 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ _cliente.nome }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <!-- <ion-item-divider color="primary">
+    <h2>{{ _cliente.nome }}</h2>
+  </ion-item-divider> -->
+  <ion-list>
+
+    <ion-item>
+      <h2>{{ _cliente.codigo }}</h2>
+      <p>CÓDIGO</p>
+    </ion-item>
+
+    <ion-item>
+      <h2>{{ util.formatarCnpj(_cliente.cnpj) }}</h2>
+      <p>CNPJ</p>
+    </ion-item>
+
+    <ion-item>
+      <h2>{{ _cliente.ie }}</h2>
+      <p>IE</p>
+    </ion-item>
+
+    <ion-item>
+      <h2><a href="tel:{{ _cliente.telefone }}">{{ util.formatarTelefone(_cliente.telefone) }}</a></h2>
+      <p>TELEFONE</p>
+    </ion-item>
+
+    <ion-item>
+      <h2><a href="tel:{{ _cliente.telefone2 }}">{{ util.formatarTelefone(_cliente.telefone2) }}</a></h2>
+      <p>TELEFONE 2</p>
+    </ion-item>
+
+    <ion-item>
+      <h2><a href="tel:{{ _cliente.fax }}">{{ util.formatarTelefone(_cliente.fax) }}</a></h2>
+      <p>FAX</p>
+    </ion-item>
+
+    <ion-item>
+      <h2><a href="mailto:{{ _cliente.email }}">{{ _cliente.email }}</a></h2>
+      <p>E-MAIL</p>
+    </ion-item>
+
+    <ion-item>
+      <h2>{{ _cliente.endereco }}</h2>
+      <h2>{{ _cliente.bairro }}, {{ _cliente.cidade }} - {{ _cliente.estado }} - {{ _cliente.cep }}</h2>
+      <p>ENDEREÇO</p>
+    </ion-item>
+
+    <ion-item>
+      <h2>{{ util.formatarMoeda(_cliente.limite) }}</h2>
+      <p>LIMITE (R$)</p>
+    </ion-item>
+
+    <ion-item>
+      <h2>{{ _cliente.contato }}</h2>
+      <p>CONTATO</p>
+    </ion-item>
+
+    <ion-item>
+      <h2><a href="tel:{{ _cliente.telefoneContato }}">{{ util.formatarTelefone(_cliente.telefoneContato) }}</a></h2>
+      <p>CONTATO TELEFONE</p>
+    </ion-item>
+  </ion-list>
+
+  <ion-buttons padding>
+    <button color="primary" ion-button icon-left block (click)="sair()">
+      <ion-icon name="close-circle"></ion-icon>FECHAR
+    </button>
+  </ion-buttons>
+</ion-content>

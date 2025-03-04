@@ -1,0 +1,49 @@
+page-produto {
+  .item-md {
+    background-color: transparent;
+  }
+  .item-md.item-block .item-inner {
+    border-bottom: 0;
+  }
+  .tbl-linha button {
+    height: 25px;
+    font-size: 1.2rem;
+  }
+  .valor {
+    margin-top: 15px;
+  }
+  .desc {
+    padding-top: 10px;
+  }
+  @media only screen and (min-device-width: 576px) and (max-device-width: 1023px) {
+    page-produto ion-card img {
+      max-height: 166px;
+    }
+  }
+  @media only screen and (max-width: 760px),
+  (min-device-width: 768px) and (max-device-width: 1023px)  {
+    .tbl-linha ion-col:nth-of-type(1):before { content: "PRODUTO"; font-weight: bold; }
+    .tbl-linha ion-col:nth-of-type(2):before { content: "QTDE"; font-weight: bold; }
+    .tbl-linha ion-col:nth-of-type(3):before { content: "VALOR (R$)"; font-weight: bold; }
+    .tbl-linha ion-col:nth-of-type(4):before { content: "DESC. (%)"; font-weight: bold; }
+    .tbl-linha ion-col:nth-of-type(5):before { content: "DESC. (%)"; font-weight: bold; }
+    .tbl-linha ion-col:nth-of-type(6):before { content: "IPI (R$)"; font-weight: bold; }
+    .tbl-linha ion-col:nth-of-type(7):before { content: "ST (R$)"; font-weight: bold; }
+    .tbl-linha ion-col:nth-of-type(8):before { content: "TOTAL (R$)"; font-weight: bold; }
+    .tbl-responsiva .tbl-linha ion-col:last-child { padding-left: 0; min-width: 100%; }
+  }
+  ion-card {
+    ion-card-content{
+      ion-card-title.card-title-md {
+      font-size: 20px !important;
+    }
+    }
+  }
+  ion-card img {
+    width: auto;
+    max-height: 200px;
+    display: block;
+    margin: 0 auto;
+    background-color: transparent;
+  }
+}

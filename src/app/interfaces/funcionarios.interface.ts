@@ -1,0 +1,19 @@
+export class IFuncionarios {
+    codigo: number = 0;
+    situacao: string = '';
+    filial: number = 0;
+    nome: string = '';
+    endereco: string = '';
+    bairro: string = '';
+    cidade: string = '';
+    estado: string = '';
+    cep: string = '';
+    telefone: string = '';
+    contato: string = '';
+    cnpj: string = '';
+    ie: string = '';
+    senha: string = '';
+    comissao: number = 0;
+    logado: boolean = false;
+    vendaProdImp: string = '';
+}

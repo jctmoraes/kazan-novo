@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>PRODUTOS ADICIONADOS</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-buttons *ngIf="_lstPedidosItens != null && _lstPedidosItens.length > 0" padding>
+    <button color="primary" padding ion-button icon-left block (click)="finalizarPedido()">
+      <ion-icon name="checkbox"></ion-icon>CONCLUIR PEDIDO
+    </button>
+  </ion-buttons>
+
+  <!-- <ion-content [hidden]="_lstItens.length > 0"> -->
+    <!-- <ion-nav style="margin-bottom: 60px;" #navPagina></ion-nav> -->
+  <ion-grid class="tabela tbl-responsiva">
+    <ion-row class="tbl-cabecalho">
+      <ion-col>PRODUTO</ion-col>
+      <ion-col>QTDE</ion-col>
+      <ion-col>DESC. (%)</ion-col>
+      <ion-col>UNITÁRIO (R$)</ion-col>
+      <ion-col>TOTAL (R$)</ion-col>
+      <ion-col>IPI (R$)</ion-col>
+      <ion-col>ST (R$)</ion-col>
+    </ion-row>
+
+    <ion-row class="tbl-linha" *ngFor="let cada of _lstPedidosItens">
+      <ion-col>{{ cada.item.codigo + ' - ' + cada.item.nome }}</ion-col>
+      <ion-col>{{ cada.quantidade }}</ion-col>
+      <ion-col>{{ util.formatarMoeda(cada.desconto) }}</ion-col>
+      <ion-col>{{ util.formatarMoeda(cada.valorUnitario) }}</ion-col>
+      <ion-col>{{ util.formatarMoeda(cada.total) }}</ion-col>
+      <ion-col>{{ util.formatarMoeda(cada.valorIpi) }}</ion-col>
+      <ion-col>{{ util.formatarMoeda(cada.valorSt) }}</ion-col>
+      <ion-col>
+        <ion-buttons>
+          <button (click)="excluir(cada)" color="secondary" ion-button small icon-left outline float-left>
+            <ion-icon name="trash"></ion-icon>
+            EXCLUIR
+          </button>
+          <button (click)="editar(cada)" color="secondary" ion-button small icon-left float-right>
+            <ion-icon name="create"></ion-icon>
+            EDITAR
+          </button>
+        </ion-buttons>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+<ion-footer [hidden]="false">
+  <ion-toolbar>
+    <ion-title text-center>TOTAL: R$ {{ util.formatarMoeda(_total) }}</ion-title>
+  </ion-toolbar>
+</ion-footer>

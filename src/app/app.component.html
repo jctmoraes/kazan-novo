@@ -1,3 +1,43 @@
-<ion-app>
-  <ion-router-outlet></ion-router-outlet>
-</ion-app>
+<ion-menu contentId="navPagina" side="left"  class="menu-principal" id="mnuPrincipal">
+  <ion-header>
+    <div class="versao">
+      Versão: <b>{{ _versao }}</b>
+    </div>
+    <ion-icon name="user"></ion-icon>
+    <ion-label>
+    {{ funcionarioLogado.codigo }} - {{ funcionarioLogado.nome }}
+    </ion-label>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-item (click)="mudarPagina('home')">
+        <ion-icon name="home"></ion-icon> HOME
+      </ion-item>
+      <ion-item (click)="iniciarPedido()">
+        <ion-icon name="clipboard"></ion-icon> NOVO PEDIDO
+      </ion-item>
+      <ion-item (click)="mudarPagina('pedidos')">
+        <ion-icon name="list"></ion-icon> PEDIDOS
+      </ion-item>
+      <ion-item (click)="mudarPagina('produtos')">
+        <ion-icon name="cube"></ion-icon> PRODUTOS
+      </ion-item>
+      <ion-item (click)="mudarPagina('clientes')">
+        <ion-icon name="people"></ion-icon> CLIENTES
+      </ion-item>
+      <ion-item (click)="mudarPagina('cliente-castro')">
+        <ion-icon name="create"></ion-icon> CADASTRAR CLIENTE
+      </ion-item>
+      <ion-item (click)="mudarPagina('tabela-preco')">
+        <ion-icon name="send"></ion-icon> ENVIAR TABELA
+      </ion-item>
+      <!--<ion-item (click)="mudarPagina('FaleConoscoPage')">
+        <ion-icon name="mail"></ion-icon> FALE CONOSCO
+      </ion-item>-->
+      <ion-item (click)="sair()">
+        <ion-icon name="log-out"></ion-icon> SAIR
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+<ion-router-outlet></ion-router-outlet>

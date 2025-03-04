@@ -1,0 +1,24 @@
+page-cliente {
+    ion-label {
+        color: #003960;
+        font-weight: bold;
+    }
+    .status {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        margin: 10px auto;
+    }
+    .status-vermelho {
+        background-color: #f00;
+    }
+    .status-roxo {
+        background-color: purple;
+    }
+    .status-laranja {
+        background-color: goldenrod;
+    }
+    .status-verde {
+        background-color: green;
+    }
+}

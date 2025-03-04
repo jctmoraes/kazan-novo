@@ -1,0 +1,35 @@
+// .empresa1 {
+//   @include mudarCor(#000, #cea10c);
+// }
+// .empresa2 {  
+//   /*** CSS STANER ***/
+//   @include mudarCor(#c9852e, #000);
+// }
+// .empresa3 {
+//   @include mudarCor(#282f6a, #000);
+// }
+
+page-master {
+  /* cabeçalho */
+  ion-header {
+    ion-title {
+      img {
+        display: block;
+        margin: 0 auto;
+        background-color: transparent;
+        max-height: 50px;
+      }
+    }
+  }
+  ion-navbar ion-icon {
+    font-size: 1.8em;
+  }
+  .item-md.item-block .item-inner {
+    border-bottom: 0;
+  }
+  .titulo-master .item-md {
+    background-color: transparent;
+  }
+  /* cabeçalho */
+  
+}

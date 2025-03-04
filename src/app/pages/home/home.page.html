@@ -1,0 +1,24 @@
+<ion-content padding>
+
+  <ion-list>
+
+    <ion-img src="./assets/logo/kazan.png"></ion-img>
+    <ion-item>
+      <ion-label floating>Usuário</ion-label>
+      <ion-input type="number" [(ngModel)]="_login.codigo"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Senha</ion-label>
+      <ion-input type="password" [(ngModel)]="_login.senha"></ion-input>
+    </ion-item>
+  </ion-list>
+
+  <button color="primary" ion-button block (click)="autenticar()">ENTRAR</button>
+
+</ion-content>
+<ion-footer>
+  <ion-label text-center>
+    Versão: <b>{{ _versao }}</b>
+  </ion-label>
+</ion-footer>

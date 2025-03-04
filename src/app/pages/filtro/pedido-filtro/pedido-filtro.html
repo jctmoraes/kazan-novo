@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>FILTRO</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="sair()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <p>CLIENTE</p>
+      <ion-label (click)="selecionarCliente()">{{ _filtro.cliNome }}</ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>INÍCIO</ion-label>
+      <ion-datetime displayFormat="DD/MM/YYYY" cancelText="CANCELAR" doneText="SELECIONAR" [(ngModel)]="_filtro.dtInicio"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>FIM</ion-label>
+      <ion-datetime displayFormat="DD/MM/YYYY" cancelText="CANCELAR" doneText="SELECIONAR" [(ngModel)]="_filtro.dtFim"></ion-datetime>
+    </ion-item>
+
+  </ion-list>
+
+  <ion-buttons padding>
+    <button color="primary" ion-button icon-left block (click)="pesquisar()">
+      <ion-icon name="search"></ion-icon>PESQUISAR
+    </button>
+
+    <button color="primary" ion-button icon-left block ouline (click)="sair()">
+      <ion-icon name="close-circle"></ion-icon>CANCELAR
+    </button>
+  </ion-buttons>
+</ion-content>

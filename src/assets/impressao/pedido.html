@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <style>
+      body {
+        padding: 20px;
+        background-color: white;
+        color: black !important;
+        font-size: 17px;
+        font-family: Arial, sans-serif;
+        box-sizing: border-box;
+      }
+      .header {
+        width: 100%;
+        display: flex;
+        color: red;
+        justify-content: center;
+      }
+      .info,
+      .observations {
+        display: flex;
+        flex-wrap: wrap;
+        padding-right: 20px;
+        margin-bottom: 20px;
+      }
+      .info div,
+      .observations div {
+        flex: 1 1 180px;
+        display: flex;
+        flex-wrap: wrap;
+        margin-bottom: 10px;
+        align-items: flex-start;
+        flex-direction: column;
+      }
+      .info div p,
+      .observations div p {
+        margin-right: 20px;
+        margin-bottom: -10px;
+        white-space: nowrap;
+      }
+      .negociation {
+        display: flex;
+        flex-direction: column;
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+      .negociation p {
+        margin-bottom: -20px;
+      }
+      .table-container {
+        overflow-x: auto;
+      }
+      table {
+        width: 100%;
+      }
+      th,
+      td {
+        padding: 8px;
+        text-align: left;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <h2>*PROPOSTA COMERCIAL*</h2>
+    </div>
+    <div style="width: 100%; display: flex; justify-content: space-between">
+      <div
+        style="
+          border: 1.5px solid black;
+          padding-left: 10px;
+          padding-right: 10px;
+          width: 70%;
+        "
+      >
+        <div style="display: flex; justify-content: space-between">
+          <h2><strong>KAZAN COMERCIO IMP.E EXP</strong></h2>
+          <h2><strong>{CNPJ_EMPRESA}</strong></h2>
+        </div>
+        <div class="info">
+          <div>
+            <p><strong>Código</strong></p>
+            <p>{COD_CLI}</p>
+          </div>
+          <div style="flex: 1 1 320px !important">
+            <p>
+              <strong>Razão Social/Nome</strong>
+            </p>
+            <p>{NOME}</p>
+          </div>
+          <div style="flex: 1 1 250px !important">
+            <p><strong>Endereço para faturamento</strong></p>
+            <p>{ENDERECO}</p>
+          </div>
+          <div>
+            <p><strong>Número</strong></p>
+            <p>{NUMERO_END}</p>
+          </div>
+          <div style="flex: 1 1 250px !important">
+            <p><strong>Bairro</strong></p>
+            <p>{BAIRRO}</p>
+          </div>
+          <div style="flex: 1 1 250px !important">
+            <p><strong>Cidade</strong></p>
+            <p>{CIDADE}</p>
+          </div>
+          <div>
+            <p><strong>UF</strong></p>
+            <p>{ESTADO}</p>
+          </div>
+          <div>
+            <p><strong>CEP</strong></p>
+            <p>{CEP}</p>
+          </div>
+          <div>
+            <p><strong>Telefone Nº</strong></p>
+            <p>{TELEFONE}</p>
+          </div>
+          <div>
+            <p><strong>CNPJ/MF</strong></p>
+            <p>{CNPJ}</p>
+          </div>
+          <div>
+            <p><strong>Inscrição Estadual</strong></p>
+            <p>{INSCRICAO_ESTADUAL}</p>
+          </div>
+          <div>
+            <p><strong>Emissão</strong></p>
+            <p>{DATA}</p>
+          </div>
+        </div>
+      </div>
+      <div style="border: 1.5px solid black; width: 25%">
+        <div
+          style="
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-bottom: 1px solid black;
+          "
+        >
+          <h2 style="margin-bottom: 0px">
+            <strong style="border-bottom: 1px solid black; padding-bottom: 5px"
+              >VENDA_SP</strong
+            >
+          </h2>
+          <h2>{NUMERO}</h2>
+        </div>
+        <div class="negociation">
+          <p><strong>Negociação</strong></p>
+          <p>{CONDICAO}</p>
+        </div>
+      </div>
+    </div>
+    <div
+      style="
+        border: 1.5px solid black;
+        padding-left: -10px;
+        width: 100%;
+        margin-top: 10px;
+      "
+    >
+      <div class="info" style="padding-left: 10px">
+        <div>
+          <p><strong>Transportadora</strong></p>
+          <p>{TRANSPORTADORA}</p>
+        </div>
+        <div style="flex: 1 1 250px !important">
+          <p>
+            <strong>Frete</strong>
+          </p>
+          <p>{FRETE}</p>
+        </div>
+        <div style="flex: 1 1 250px !important">
+          <p><strong>Data para Entrega</strong></p>
+          <p></p>
+        </div>
+        <div style="flex: 1 1 250px !important">
+          <p><strong>Endereço para Entrega</strong></p>
+          <p></p>
+        </div>
+        <div style="flex: 1 1 250px !important">
+          <p><strong>Bairro</strong></p>
+          <p></p>
+        </div>
+        <div style="flex: 1 1 200px !important">
+          <p><strong>Cidade</strong></p>
+          <p></p>
+        </div>
+        <div>
+          <p><strong>UF</strong></p>
+          <p></p>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="observations"
+      style="
+        border: 1.5px solid black;
+        margin-top: 10px;
+        min-height: 100px;
+        padding-left: 10px;
+      "
+    >
+      <div>
+        <p><strong>Observações / Pedido Cliente</strong></p>
+        <p>{OBSERVACAO}</p>
+      </div>
+    </div>
+
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            {TH-INCLUSA}
+          </tr>
+        </thead>
+        <tbody>
+          {ITENS}
+        </tbody>
+      </table>
+    </div>
+    <div
+      style="
+        display: flex;
+        width: 100%;
+        height: 350px;
+        flex-direction: row;
+        margin-top: 40px;
+      "
+    >
+      <div
+        style="
+          display: flex;
+          width: 80%;
+          height: 100%;
+          border: 1px solid black;
+          flex-direction: row;
+        "
+      >
+        <div style="width: 50%; height: 100%; padding: 10px">
+          <strong>A validade desta proposta é até {VALIDADE}</strong>
+        </div>
+        <div
+          style="
+            display: flex;
+            width: 50%;
+            flex-direction: column;
+            align-items: flex-end;
+            padding: 190px 10px 10px 10px;
+          "
+        >
+          <strong style="margin-bottom: 80px">Autorização:</strong>
+          <div style="border: 1px solid black; width: 450px"></div>
+          <span style="margin-top: 30px">{NOME}</span>
+        </div>
+      </div>
+
+      <div
+        style="
+          display: flex;
+          flex-direction: column;
+          height: 100%;
+          margin-left: 2%;
+          width: 18%;
+        "
+      >
+        <div
+          style="
+            display: flex;
+            margin-bottom: 5%;
+            flex-direction: column;
+            border: 1px solid black;
+            padding: 10px;
+            height: 30%;
+            align-items: center;
+          "
+        >
+          <strong>Totais Valores</strong>
+          <div
+            style="
+              display: flex;
+              width: 100%;
+              flex-direction: row;
+              justify-content: space-between;
+            "
+          >
+            <div style="display: flex; flex-direction: column">
+              <strong>Mercadorias</strong>
+              <strong>Vr IPI(+)</strong>
+              <strong>Vr ST (+)</strong>
+            </div>
+            <div style="display: flex; flex-direction: column">
+              <span>{VALOR_MERCADORIA}</span>
+              <span>{VALOR_IPI}</span>
+              <span>{VALOR_ST}</span>
+            </div>
+          </div>
+          <strong style="font-size: 22px">{TOTAL}</strong>
+        </div>
+        <div
+          style="
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: space-around;
+            align-items: center;
+            height: 70%;
+            border: 1px solid black;
+            padding-bottom: 30px;
+          "
+        >
+          <strong>Agente Comercial</strong>
+          <strong style="text-align: center">{VENDEDOR}</strong>
+          <strong>{VENDEDOR-CONTATO}</strong>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

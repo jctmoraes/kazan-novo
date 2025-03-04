@@ -1,0 +1,125 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ _item?.nome }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-row>
+    <ion-col [hidden]="_fotos == null  || _fotos?.imagem1 == ''">
+      <img src="data:image/png;base64,{{ _fotos?.imagem1 }}" #img1  (click)="abrirImagem(img1)" (error)="onError(1)"/>
+    </ion-col>
+    <ion-col [hidden]="_fotos == null || _fotos?.imagem2 == ''">
+      <img src="data:image/png;base64,{{ _fotos?.imagem2 }}" #img2  (click)="abrirImagem(img2)" (error)="onError(2)"/>
+    </ion-col>
+    <ion-col [hidden]="_fotos == null || _fotos?.imagem3 == ''">
+      <img src="data:image/png;base64,{{ _fotos?.imagem3 }}" #img3  (click)="abrirImagem(img3)" (error)="onError(3)"/>
+    </ion-col>
+    <ion-col [hidden]="_fotos == null || _fotos?.imagem4 == ''">
+      <img src="data:image/png;base64,{{ _fotos?.imagem4 }}" #img4  (click)="abrirImagem(img4)" (error)="onError(4)"/>
+    </ion-col>
+  </ion-row>
+  <!-- <ion-slides>
+    <ion-slide>
+      <ion-img src="data:image/png;base64,{{ _fotos?.imagem1 }}"></ion-img>
+    </ion-slide>
+    <ion-slide>
+      <ion-img src="data:image/png;base64,{{ _fotos?.imagem2 }}"></ion-img>
+    </ion-slide>
+    <ion-slide>
+      <ion-img src="data:image/png;base64,{{ _fotos?.imagem3 }}"></ion-img>
+    </ion-slide>
+    <ion-slide>
+      <ion-img src="data:image/png;base64,{{ _fotos?.imagem4 }}"></ion-img>
+    </ion-slide>
+  </ion-slides> -->
+
+  <ion-item>
+    <h2>{{ _item?.codigo }}</h2>
+    <p>CÓDIGO</p>
+  </ion-item>
+
+  <ion-item>
+    <h2>{{ _item?.nome }}</h2>
+    <p>DESCRIÇÃO</p>
+  </ion-item>
+
+  <ion-item>
+    <h2>{{ _item?.codBarras }}</h2>
+    <p>CÓDIGO DE BARRAS</p>
+  </ion-item>
+
+  <ion-item>
+    <h2>{{ _item?.fabricante.nome }}</h2>
+    <p>FABRICANTE</p>
+  </ion-item>
+
+  <ion-item>
+    <h2>{{ _item?.embalagem }}</h2>
+    <p>EMBALAGEM</p>
+  </ion-item>
+
+  <ion-item>
+    <h2>{{ _item?.estoque }}</h2>
+    <p>ESTOQUE TOTAL</p>
+  </ion-item>
+
+    <ion-item>
+      <p>ESTOQUE NAS FILIAIS</p>
+      <ng-container *ngFor="let item of _estoque">
+        <h2>{{ item.estoque | number: '1.0-0' }}</h2>
+        <p>{{ retNomeFilial(item.codFilial) }}</p>
+      </ng-container>
+    </ion-item>
+
+  <!-- <ng-container *ngFor="let item of _estoque">
+    <ion-item>
+      <p>ESTOQUE</p>
+      <h2>{{ item.estoque }}</h2>
+      <p>{{'FILIAL - '+ item.filial }}</p>
+    </ion-item>
+  </ng-container> -->
+
+<!--
+  <ion-item>
+    <h2>R$ {{ this.util.formatarMoeda(_item?.valor) }}</h2>
+    <p>VALOR SEM IMPOSTO</p>
+  </ion-item> -->
+
+  <ion-item>
+    <h2>R$ {{ util.formatarMoeda(_item?.valorUnitario) }}</h2>
+    <p>VALOR UNITÁRIO</p>
+  </ion-item>
+
+  <ion-item>
+    <h2>R$ {{ util.formatarMoeda(_item?.valorTotal) }}</h2>
+    <p>VALOR TOTAL</p>
+  </ion-item>
+
+  <ion-item *ngIf="_item.qtd != null">
+    <h2>{{ _item.qtd }}</h2>
+    <p>QTD</p>
+  </ion-item>
+
+  <ion-item>
+    <h2>{{ _item?.claFiscal }}</h2>
+    <p>NCM</p>
+  </ion-item>
+
+  <ion-item *ngIf="_item?.iValor != null">
+    <h2>{{ this.util.formatarMoeda(_item?.ipi) }}%</h2>
+    <p>IPI</p>
+  </ion-item>
+
+  <ion-item *ngIf="_item?.iValor != null">
+    <h2>R$ {{ this.util.formatarMoeda(_item?.iValor?.valorIpi) }}</h2>
+    <p>VALOR IPI</p>
+  </ion-item>
+
+  <ion-item *ngIf="_item?.iValor != null">
+    <h2>R$ {{ this.util.formatarMoeda(_item?.iValor?.valorSt) }}</h2>
+    <p>VALOR ST</p>
+  </ion-item>
+</ion-content>

@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>
+      SELECIONE A QUANTIDADE
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label floating>PRODUTO</ion-label>
+      <ion-input type="text" [(ngModel)]="_item.nome" disabled></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>VALOR (R$)</ion-label>
+      <ion-input type="text" [(ngModel)]="_valorFormat" disabled></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>QTDE</ion-label>
+      <ion-input #tbxQtd type="number" [(ngModel)]="_pedidoItens.quantidade" (change)="change()"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>DESCONTO (%)</ion-label>
+      <ion-input type="number" [(ngModel)]="_pedidoItens.desconto" (change)="change()"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>UNITÁRIO (R$)</ion-label>
+      <ion-input type="text" [(ngModel)]="_valorUnitarioFormat" disabled></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>TOTAL (R$)</ion-label>
+      <ion-input type="text" [(ngModel)]="_totalFormat" disabled></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>VALOR IPI (R$)</ion-label>
+      <ion-input type="text" [(ngModel)]="_valorIpiFormat" disabled></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>VALOR ST (R$)</ion-label>
+      <ion-input type="text" [(ngModel)]="_valorStFormat" disabled></ion-input>
+    </ion-item>
+  </ion-list>
+
+  <ion-buttons padding>
+    <button color="primary" padding ion-button icon-left block (click)="salvar()">
+      <ion-icon name="checkmark-circle"></ion-icon>SALVAR
+    </button>
+
+    <button color="primary" padding ion-button icon-left block outline (click)="cancelar()">
+      <ion-icon name="close-circle"></ion-icon>CANCELAR
+    </button>
+  </ion-buttons>
+</ion-content>

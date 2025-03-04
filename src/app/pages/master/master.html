@@ -1,0 +1,76 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <button ion-button icon-only menuToggle="left">
+      <ion-icon color="secondary" name="menu"></ion-icon>
+    </button>
+    <ion-title>
+      <img src="assets/logo/kazan.png" />
+    </ion-title>
+    <ion-buttons (click)="sair()" end>
+      <button ion-button icon-only>
+        <ion-icon color="secondary" name="log-out"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-item-divider class="titulo-master" color="light">
+    <h2 color="primary" class="titulo">
+      <ion-icon name="home"></ion-icon>
+      {{ 'HOME - FILIAL: '+ _filial }}
+    </h2>
+  </ion-item-divider>
+</ion-header>
+
+<ion-content>
+  <ion-buttons padding>
+    <button color="secondary" ion-button icon-left block (click)="openFilialSelection()">
+      TROCAR FILIAL
+    </button>
+  </ion-buttons>
+  <ion-buttons padding>
+    <button color="primary" ion-button icon-left block (click)="sincronizar(true)">
+      <ion-icon name="sync"></ion-icon> SINCRONIZAR
+    </button>
+  </ion-buttons>
+
+  <ion-item-divider color="light">
+    <h2>PEDIDOS ABERTOS</h2>
+  </ion-item-divider>
+
+  <ion-card *ngFor="let cada of _lstPedidos">
+    <ion-row>
+      <ion-col class="titulo" col-12>
+        <h2 color="secondary">{{ cada.cliente.nome }}</h2>
+        <!-- <h2 *ngIf="cada.cliProspec != null && cada.cliProspec != '' && cada.cliProspec != undefined">{{
+          retornarNomeCliente(cada.cliProspec) }} </h2>
+        <h2 *ngIf="cada.cliProspec != null && cada.cliProspec != '' && cada.cliProspec != undefined">{{ cada.cliProspec}} </h2> -->
+
+
+      </ion-col>
+      <ion-col col-6>
+        <p>{{ util.formatarDataHora(cada.data) }}</p>
+      </ion-col>
+      <ion-col col-6>
+        <p>R$ {{ util.formatarMoeda(cada.valor) }}</p>
+      </ion-col>
+      <ion-col col-12>
+        <button (click)="editar(cada)" color="secondary" small block ion-button icon-left item-end>
+          <ion-icon name="create"></ion-icon>
+          EDITAR
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-card>
+
+  <!--<ion-card>
+    <ion-card-header>
+      VENDAS DIÁRIAS
+    </ion-card-header>
+    <ion-card-content>
+      <canvas #cvsVenda></canvas>
+    </ion-card-content>
+  </ion-card>-->
+
+  <ion-fab bottom right #fab>
+    <button color="primary" (click)="iniciarPedido()" ion-fab><ion-icon name="clipboard"></ion-icon></button>
+  </ion-fab>
+</ion-content>
