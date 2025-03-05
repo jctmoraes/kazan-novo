@@ -1,5 +1,10 @@
 <ion-header>
-  <ion-toolbar primary>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button color="light" (click)="fechar()">
+        <ion-icon name="arrow-back-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
     <ion-title> {{ _pedido ? 'SELECIONE O CLIENTE' : 'CLIENTES' }} </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -15,21 +20,20 @@
   </ion-toolbar>
 
   <ion-toolbar no-border-top>
-    <ion-row>
-      <ion-col col-10>
+    <ion-list>
+      <ion-item>
         <ion-input
+          labelPlacement="stacked"
           placeholder="Digite o nome, cnpj ou e-mail"
           (keypress)="keypress($event)"
           [(ngModel)]="_filtro"
-          class="input-borda"
-        ></ion-input>
-      </ion-col>
-      <ion-col col-2>
-        <button color="primary" (click)="pesquisar()" ion-button icon-only>
-          <ion-icon name="search"></ion-icon>
-        </button>
-      </ion-col>
-    </ion-row>
+        >
+          <ion-button color="primary" (click)="pesquisar()" slot="end" aria-label="Show/hide">
+            <ion-icon name="search" slot="icon-only"></ion-icon>
+          </ion-button>
+        </ion-input>
+      </ion-item>
+    </ion-list>
     <!-- <ion-row *ngIf="_pedido">
       <ion-col>
         <ion-label>Desconto Geral</ion-label>
@@ -59,7 +63,7 @@
     </ion-row>
     <ion-row>
       <ion-col col-5>
-        <button
+        <ion-button
           (click)="abrirDetalhe(cada)"
           color="secondary"
           small
@@ -70,13 +74,13 @@
         >
           <ion-icon name="information-circle"></ion-icon>
           DETALHES
-        </button>
+        </ion-button>
       </ion-col>
       <ion-col col-2>
         <div class="status" [ngClass]="obterClasse(cada)"></div>
       </ion-col>
       <ion-col [hidden]="!_pedido" text-right col-5>
-        <button
+        <ion-button
           (click)="selecionar(cada)"
           color="secondary"
           small
@@ -86,7 +90,7 @@
         >
           <ion-icon name="checkbox-outline"></ion-icon>
           SELECIONAR
-        </button>
+        </ion-button>
       </ion-col>
     </ion-row>
   </ion-card>

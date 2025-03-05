@@ -1,13 +1,18 @@
 <ion-header>
-    <ion-toolbar>
-      <ion-title>Selecione a Filial</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button color="medium" (click)="fechar()">
+        <ion-icon name="arrow-back-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>SELECIONE A FILIAL</ion-title>
+  </ion-toolbar>
+</ion-header>
 
-  <ion-content padding>
-    <ion-list>
-      <ion-item *ngFor="let filial of filiais" (click)="selectFilial(filial)">
-        {{ filial }}
-      </ion-item>
-    </ion-list>
-  </ion-content>
+<ion-content padding>
+  <ion-list>
+    <ion-item *ngFor="let filial of filiais" (click)="selectFilial(filial)">
+      {{ filial }}
+    </ion-item>
+  </ion-list>
+</ion-content>

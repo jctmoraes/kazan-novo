@@ -34,7 +34,7 @@
   </ion-toolbar>
 
   <ion-fab bottom right #fab>
-    <button color="primary" (click)="abrirFiltro()" ion-fab><ion-icon name="options"></ion-icon></button>
+    <ion-button color="primary" (click)="abrirFiltro()" ion-fab><ion-icon name="options"></ion-icon></ion-button>
   </ion-fab>
 
   <ion-grid class="tabela tbl-responsiva">
@@ -56,41 +56,41 @@
       <ion-col>{{ cada.nomeFilial }}</ion-col>
 			<ion-col col-12>
         <ion-item>
-          <button *ngIf="cada.status != 1" (click)="abrirDetalhe(cada)" color="secondary" ion-button icon-left outline item-start>
+          <ion-button *ngIf="cada.status != 1" (click)="abrirDetalhe(cada)" color="secondary" ion-button icon-left outline item-start>
             <ion-icon name="information-circle"></ion-icon>
             DETALHES
-          </button>
-          <button *ngIf="cada.status == 1" (click)="excluir(cada)" color="secondary" ion-button icon-left outline item-start>
+          </ion-button>
+          <ion-button *ngIf="cada.status == 1" (click)="excluir(cada)" color="secondary" ion-button icon-left outline item-start>
             <ion-icon name="trash"></ion-icon>
             EXCLUIR
-          </button>
-          <button *ngIf="cada.status == 1" (click)="editar(cada)" color="secondary" ion-button icon-left item-end>
+          </ion-button>
+          <ion-button *ngIf="cada.status == 1" (click)="editar(cada)" color="secondary" ion-button icon-left item-end>
             <ion-icon name="create"></ion-icon>
             EDITAR
-          </button>
-          <!-- <button *ngIf="cada.status == 2" (click)="copiar(cada)" color="secondary" ion-button icon-left item-end>
+          </ion-button>
+          <!-- <ion-button *ngIf="cada.status == 2" (click)="copiar(cada)" color="secondary" ion-button icon-left item-end>
             <ion-icon name="create"></ion-icon>
             COPIAR
-          </button> -->
-          <button (click)="enviarPlanilha(cada)" color="sheet" ion-button icon-left item-end>
+          </ion-button> -->
+          <ion-button (click)="enviarPlanilha(cada)" color="sheet" ion-button icon-left item-end>
             <ion-icon name="send"></ion-icon>
             PLANILHA
-          </button>
-          <button (click)="enviarPdf(cada)" color="primary" ion-button icon-left item-end>
+          </ion-button>
+          <ion-button (click)="enviarPdf(cada)" color="primary" ion-button icon-left item-end>
             <ion-icon name="send"></ion-icon>
             ENVIAR PDF
-          </button>
+          </ion-button>
         </ion-item>
         <ion-item block>
           <ion-row>
-            <button (click)="imprimir(cada)" color="secondary" col-5 small ion-button  icon-left>
+            <ion-button (click)="imprimir(cada)" color="secondary" col-5 small ion-button  icon-left>
               <ion-icon name="print"></ion-icon>
               IMPRIMIR
-            </button>
-            <button (click)="enviar(cada)" color="primary" col-6 small ion-button  icon-left esp>
+            </ion-button>
+            <ion-button (click)="enviar(cada)" color="primary" col-6 small ion-button  icon-left esp>
               <ion-icon name="cloud-upload"></ion-icon>
               SINCRONIZAR
-            </button>
+            </ion-button>
           </ion-row>
         </ion-item>
       </ion-col>

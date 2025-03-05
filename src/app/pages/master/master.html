@@ -1,15 +1,15 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <button ion-button icon-only menuToggle="left">
-      <ion-icon color="secondary" name="menu"></ion-icon>
-    </button>
+    <ion-buttons slot="start">
+      <ion-menu-button auto-hide="false" color="light"></ion-menu-button>
+    </ion-buttons>
     <ion-title>
       <img src="assets/logo/kazan.png" />
     </ion-title>
-    <ion-buttons (click)="sair()" end>
-      <button ion-button icon-only>
-        <ion-icon color="secondary" name="log-out"></ion-icon>
-      </button>
+    <ion-buttons slot="end">
+      <ion-button color="light" (click)="sair()">
+        <ion-icon name="log-out"></ion-icon>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
   <ion-item-divider class="titulo-master" color="light">
@@ -21,16 +21,13 @@
 </ion-header>
 
 <ion-content>
-  <ion-buttons padding>
-    <button color="secondary" ion-button icon-left block (click)="openFilialSelection()">
-      TROCAR FILIAL
-    </button>
-  </ion-buttons>
-  <ion-buttons padding>
-    <button color="primary" ion-button icon-left block (click)="sincronizar(true)">
-      <ion-icon name="sync"></ion-icon> SINCRONIZAR
-    </button>
-  </ion-buttons>
+  <ion-button color="secondary" expand="block" (click)="openFilialSelection()">
+    TROCAR FILIAL
+  </ion-button>
+
+  <ion-button color="primary" expand="block" (click)="sincronizar(true)">
+    <ion-icon name="sync" slot="start"></ion-icon> SINCRONIZAR
+  </ion-button>
 
   <ion-item-divider color="light">
     <h2>PEDIDOS ABERTOS</h2>
@@ -53,10 +50,10 @@
         <p>R$ {{ util.formatarMoeda(cada.valor) }}</p>
       </ion-col>
       <ion-col col-12>
-        <button (click)="editar(cada)" color="secondary" small block ion-button icon-left item-end>
-          <ion-icon name="create"></ion-icon>
+        <ion-button (click)="editar(cada)" color="secondary" small expand="block">
+          <ion-icon name="create" slot="start"></ion-icon>
           EDITAR
-        </button>
+        </ion-button>
       </ion-col>
     </ion-row>
   </ion-card>
@@ -70,7 +67,9 @@
     </ion-card-content>
   </ion-card>-->
 
-  <ion-fab bottom right #fab>
-    <button color="primary" (click)="iniciarPedido()" ion-fab><ion-icon name="clipboard"></ion-icon></button>
+  <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+    <ion-fab-button color="primary" (click)="iniciarPedido()">
+      <ion-icon name="clipboard"></ion-icon>
+    </ion-fab-button>
   </ion-fab>
 </ion-content>

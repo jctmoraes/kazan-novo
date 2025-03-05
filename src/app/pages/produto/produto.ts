@@ -14,14 +14,14 @@ import { IvaProvider } from "@services/iva-provider";
 import { PedidosItensProvider } from "@services/pedidos-itens-provider";
 import { PedidosProvider } from "@services/pedidos-provider";
 import { UtilProvider } from "@services/util-provider";
-import { AppComponent } from "app/app.component";
+import { AppComponent } from "src/app/app.component";
 // import { ImageViewerController } from "ionic-img-viewer";
 import { Router } from "@angular/router";
 import { ProdutoDetalhePage } from "../produto-detalhe/produto-detalhe";
 import { CapacitorBarcodeScanner, CapacitorBarcodeScannerTypeHint } from "@capacitor/barcode-scanner";
 
 @Component({
-  selector: "page-produto",
+  selector: "app-produto",
   templateUrl: "produto.html",
   styleUrls: ["produto.scss"],
   standalone: false,

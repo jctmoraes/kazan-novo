@@ -7,9 +7,9 @@
 <ion-content padding>
 
   <ion-buttons *ngIf="_lstPedidosItens != null && _lstPedidosItens.length > 0" padding>
-    <button color="primary" padding ion-button icon-left block (click)="finalizarPedido()">
+    <ion-button color="primary" padding ion-button icon-left block (click)="finalizarPedido()">
       <ion-icon name="checkbox"></ion-icon>CONCLUIR PEDIDO
-    </button>
+    </ion-button>
   </ion-buttons>
 
   <!-- <ion-content [hidden]="_lstItens.length > 0"> -->
@@ -35,14 +35,14 @@
       <ion-col>{{ util.formatarMoeda(cada.valorSt) }}</ion-col>
       <ion-col>
         <ion-buttons>
-          <button (click)="excluir(cada)" color="secondary" ion-button small icon-left outline float-left>
+          <ion-button (click)="excluir(cada)" color="secondary" ion-button small icon-left outline float-left>
             <ion-icon name="trash"></ion-icon>
             EXCLUIR
-          </button>
-          <button (click)="editar(cada)" color="secondary" ion-button small icon-left float-right>
+          </ion-button>
+          <ion-button (click)="editar(cada)" color="secondary" ion-button small icon-left float-right>
             <ion-icon name="create"></ion-icon>
             EDITAR
-          </button>
+          </ion-button>
         </ion-buttons>
       </ion-col>
     </ion-row>

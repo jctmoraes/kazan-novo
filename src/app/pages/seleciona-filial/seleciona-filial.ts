@@ -1,9 +1,10 @@
 import { Component, Input } from "@angular/core";
 import { Router } from "@angular/router";
-import { NavParams } from "@ionic/angular";
+import { IFilial } from "@interfaces/filiais.interface";
+import { ModalController } from "@ionic/angular";
 import { FiliaisProvider } from "@services/filiais-provider";
 import { FuncionariosProvider } from "@services/funcionarios-provider";
-import { IFilial } from "app/interfaces/filiais.interface";
+
 
 @Component({
   selector: "seleciona-filial",
@@ -18,19 +19,20 @@ export class SelecionaFilialComponent {
   filialCod: number[];
 
   constructor(
+    private modalCtrl: ModalController,
     private router: Router,
-    private navParams: NavParams,
     private filialProv: FiliaisProvider,
-    private updateFuncionario: FuncionariosProvider
+    private updateFuncionario: FuncionariosProvider,
   ) {}
 
   async ionViewDidEnter() {
-    const navigation = this.router.getCurrentNavigation();
-    const state = navigation?.extras.state as { funcionario: string, callback: (name: string) => void };
-    this.funcionario = state?.funcionario;
+    //obter parâmetros passados, considerando que este componente foi chamado por um modal
+    const htmlIonModalElement = await this.modalCtrl.getTop();
+    const componentProps = htmlIonModalElement?.componentProps as { funcionario: string };
+    this.funcionario = componentProps?.funcionario;
     console.log("FUNCIONARIO -> " + this.funcionario);
-    const nav = this.navParams.get("funcionario");
-    console.log("NAV -> " + nav);
+    // const nav = this.navParams.get("funcionario");
+    // console.log("NAV -> " + nav);
     if (this.funcionario) {
       this.filialProv.buscarT().subscribe(
         (filiais: IFilial[]) => {
@@ -55,7 +57,10 @@ export class SelecionaFilialComponent {
     console.log("NAME FILIAL -> " + name);
     localStorage.setItem("codFilialSet", codigo);
     this.updateFuncionario.atualizaFilialCod(parseInt(codigo));
-    this.navParams.get("callback")(name);
-    this.router.navigate(['..']);
+    this.fechar(codigo);
+  }
+
+  fechar(data?: any) {
+    return this.modalCtrl.dismiss(data);
   }
 }

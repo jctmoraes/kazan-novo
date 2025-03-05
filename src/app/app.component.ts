@@ -32,28 +32,27 @@ export class AppComponent {
     this.platform.ready().then(() => {
       console.log('Plataforma pronta');
       this.bancoProvider.criarTabela().then(() => {
+        console.log('AQUIIIIIIIIIIII');
         this.funcionarioProvider.buscarLogado().subscribe((retorno) => {
+          console.log('retorno', retorno);
           this.funcionarioLogado = retorno;
+          UtilProvider.funCodigo = retorno.codigo;
         });
-        this.obterVersao().then((versao) => {
+        this.utilProvider.obterVersao().then((versao) => {
           this._versao = versao;
         });
       });
       SplashScreen.hide();
       StatusBar.setBackgroundColor({ color: '#044fa2' });
+      // StatusBar.hide();
+      // StatusBar.setOverlaysWebView({ overlay: true });
+      this.setScreenMode();
     });
   }
 
-  async obterVersao() {
-    const info = await App.getInfo();
-    const versionNumber = info.version;
-    UtilProvider.versao = versionNumber;
-    return versionNumber;
-  }
-
-  sair() {
+  async sair() {
     this.menuCtrl.close();
-    this.utilProvider.confirmacao('DESEJA SAIR DO APP?', 'CONFIRMAR SAÍDA',
+    await this.utilProvider.confirmacao('DESEJA SAIR DO APP?', 'CONFIRMAR SAÍDA',
       () => {
         this.utilProvider.mostrarCarregando('SAINDO...')
           .then((loading) => {
@@ -84,5 +83,17 @@ export class AppComponent {
   iniciarPedido() {
     UtilProvider.pedido = true;
     this.mudarPagina('cliente', 'NOVO PEDIDO');
+  }
+
+  fecharMenu() {
+    this.menuCtrl.close();
+  }
+
+  setScreenMode() {
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    document.body.classList.toggle('dark', prefersDark.matches);
+    prefersDark.addEventListener('change', (mediaQuery) => {
+      document.body.classList.toggle('dark', mediaQuery.matches);
+    });
   }
 }

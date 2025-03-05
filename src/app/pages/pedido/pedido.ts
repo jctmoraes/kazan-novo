@@ -13,7 +13,7 @@ import { StatusPedidoProvider, IStatusPedido } from "@services/status-pedido";
 import { FotosProvider } from "@services/fotos-provider";
 import { IFotos } from "@interfaces/fotos.interface";
 import { FiliaisProvider } from "@services/filiais-provider";
-import { AppComponent } from "app/app.component";
+import { AppComponent } from "src/app/app.component";
 
 @Component({
   selector: "page-pedido",
@@ -99,8 +99,8 @@ export class PedidoPage implements OnDestroy {
     });
   }
 
-  excluir(pedido: IPedidos) {
-    this.utilProvider.confirmacao(
+  async excluir(pedido: IPedidos) {
+    await this.utilProvider.confirmacao(
       "DESEJA REALMENTE EXCLUIR O PEDIDO N° " + pedido.codigo + "?",
       "CONFIMAR EXCLUSÃO",
       () => {

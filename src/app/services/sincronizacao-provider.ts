@@ -14,6 +14,7 @@ import { EstoqueProvider } from "./estoque-provider";
 import { FaixaDescontosProvider } from "./faixaDescontos-provider";
 import { ClicadastradosProvider } from "./clicadastrados-provider";
 import { FiliaisProvider } from "./filiais-provider";
+import { StorageService } from "./storage.service";
 
 @Injectable({ providedIn: 'root' })
 export class SincronizacaoProvider {
@@ -38,7 +39,7 @@ export class SincronizacaoProvider {
   _mensagem: string = "";
 
   constructor(
-    private storage: Storage,
+    private storageService: StorageService,
     private utilProvider: UtilProvider,
     private clienteProvider: ClientesProvider,
     private itemProvider: ItensProvider,
@@ -66,39 +67,36 @@ export class SincronizacaoProvider {
     if (forcar) {
       await this.continuarSincronizacao(vendaProdImp, cdr); // Passando o cdr
     } else {
-      this.buscarDtSincronizacao("UltSincronizacao" + this._codigo).subscribe(
-        async (dtm: Date) => {
-          let dtmAtual: Date = new Date();
-          if (dtm != null) {
-            dtm = new Date(dtm);
-            let horas: number =
-              Math.abs(dtmAtual.getTime() - dtm.getTime()) / (1000 * 60 * 60);
-            let tempoAtualizacao: number = 24;
-            if (horas >= tempoAtualizacao) {
-              this.continuarSincronizacao(vendaProdImp, cdr); // Passando o cdr
-            } else if (horas > 4) {
-              this._sincronizacao.clientes = true;
-              this._sincronizacao.itens = true;
-              this._sincronizacao.transportadoras = true;
-              this._sincronizacao.condicaoPagto = true;
-              this._sincronizacao.codigoBarras = true;
-              this._sincronizacao.fabricantes = true;
-              this._sincronizacao.iva = true;
-              this._sincronizacao.estoque = true;
-              this._sincronizacao.faixadescontos = true;
-              this._sincronizacao.cliCadastrados = true;
-              this._sincronizacao.filiais = true;
-              this._loading = await this.utilProvider.mostrarCarregando(
-                this._mensagem,
-              );
-              this.sincronizarConfiguracao();
-            }
-          } else {
-            this._forcar = true;
-            this.continuarSincronizacao(vendaProdImp, cdr); // Passando o cdr
-          }
-        },
-      );
+      const dtm = await this.buscarDtSincronizacao("UltSincronizacao" + this._codigo);
+      console.log("Data da última sincronização:", dtm);
+      let dtmAtual: Date = new Date();
+      if (dtm != null) {
+        let horas: number =
+          Math.abs(dtmAtual.getTime() - dtm.getTime()) / (1000 * 60 * 60);
+        let tempoAtualizacao: number = 24;
+        if (horas >= tempoAtualizacao) {
+          this.continuarSincronizacao(vendaProdImp, cdr); // Passando o cdr
+        } else if (horas > 4) {
+          this._sincronizacao.clientes = true;
+          this._sincronizacao.itens = true;
+          this._sincronizacao.transportadoras = true;
+          this._sincronizacao.condicaoPagto = true;
+          this._sincronizacao.codigoBarras = true;
+          this._sincronizacao.fabricantes = true;
+          this._sincronizacao.iva = true;
+          this._sincronizacao.estoque = true;
+          this._sincronizacao.faixadescontos = true;
+          this._sincronizacao.cliCadastrados = true;
+          this._sincronizacao.filiais = true;
+          this._loading = await this.utilProvider.mostrarCarregando(
+            this._mensagem,
+          );
+          this.sincronizarConfiguracao();
+        }
+      } else {
+        this._forcar = true;
+        this.continuarSincronizacao(vendaProdImp, cdr); // Passando o cdr
+      }
     }
   }
 
@@ -223,7 +221,7 @@ export class SincronizacaoProvider {
       this.inserirDtSincronizacao(
         "UltSincronizacao" + this._codigo,
         new Date(),
-      ).subscribe((sub) => {
+      ).then(() => {
         this._sincronizacao.clientes = false;
         this._sincronizacao.itens = false;
         this._sincronizacao.transportadoras = false;
@@ -245,20 +243,14 @@ export class SincronizacaoProvider {
     }
   }
 
-  buscarDtSincronizacao(chave: string): Observable<Date> {
-    return new Observable((subs) => {
-      this.storage.get("dtm" + chave).then((retorno: Date) => {
-        UtilProvider.completarObservable(subs, retorno);
-      });
-    });
+  async buscarDtSincronizacao(chave: string): Promise<Date> {
+    const retorno = await this.storageService.get("dtm" + chave);
+    console.log("Data de sincronização:", retorno);
+    return new Date(retorno);
   }
 
-  inserirDtSincronizacao(chave: string, valor: Date): Observable<Date> {
-    return new Observable((subs) => {
-      this.storage.set("dtm" + chave, valor).then(() => {
-        UtilProvider.completarObservable(subs, true);
-      });
-    });
+  async inserirDtSincronizacao(chave: string, valor: Date): Promise<void> {
+    await this.storageService.set("dtm" + chave, valor);
   }
 
   converteHora(h: string) {

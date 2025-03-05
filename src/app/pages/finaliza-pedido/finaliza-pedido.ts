@@ -11,9 +11,9 @@ import { PedidosProvider } from "@services/pedidos-provider";
 import { ClienteCadastroProvider } from "@services/cliente-cadastro-provider";
 import { IClienteCadastro } from "@interfaces/cliente-cadastro.interface";
 import { IPedidosItens } from "@interfaces/pedidosItens.interface";
-import { AppComponent } from "app/app.component";
 import { ModalController } from "@ionic/angular";
 import { ICondicaoPagto } from "@interfaces/condicaoPagto.interface";
+import { AppComponent } from "src/app/app.component";
 
 @Component({
   selector: "page-finaliza-pedido",

@@ -13,16 +13,16 @@
           class="input-borda"></ion-input>
       </ion-col>
       <ion-col col-2>
-        <button color="primary" (click)="pesquisar()" ion-button full icon-only>
+        <ion-button color="primary" (click)="pesquisar()" ion-button full icon-only>
           <ion-icon name="search"></ion-icon>
-        </button>
+        </ion-button>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col col-12>
-        <button color="secondary" (click)="lerCodigo()" ion-button full icon-left>
+        <ion-button color="secondary" (click)="lerCodigo()" ion-button full icon-left>
           <ion-icon name="barcode"></ion-icon> CÓDIGO DE BARRAS
-        </button>
+        </ion-button>
       </ion-col>
     </ion-row>
     <ion-row>
@@ -88,21 +88,21 @@
     </ion-row> -->
     <ion-row class="titulo">
       <ion-col col-12>
-        <button (click)="abrirDetalhe(cada)" color="secondary" [attr.block]="!_pedido" small ion-button icon-left
+        <ion-button (click)="abrirDetalhe(cada)" color="secondary" [attr.block]="!_pedido" small ion-button icon-left
           float-left outline>
           <ion-icon name="information-circle"></ion-icon>
           DETALHES
-        </button>
-        <button (click)="doViewImg(cada)" color="secondary" [attr.block]="!_pedido" small ion-button icon-left float-left
+        </ion-button>
+        <ion-button (click)="doViewImg(cada)" color="secondary" [attr.block]="!_pedido" small ion-button icon-left float-left
           outline>
           <ion-icon name="image"></ion-icon>
           IMG
-        </button>
-        <button [hidden]="!_pedido" [disabled]="cada.valorTotal == null" (click)="addProduto(cada)" color="secondary"
+        </ion-button>
+        <ion-button [hidden]="!_pedido" [disabled]="cada.valorTotal == null" (click)="addProduto(cada)" color="secondary"
           small ion-button icon-left float-right>
           <ion-icon name="checkbox-outline"></ion-icon>
           ADICIONAR
-        </button>
+        </ion-button>
       </ion-col>
     </ion-row>
   </ion-card>
@@ -119,9 +119,9 @@
 </ion-content>
 <ion-footer *ngIf="_pedido">
   <ion-fab *ngIf="_pedido" bottom right #fab>
-    <button color="primary" (click)="abrirCarrinho()" ion-fab>
+    <ion-button color="primary" (click)="abrirCarrinho()" ion-fab>
       <ion-icon name="cart"></ion-icon>
-    </button>
+    </ion-button>
   </ion-fab>
   <ion-toolbar>
     <ion-title text-center>TOTAL: R$ {{ utilProvider.formatarMoeda(_total) }}</ion-title>

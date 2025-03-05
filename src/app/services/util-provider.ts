@@ -2,13 +2,14 @@ import { Network } from '@capacitor/network';
 import { Injectable } from "@angular/core";
 import { IPedidos } from "../interfaces/pedidos.interface";
 import { IConfiguracao } from "../interfaces/configuracao.interface";
-import { AlertController, LoadingController, ToastController } from "@ionic/angular/standalone";
+import { AlertController, LoadingController, ToastController } from "@ionic/angular";
 import { IIva } from "../interfaces/iva.interface";
 import { IValor } from "../interfaces/itens.interface";
 import { IvaProvider } from "./iva-provider";
 import { PedidosItensProvider } from "./pedidos-itens-provider";
 import { Subscriber } from "rxjs";
-import { IPedidosItens } from "app/interfaces/pedidosItens.interface";
+import { IPedidosItens } from '@interfaces/pedidosItens.interface';
+import { App } from '@capacitor/app';
 
 @Injectable({ providedIn: 'root' })
 export class UtilProvider {
@@ -280,6 +281,7 @@ export class UtilProvider {
       ],
     });
     await confirm.present();
+    return confirm;
   }
 
   async mostrarCarregando(texto: string) : Promise<HTMLIonLoadingElement> {
@@ -652,6 +654,15 @@ export class UtilProvider {
   static completarObservable(subs: Subscriber<any>, retorno: any) {
     subs.next(retorno);
     subs.complete();
+  }
+
+  async obterVersao() {
+    const info = await App.getInfo();
+    console.log('Versão do App:', info);
+    const versionNumber = info.version;
+    UtilProvider.versao = versionNumber;
+    console.log('Versão do App:', versionNumber);
+    return versionNumber;
   }
 }
 

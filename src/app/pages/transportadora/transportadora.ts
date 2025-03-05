@@ -2,13 +2,13 @@ import { Component } from "@angular/core";
 import { ChangeDetectorRef } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { Router } from '@angular/router';
+import { ITransportadoras } from "@interfaces/transportadoras.interface";
 import { InfiniteScrollCustomEvent } from "@ionic/angular";
 import { IvaProvider } from "@services/iva-provider";
 import { PedidosItensProvider } from "@services/pedidos-itens-provider";
 import { PedidosProvider } from "@services/pedidos-provider";
 import { TransportadorasProvider } from "@services/transportadoras-provider";
 import { UtilProvider } from "@services/util-provider";
-import { ITransportadoras } from "app/interfaces/transportadoras.interface";
 
 @Component({
   selector: "page-transportadora",
@@ -37,11 +37,13 @@ export class TransportadoraPage {
     private utilProvider: UtilProvider,
     private cdr: ChangeDetectorRef,
   ) {
-    this._iniciarPedido = route.snapshot.queryParams['iniciarPedido'];
-    console.log("Iniciar Pedido: ", this._iniciarPedido);
   }
 
   ionViewDidLoad() {
+    const navigation = this.router.getCurrentNavigation();
+    console.log('navigation.extras.state', navigation);
+    this._iniciarPedido = navigation.extras.state['iniciarPedido'] as boolean;
+    console.log("Iniciar Pedido: ", this._iniciarPedido);
     this.transportadoraProvider
       .porCodigo(UtilProvider.objPedido.traCodigo)
       .subscribe((transportadora) => {

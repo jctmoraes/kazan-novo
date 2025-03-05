@@ -1,14 +1,10 @@
-page-home {
-    ion-img {
-        display: block;
-        margin: 50px auto;
-        background-color: transparent;
-        min-height: 80px;
-        width: 200px;
-    }
-        ion-img img {
-            display: block;
-            margin: 0 auto;
-            max-width: 200px;
-        }
+img {
+  display: block;
+  margin: 50px auto;
+  background-color: transparent;
+  min-height: 80px;
+  width: 200px;
+}
+ion-footer {
+  border: 1px solid #000;
 }

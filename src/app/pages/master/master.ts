@@ -1,5 +1,6 @@
+import { IClienteCadastro } from './../../interfaces/cliente-cadastro.interface';
 import { ChangeDetectorRef, Component } from "@angular/core";
-import { NavController } from "@ionic/angular";
+import { NavController, ModalController } from "@ionic/angular";
 import { Router } from '@angular/router';
 import { ClienteCadastroProvider } from "@services/cliente-cadastro-provider";
 import { ConfiguracaoProvider } from "@services/configuracao-provider";
@@ -9,11 +10,11 @@ import { PedidosItensProvider } from "@services/pedidos-itens-provider";
 import { PedidosProvider } from "@services/pedidos-provider";
 import { SincronizacaoProvider } from "@services/sincronizacao-provider";
 import { UtilProvider } from "@services/util-provider";
-import { AppComponent } from "app/app.component";
-import { IClienteCadastro } from "app/interfaces/cliente-cadastro.interface";
-import { IPedidosFiltro } from "app/interfaces/filtro/pedidos-filtro.interface";
-import { IFuncionarios } from "app/interfaces/funcionarios.interface";
-import { IPedidos } from "app/interfaces/pedidos.interface";
+import { AppComponent } from "src/app/app.component";
+import { IPedidos } from "@interfaces/pedidos.interface";
+import { IFuncionarios } from '@interfaces/funcionarios.interface';
+import { IPedidosFiltro } from '@interfaces/filtro/pedidos-filtro.interface';
+import { SelecionaFilialComponent } from '../seleciona-filial/seleciona-filial';
 
 interface Filial {
   id: number;
@@ -21,9 +22,9 @@ interface Filial {
 }
 
 @Component({
-  selector: "page-master",
-  templateUrl: "master.html",
-  styleUrls: ["master.scss"],
+  selector: 'app-master',
+  templateUrl: 'master.html',
+  styleUrls: ['master.scss'],
   standalone: false,
 })
 export class MasterPage {
@@ -32,7 +33,7 @@ export class MasterPage {
   _cliCad: IClienteCadastro[] = [];
   private _funcionarioLogado: IFuncionarios = new IFuncionarios();
 
-  _filial = "Filial";
+  _filial = 'SELECIONE';
 
   constructor(
     private funcionario: FuncionariosProvider,
@@ -44,7 +45,7 @@ export class MasterPage {
     private configuracaoProvider: ConfiguracaoProvider,
     private cliCadProvider: ClienteCadastroProvider,
     private filialProv: FiliaisProvider,
-    private router: Router,
+    private modalController: ModalController,
     private myApp: AppComponent,
   ) {
     funcionario.buscarLogado().subscribe((retorno) => {
@@ -149,13 +150,22 @@ export class MasterPage {
     return aux?.razao;
   }
 
-  openFilialSelection() {
-    this.router.navigate(['seleciona-filial'], {
-      state: {
+  async openFilialSelection() {
+    const modal = await this.modalController.create({
+      component: SelecionaFilialComponent, // Replace with your actual component
+      componentProps: {
         funcionario: this._funcionarioLogado.filial.toString(),
-        callback: this.filialSelectedCallback.bind(this),
       },
     });
+
+    modal.onDidDismiss().then((detail) => {
+      console.log('detail', detail);
+      if (detail.data) {
+        this.filialSelectedCallback(detail.data);
+      }
+    });
+
+    return await modal.present();
   }
 
   filialSelectedCallback(filial: string) {

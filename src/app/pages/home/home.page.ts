@@ -4,7 +4,7 @@ import { MenuController } from '@ionic/angular';
 import { FuncionariosProvider } from '@services/funcionarios-provider';
 import { UtilProvider } from '@services/util-provider';
 import { FiliaisProvider } from '@services/filiais-provider';
-import { AppComponent } from 'app/app.component';
+import { AppComponent } from 'src/app/app.component';
 import { Router } from '@angular/router';
 
 @Component({
@@ -23,10 +23,16 @@ export class HomePage {
     private funcionarioProvider: FuncionariosProvider,
     private utilProvider: UtilProvider,
     private filialProv: FiliaisProvider,
-    private myApp: AppComponent) {
-    this._versao = UtilProvider.versao;
+    private myApp: AppComponent,
+  ) {
+  }
 
-    filialProv.sincronizar().subscribe(x => {
+  ngOnInit() {
+    //console.log('ngOnInit');
+    this.utilProvider.obterVersao().then((versao) => {
+      this._versao = versao;
+    });
+    this.filialProv.sincronizar().subscribe(x => {
       console.log('Bucando filiais no Login ---> ', x);
     });
   }

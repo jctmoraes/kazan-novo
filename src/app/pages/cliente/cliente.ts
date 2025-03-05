@@ -9,6 +9,7 @@ import { PedidosProvider } from "@services/pedidos-provider";
 import { UtilProvider } from "@services/util-provider";
 import { Router } from "@angular/router";
 import { IPedidos } from "@interfaces/pedidos.interface";
+import { TransportadoraPage } from "../transportadora/transportadora";
 
 @Component({
   selector: "page-cliente",
@@ -36,7 +37,12 @@ export class ClientePage {
     public alertController: AlertController,
     private pedido: PedidosProvider
   ) {
+  }
+
+  ionViewWillEnter() {
+    console.log('ionViewWillEnter');
     this._pedido = UtilProvider.pedido;
+    console.log('this._pedido', this._pedido);
     this._funCodigo = UtilProvider.funCodigo;
   }
 
@@ -63,7 +69,10 @@ export class ClientePage {
     this._pagina++;
     const inicio = this._pagina * this._qtdPorPagina;
 
+    console.log('this._pagina', this._pagina);
+
     if (this._pagina == 0) {
+      console.log('this.clientStatus', this.clientStatus);
       if (this.clientStatus === "active") {
         this.cliente
           .buscarTotalAtivos(this._funCodigo, this._filtro)
@@ -140,7 +149,8 @@ export class ClientePage {
   async selecionar(cliente: IClientes) {
     this.pedido
       .buscarAberto(cliente.codigo, cliente.venCodigo)
-      .subscribe((lstPedido) => {
+      .subscribe(async (lstPedido) => {
+        console.log("lstPedido", lstPedido);
         if (lstPedido.length > 0) {
           let msg = "HÁ UM PEDIDO EM ABERTO, DESEJA EDITÁ-LO?";
           let titulo = "PEDIDO ABERTO";
@@ -149,7 +159,7 @@ export class ClientePage {
               "ENCONTRAMOS PEDIDOS DESSE CLIENTE QUE NÃO FORAM FINALIZADOS, DESEJA VISUALIZÁ-LOS?";
             titulo = "PEDIDOS ABERTOS";
           }
-          this.util.confirmacao(
+          await this.util.confirmacao(
             msg,
             titulo,
             () => {
@@ -180,6 +190,7 @@ export class ClientePage {
   }
 
   async novoPedido(cliente: IClientes) {
+    console.log('novoPedido', cliente);
     const func = await this.funcionario.buscarLogado().toPromise();
 
     let pedido: IPedidos = <IPedidos>{
@@ -197,14 +208,13 @@ export class ClientePage {
       cliente: cliente,
     };
     UtilProvider.objPedido = pedido;
-    this.router.navigate(["/transportadora"], {
-      state: { iniciarPedido: true, traCodigo: cliente.traCodigo },
-    });
+    console.log('escolher transportadora');
+    this.abrirTransportadora(cliente);
   }
 
   async abrirTransportadora(cliente: IClientes) {
     let modal = await this.modalCtrl.create({
-      component: "TransportadoraPage",
+      component: TransportadoraPage,
       componentProps: {
         cliente: cliente,
         iniciarPedido: true,
@@ -214,7 +224,7 @@ export class ClientePage {
     // modal.onDidDismiss((transportadora) => {
     //   // Handle dismissal
     // });
-    modal.present();
+    await modal.present();
   }
 
   obterClasse(cliente: IClientes) {
@@ -265,5 +275,9 @@ export class ClientePage {
       ],
     });
     confirm.present();
+  }
+
+  fechar() {
+    this.router.navigate(["/master"]);
   }
 }

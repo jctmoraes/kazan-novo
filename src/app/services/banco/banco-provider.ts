@@ -26,15 +26,23 @@ export class BancoProvider extends ComandoProvider {
           "CREATE TABLE IF NOT EXISTS configuracao (embalagemMin TEXT, descInterestadual INTEGER);" +
           "CREATE TABLE IF NOT EXISTS faixadescontos (filial INTEGER, faixa INTEGER, valde NUMERIC, valate NUMERIC, perdesc NUMERIC);" +
           "CREATE TABLE IF NOT EXISTS cliCadastrados (codigo INTEGER, cnpj TEXT);" +
-          "CREATE TABLE IF NOT EXISTS estoque (id INTEGER PRIMARY KEY AUTOINCREMENT, cod_produto INTEGER, cod_filial INTEGER, quantidade INTEGER, UNIQUE(cod_produto, cod_filial));",
+          "CREATE TABLE IF NOT EXISTS estoque (id INTEGER PRIMARY KEY AUTOINCREMENT, cod_produto INTEGER, cod_filial INTEGER, quantidade INTEGER, UNIQUE(cod_produto, cod_filial));" +
+          "CREATE TABLE IF NOT EXISTS filiais (codigo INTEGER, codEmp INTEGER, razao TEXT, nomeFantasia TEXT);",
       );
 
-    await super
-      .importSqlPromise(
-        // Tenta adicionar a coluna 'qtdFat', mas ignora se já existir
-        `CREATE TABLE IF NOT EXISTS filiais (codigo INTEGER, codEmp INTEGER, razao TEXT, nomeFantasia TEXT);
-          ALTER TABLE pedidosItens ADD COLUMN qtdFat INTEGER;`,
+    // Check if 'qtdFat' column exists in 'pedidosItens' table
+    const result = await super.selectPersonalizadoPromise(
+      "name",
+      "pragma_table_info('pedidosItens')",
+      "name='qtdFat'"
+    );
+
+    if (result.rows.length === 0) {
+      // Add 'qtdFat' column if it does not exist
+      await super.importSqlPromise(
+        "ALTER TABLE pedidosItens ADD COLUMN qtdFat INTEGER;"
       );
+    }
   }
 
   async verificarTabelas(): Promise<boolean> {

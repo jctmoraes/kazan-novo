@@ -72,8 +72,8 @@ export class CarrinhoPage {
     modal.present();
   }
 
-  excluirProduto(pedidoItens: IPedidosItens): void {
-    this.util.confirmacao('DESEJA EXCLUIR O ITEM <b>' + pedidoItens.item.nome + '</b>', 'CONFIRMAÇÃO DE EXCLUSÃO', () => {
+  async excluirProduto(pedidoItens: IPedidosItens): Promise<void> {
+    await this.util.confirmacao('DESEJA EXCLUIR O ITEM <b>' + pedidoItens.item.nome + '</b>', 'CONFIRMAÇÃO DE EXCLUSÃO', () => {
       this.pedidoItens.excluir(pedidoItens.pedCodigo, pedidoItens.sequencia).subscribe(
         () => {
           let index = this._lstPedidosItens.findIndex(x => x.sequencia == pedidoItens.sequencia

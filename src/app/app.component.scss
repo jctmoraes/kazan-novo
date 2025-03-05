@@ -124,7 +124,6 @@
 }
 /* menu */
 .menu-principal ion-header {
-  height: 150px;
   text-align: center;
   color: #fff;
 }
@@ -146,11 +145,11 @@ ion-menu .item-md .item-inner {
 ion-menu ion-icon {
   margin-right: 5px;
 }
-.versao {
-  position: absolute;
-  top: 5px;
-  left: 5px;
-}
+// .versao {
+//   position: absolute;
+//   top: 5px;
+//   left: 5px;
+// }
 /* menu */
 @media
 only screen and (max-width: 760px),

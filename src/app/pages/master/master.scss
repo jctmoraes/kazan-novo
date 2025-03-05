@@ -1,35 +1,40 @@
 // .empresa1 {
 //   @include mudarCor(#000, #cea10c);
 // }
-// .empresa2 {  
+// .empresa2 {
 //   /*** CSS STANER ***/
 //   @include mudarCor(#c9852e, #000);
 // }
 // .empresa3 {
 //   @include mudarCor(#282f6a, #000);
 // }
+// img {
+//   display: block;
+//   margin: 0 auto;
+//   background-color: transparent;
+//   height: 50px;
+// }
 
-page-master {
-  /* cabeçalho */
-  ion-header {
+/* cabeçalho */
+ion-header {
+  ion-toolbar {
     ion-title {
       img {
         display: block;
         margin: 0 auto;
         background-color: transparent;
-        max-height: 50px;
+        height: 50px;
       }
     }
   }
-  ion-navbar ion-icon {
-    font-size: 1.8em;
-  }
-  .item-md.item-block .item-inner {
-    border-bottom: 0;
-  }
-  .titulo-master .item-md {
-    background-color: transparent;
-  }
-  /* cabeçalho */
-  
 }
+ion-navbar ion-icon {
+  font-size: 1.8em;
+}
+.item-md.item-block .item-inner {
+  border-bottom: 0;
+}
+.titulo-master .item-md {
+  background-color: transparent;
+}
+/* cabeçalho */

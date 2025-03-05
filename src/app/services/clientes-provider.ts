@@ -202,7 +202,7 @@ export class ClientesProvider extends ComandoProvider {
           filtro +
           "%' )";
       }
-
+      console.log(select + from + where);
       super.executeSql(select + from + where).subscribe((retorno) => {
         UtilProvider.completarObservable(subs, retorno.rows.item(0).qtd);
       });
