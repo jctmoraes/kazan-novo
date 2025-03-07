@@ -1,78 +1,84 @@
-<ion-header>
-  <ion-toolbar primary>
-    <ion-title>
-      {{ _titulo }}
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-header [title]="_titulo" (backButtonClick)="voltar()"></app-header>
 <ion-content>
   <ion-toolbar no-border-top>
-    <ion-row>
-      <ion-col col-10>
+    <ion-list>
+      <ion-item>
         <ion-input placeholder="Digite o nome ou código do produto" (keypress)="keypress($event)" [(ngModel)]="_filtro"
-          class="input-borda"></ion-input>
-      </ion-col>
-      <ion-col col-2>
-        <ion-button color="primary" (click)="pesquisar()" ion-button full icon-only>
-          <ion-icon name="search"></ion-icon>
-        </ion-button>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col col-12>
-        <ion-button color="secondary" (click)="lerCodigo()" ion-button full icon-left>
+          class="input-borda">
+          <ion-button color="primary" (click)="pesquisar()" slot="end">
+            <ion-icon name="search"></ion-icon>
+          </ion-button>
+        </ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-button color="secondary" (click)="lerCodigo()" slot="start" expand="block" class="btn-codigo">
           <ion-icon name="barcode"></ion-icon> CÓDIGO DE BARRAS
         </ion-button>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col col-12>
-        <label [hidden]="_qtdTotal == -1">{{ _qtdTotal }} ENCONTRADO(S)</label>
-      </ion-col>
-    </ion-row>
+      </ion-item>
+      <ion-item *ngIf="_qtdTotal > -1">
+        <label>{{ _qtdTotal }} ENCONTRADO(S)</label>
+      </ion-item>
+    </ion-list>
   </ion-toolbar>
 
   <ion-card *ngFor="let cada of _lstItens">
+
     <ion-row>
-      <ion-col class="titulo" col-12>
+      <ion-col class="titulo">
         <h2 color="primary">{{ cada.codigo }} {{ cada.nome }} - {{ cada.fabricante.nome }} {{ cada.embalagem }}</h2>
       </ion-col>
-      <ion-col col-12>
-        <ion-row *ngIf="_fotos != null && cada.codigo == _fotos?.proCodigo">
-          <ion-col [hidden]="_fotos == null || _fotos?.imagem1 == ''">
-            <img src="data:image/png;base64,{{ _fotos?.imagem1 }}" #img1 (click)="abrirImagem(img1)" />
-          </ion-col>
-          <ion-col [hidden]="_fotos == null || _fotos?.imagem2 == ''">
-            <img src="data:image/png;base64,{{ _fotos?.imagem2 }}" #img2 (click)="abrirImagem(img2)" />
-          </ion-col>
-          <ion-col [hidden]="_fotos == null || _fotos?.imagem3 == ''">
-            <img src="data:image/png;base64,{{ _fotos?.imagem3 }}" #img3 (click)="abrirImagem(img3)" />
-          </ion-col>
-          <ion-col [hidden]="_fotos == null || _fotos?.imagem4 == ''">
-            <img src="data:image/png;base64,{{ _fotos?.imagem4 }}" #img4 (click)="abrirImagem(img4)" />
-          </ion-col>
-        </ion-row>
+    </ion-row>
+    <ion-row *ngIf="_fotos != null && cada.codigo == _fotos?.proCodigo">
+      <ion-col [hidden]="_fotos == null || _fotos?.imagem1 == ''">
+        <img src="data:image/png;base64,{{ _fotos?.imagem1 }}" #img1 (click)="abrirImagem(img1)" />
       </ion-col>
-      <ion-col col-4>
+      <ion-col [hidden]="_fotos == null || _fotos?.imagem2 == ''">
+        <img src="data:image/png;base64,{{ _fotos?.imagem2 }}" #img2 (click)="abrirImagem(img2)" />
+      </ion-col>
+      <ion-col [hidden]="_fotos == null || _fotos?.imagem3 == ''">
+        <img src="data:image/png;base64,{{ _fotos?.imagem3 }}" #img3 (click)="abrirImagem(img3)" />
+      </ion-col>
+      <ion-col [hidden]="_fotos == null || _fotos?.imagem4 == ''">
+        <img src="data:image/png;base64,{{ _fotos?.imagem4 }}" #img4 (click)="abrirImagem(img4)" />
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
         <h2 class="valor"> Cx.Master {{ cada.qtdMax }}</h2>
       </ion-col>
-      <ion-col col-4>
+      <ion-col>
         <h2 class="valor">Estoque: {{ cada.estoque }}</h2>
       </ion-col>
-      <ion-col col-4>
-        <ion-item>
-          <ion-input #tbxQtd *ngIf="_pedido" type="number" (ionChange)="change($event.target.value, cada)"
-            [(ngModel)]="cada.qtd" placeholder="QTDE"></ion-input>
-        </ion-item>
+    </ion-row>
+    <ion-row *ngIf="_pedido">
+      <ion-col>
+        <ion-input
+          type="number"
+          [(ngModel)]="cada.qtd"
+          (ionChange)="change($event.target.value, cada)"
+          labelPlacement="stacked"
+          label="QTDE"
+          label-placement="floating"
+          fill="outline">
+        </ion-input>
       </ion-col>
-      <ion-col col-5>
-        <h2 class="valor">Valor R$ {{ utilProvider.formatarMoeda(cada.valorTotal) }}</h2>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <h2 class="valor">Valor {{ utilProvider.formatarMoeda(cada.valorTotal) }}</h2>
       </ion-col>
-      <ion-col col-4>
-        <h2 class="desc">Desconto %</h2>
-      </ion-col>
-      <ion-col col-3>
-        <ion-input type="number" [(ngModel)]="cada.desconto"></ion-input>
+    </ion-row>
+    <ion-row *ngIf="_pedido">
+      <ion-col>
+        <ion-input
+          type="number"
+          [(ngModel)]="cada.desconto"
+          (ionChange)="change(cada.qtd, cada)"
+          labelPlacement="stacked"
+          label="DESCONTO (%)"
+          label-placement="floating"
+          fill="outline">
+        </ion-input>
       </ion-col>
     </ion-row>
     <!-- <ion-row>
@@ -98,7 +104,7 @@
           <ion-icon name="image"></ion-icon>
           IMG
         </ion-button>
-        <ion-button [hidden]="!_pedido" [disabled]="cada.valorTotal == null" (click)="addProduto(cada)" color="secondary"
+        <ion-button *ngIf="_pedido" [disabled]="cada.valorTotal == null" (click)="addProduto(cada)" color="secondary"
           small ion-button icon-left float-right>
           <ion-icon name="checkbox-outline"></ion-icon>
           ADICIONAR
@@ -113,17 +119,18 @@
     </ion-col>
   </ion-row>
 
+  <ion-fab *ngIf="_pedido"  horizontal="end" vertical="bottom" slot="fixed">
+    <ion-fab-button color="primary" (click)="abrirCarrinho()">
+      <ion-icon name="cart"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
   <ion-infinite-scroll [hidden]="_lstItens.length == 0" (ionInfinite)="doInfinite($event)">
     <ion-infinite-scroll-content></ion-infinite-scroll-content>
   </ion-infinite-scroll>
 </ion-content>
 <ion-footer *ngIf="_pedido">
-  <ion-fab *ngIf="_pedido" bottom right #fab>
-    <ion-button color="primary" (click)="abrirCarrinho()" ion-fab>
-      <ion-icon name="cart"></ion-icon>
-    </ion-button>
-  </ion-fab>
   <ion-toolbar>
-    <ion-title text-center>TOTAL: R$ {{ utilProvider.formatarMoeda(_total) }}</ion-title>
+    <ion-title text-center>TOTAL: {{ utilProvider.formatarMoeda(_total) }}</ion-title>
   </ion-toolbar>
 </ion-footer>

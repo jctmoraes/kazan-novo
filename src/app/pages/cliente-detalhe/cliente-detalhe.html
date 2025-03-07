@@ -1,11 +1,5 @@
-<ion-header>
-  <ion-toolbar color="primary">
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
-    </ion-buttons>
-    <ion-title>{{ _cliente.nome }}</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-modal-header [title]="_cliente.nome"></app-modal-header>
+
 <ion-content>
   <!-- <ion-item-divider color="primary">
     <h2>{{ _cliente.nome }}</h2>
@@ -13,64 +7,86 @@
   <ion-list>
 
     <ion-item>
-      <h2>{{ _cliente.codigo }}</h2>
-      <p>CÓDIGO</p>
+      <ion-label>
+        <h2>{{ _cliente.codigo }}</h2>
+        <p>CÓDIGO</p>
+      </ion-label>
     </ion-item>
 
     <ion-item>
-      <h2>{{ util.formatarCnpj(_cliente.cnpj) }}</h2>
-      <p>CNPJ</p>
+      <ion-label>
+        <h2>{{ util.formatarCnpj(_cliente.cnpj) }}</h2>
+        <p>CNPJ</p>
+      </ion-label>
     </ion-item>
 
     <ion-item>
-      <h2>{{ _cliente.ie }}</h2>
-      <p>IE</p>
+      <ion-label>
+        <h2>{{ _cliente.ie }}</h2>
+        <p>IE</p>
+      </ion-label>
     </ion-item>
 
     <ion-item>
-      <h2><a href="tel:{{ _cliente.telefone }}">{{ util.formatarTelefone(_cliente.telefone) }}</a></h2>
-      <p>TELEFONE</p>
+      <ion-label>
+        <h2><a href="tel:{{ _cliente.telefone }}">{{ util.formatarTelefone(_cliente.telefone) }}</a></h2>
+        <p>TELEFONE</p>
+      </ion-label>
     </ion-item>
 
     <ion-item>
-      <h2><a href="tel:{{ _cliente.telefone2 }}">{{ util.formatarTelefone(_cliente.telefone2) }}</a></h2>
-      <p>TELEFONE 2</p>
+      <ion-label>
+        <h2><a href="tel:{{ _cliente.telefone2 }}">{{ util.formatarTelefone(_cliente.telefone2) }}</a></h2>
+        <p>TELEFONE 2</p>
+      </ion-label>
     </ion-item>
 
     <ion-item>
-      <h2><a href="tel:{{ _cliente.fax }}">{{ util.formatarTelefone(_cliente.fax) }}</a></h2>
-      <p>FAX</p>
+      <ion-label>
+        <h2><a href="tel:{{ _cliente.fax }}">{{ util.formatarTelefone(_cliente.fax) }}</a></h2>
+        <p>FAX</p>
+      </ion-label>
     </ion-item>
 
     <ion-item>
-      <h2><a href="mailto:{{ _cliente.email }}">{{ _cliente.email }}</a></h2>
-      <p>E-MAIL</p>
+      <ion-label>
+        <h2><a href="mailto:{{ _cliente.email }}">{{ _cliente.email }}</a></h2>
+        <p>E-MAIL</p>
+      </ion-label>
     </ion-item>
 
     <ion-item>
-      <h2>{{ _cliente.endereco }}</h2>
-      <h2>{{ _cliente.bairro }}, {{ _cliente.cidade }} - {{ _cliente.estado }} - {{ _cliente.cep }}</h2>
-      <p>ENDEREÇO</p>
+      <ion-label>
+        <h2>{{ _cliente.endereco }}</h2>
+        <h2>{{ _cliente.bairro }}, {{ _cliente.cidade }} - {{ _cliente.estado }} - {{ _cliente.cep }}</h2>
+        <p>ENDEREÇO</p>
+      </ion-label>
     </ion-item>
 
     <ion-item>
-      <h2>{{ util.formatarMoeda(_cliente.limite) }}</h2>
-      <p>LIMITE (R$)</p>
+      <ion-label>
+        <h2>{{ util.formatarMoeda(_cliente.limite) }}</h2>
+        <p>LIMITE (R$)</p>
+      </ion-label>
     </ion-item>
 
     <ion-item>
-      <h2>{{ _cliente.contato }}</h2>
-      <p>CONTATO</p>
+      <ion-label>
+        <h2>{{ _cliente.contato }}</h2>
+        <p>CONTATO</p>
+      </ion-label>
     </ion-item>
 
     <ion-item>
-      <h2><a href="tel:{{ _cliente.telefoneContato }}">{{ util.formatarTelefone(_cliente.telefoneContato) }}</a></h2>
-      <p>CONTATO TELEFONE</p>
+      <ion-label>
+        <h2><a href="tel:{{ _cliente.telefoneContato }}">{{ util.formatarTelefone(_cliente.telefoneContato) }}</a></h2>
+        <p>CONTATO TELEFONE</p>
+      </ion-label>
     </ion-item>
   </ion-list>
 
   <ion-buttons padding>
-    <ion-button color="primary" ion-button icon-left block (click)="sair()">
+    <ion-button color="primary" ion-button icon-left block (click)="fechar()">
       <ion-icon name="close-circle"></ion-icon>FECHAR
     </ion-button>
   </ion-buttons>

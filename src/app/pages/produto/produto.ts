@@ -113,6 +113,7 @@ export class ProdutoPage {
   }
 
   async proxima() {
+    console.log('this.isFetching', this.isFetching);
     if (this.isFetching) return;  // Se já estiver buscando, ignorar novas chamadas
 
     this.isFetching = true;  // Inicia o bloqueio de novas buscas
@@ -146,7 +147,7 @@ export class ProdutoPage {
           if (requisicoesPendentes > 0) {
             try {
               const estoque: any = await this.estoqueProvider.porCodigo(item.codigo, numFilial).toPromise();
-              item.estoque = estoque.quantidade;
+              item.estoque = estoque?.quantidade ?? 0;
               this._lstItens.push(item);
             } catch (error) {
               console.error("Erro ao buscar estoque", error);
@@ -182,7 +183,7 @@ export class ProdutoPage {
       component: ProdutoDetalhePage,
       componentProps: { item: item },
     });
-    modal.present();
+    await modal.present();
   }
 
   addProduto(item: IItens) {
@@ -471,5 +472,13 @@ export class ProdutoPage {
   abrirImagem(img: HTMLImageElement) {
     // const imageViewer = this._imageViewerCtrl.create(img);
     // imageViewer.present();
+  }
+
+  voltar() {
+    if (this._pedido) {
+      this.router.navigate(["/pedido/condicao-pagto"], { queryParams: { iniciarPedido: true } });
+      return;
+    }
+    this.router.navigate(["/master"]);
   }
 }

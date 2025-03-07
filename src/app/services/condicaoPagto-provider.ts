@@ -25,6 +25,8 @@ export class CondicaoPagtoProvider extends ComandoProvider {
       super.select({ codigo: codigo }).subscribe(
         (retorno) => {
           let condicao: ICondicaoPagto | null = null;
+          console.log('retorno', retorno);
+          console.log('retorno.rows', retorno.rows);
           if(retorno.rows.length > 0) {
             condicao = this.preencherObjeto(retorno.rows.item(0));
           }

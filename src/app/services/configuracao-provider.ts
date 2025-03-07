@@ -39,6 +39,7 @@ export class ConfiguracaoProvider extends ComandoProvider {
       subs => {
         this.servidor.get(this._arquivo).subscribe(
           (data: any) => {
+            console.log('configuracao', data);
             this.excluir().subscribe(() => {
               this.importJson(data).subscribe(
                 () => {

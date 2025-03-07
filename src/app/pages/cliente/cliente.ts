@@ -10,6 +10,7 @@ import { UtilProvider } from "@services/util-provider";
 import { Router } from "@angular/router";
 import { IPedidos } from "@interfaces/pedidos.interface";
 import { TransportadoraPage } from "../transportadora/transportadora";
+import { ClienteDetalhePage } from "../cliente-detalhe/cliente-detalhe";
 
 @Component({
   selector: "page-cliente",
@@ -40,10 +41,14 @@ export class ClientePage {
   }
 
   ionViewWillEnter() {
+    //pedido recebe true se url conter pedido
+    this._pedido = this.router.url.includes("pedido");
+    UtilProvider.pedido = this._pedido;
     console.log('ionViewWillEnter');
-    this._pedido = UtilProvider.pedido;
+    // this._pedido = UtilProvider.pedido;
     console.log('this._pedido', this._pedido);
     this._funCodigo = UtilProvider.funCodigo;
+    console.log('this._funCodigo', this._funCodigo);
   }
 
   keypress(event: { keyCode: number; }) {
@@ -138,12 +143,12 @@ export class ClientePage {
 
   async abrirDetalhe(cliente: IClientes) {
     let modal = await this.modalCtrl.create({
-      component: "ClienteDetalhePage",
+      component: ClienteDetalhePage,
       componentProps: {
         cliente: cliente,
       },
     });
-    modal.present();
+    await modal.present();
   }
 
   async selecionar(cliente: IClientes) {
@@ -209,22 +214,11 @@ export class ClientePage {
     };
     UtilProvider.objPedido = pedido;
     console.log('escolher transportadora');
-    this.abrirTransportadora(cliente);
+    this.abrirTransportadora();
   }
 
-  async abrirTransportadora(cliente: IClientes) {
-    let modal = await this.modalCtrl.create({
-      component: TransportadoraPage,
-      componentProps: {
-        cliente: cliente,
-        iniciarPedido: true,
-        traCodigo: cliente.traCodigo,
-      },
-    });
-    // modal.onDidDismiss((transportadora) => {
-    //   // Handle dismissal
-    // });
-    await modal.present();
+  async abrirTransportadora() {
+    this.router.navigate(["/pedido/transportadoras"], { queryParams: { iniciarPedido: true } });
   }
 
   obterClasse(cliente: IClientes) {

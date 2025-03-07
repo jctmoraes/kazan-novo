@@ -6,8 +6,8 @@ import { IvaProvider } from "@services/iva-provider";
 import { PedidosItensProvider } from "@services/pedidos-itens-provider";
 import { PedidosProvider } from "@services/pedidos-provider";
 import { UtilProvider } from "@services/util-provider";
-import { InfiniteScrollCustomEvent, NavParams } from "@ionic/angular";
-import { Router } from "@angular/router"; // Importação do Router
+import { InfiniteScrollCustomEvent, ModalController } from "@ionic/angular";
+import { Router, ActivatedRoute } from "@angular/router"; // Importação do Router e ActivatedRoute
 
 @Component({
   selector: "page-condicao-pagto",
@@ -27,17 +27,27 @@ export class CondicaoPagtoPage {
   _cpgPadrao: ICondicaoPagto = null;
 
   constructor(
-    private router: Router, // Substituição de NavController por Router
-    public navParams: NavParams,
+    private router: Router,
     private condicaoPagtoProvider: CondicaoPagtoProvider,
     private ivaProvider: IvaProvider,
     private pedidosItensProvider: PedidosItensProvider,
     private pedidosProvider: PedidosProvider,
     private utilProvider: UtilProvider,
     private cdr: ChangeDetectorRef, // Injeção do ChangeDetectorRef
+    private route: ActivatedRoute, // Injeção do ActivatedRoute
+    private modalCtrl: ModalController,
   ) {
-    this._iniciarPedido = navParams.get("iniciarPedido");
-    condicaoPagtoProvider
+  }
+
+  ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+        this._iniciarPedido = params['iniciarPedido'] === 'true';
+        console.log("Iniciar Pedido: ", this._iniciarPedido);
+      });
+
+      console.log('UtilProvider.objPedido.cpgCodigo', UtilProvider.objPedido.cpgCodigo);
+
+    this.condicaoPagtoProvider
       .porCodigo(UtilProvider.objPedido.cpgCodigo)
       .subscribe((condicao) => {
         if (condicao != null) {
@@ -115,7 +125,7 @@ export class CondicaoPagtoPage {
               this.pedidosItensProvider,
             ).then(() => {
               this.utilProvider.esconderCarregando(loading);
-              this.router.navigate(["/produto"]); // Substituição de navCtrl.push por router.navigate
+              this.router.navigate(["/produtos"]); // Substituição de navCtrl.push por router.navigate
             });
           });
       } else {
@@ -125,7 +135,7 @@ export class CondicaoPagtoPage {
         );
         this.pedidosProvider.salvar(UtilProvider.objPedido).subscribe(() => {
           this.utilProvider.esconderCarregando(loading);
-          this.router.navigate(["/condicao-pagto"]); // Substituição de viewCtrl.dismiss por router.navigate
+          this.modalCtrl.dismiss(condicaoPagto);
         });
       }
     } else {
@@ -138,7 +148,7 @@ export class CondicaoPagtoPage {
   }
 
   cancelar() {
-    this.router.navigate(["/condicao-pagto"]); // Substituição de viewCtrl.dismiss por router.navigate
+    this.router.navigate(["/master"]); // Substituição de viewCtrl.dismiss por router.navigate
   }
 
   keypress(event: { keyCode: number; }) {
@@ -151,5 +161,9 @@ export class CondicaoPagtoPage {
     this._carregando = true;
     this.proxima();
     infiniteScroll.target.complete();
+  }
+
+  compareWith(o1: number, o2: number): boolean {
+    return o1 === o2;
   }
 }

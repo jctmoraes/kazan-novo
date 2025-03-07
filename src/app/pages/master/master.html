@@ -20,7 +20,7 @@
   </ion-item-divider>
 </ion-header>
 
-<ion-content>
+<ion-content padding>
   <ion-button color="secondary" expand="block" (click)="openFilialSelection()">
     TROCAR FILIAL
   </ion-button>
@@ -35,22 +35,24 @@
 
   <ion-card *ngFor="let cada of _lstPedidos">
     <ion-row>
-      <ion-col class="titulo" col-12>
-        <h2 color="secondary">{{ cada.cliente.nome }}</h2>
+      <ion-col class="titulo">
+        <h3 color="secondary">{{ cada.cliente.nome }}</h3>
         <!-- <h2 *ngIf="cada.cliProspec != null && cada.cliProspec != '' && cada.cliProspec != undefined">{{
           retornarNomeCliente(cada.cliProspec) }} </h2>
         <h2 *ngIf="cada.cliProspec != null && cada.cliProspec != '' && cada.cliProspec != undefined">{{ cada.cliProspec}} </h2> -->
-
-
       </ion-col>
-      <ion-col col-6>
+    </ion-row>
+    <ion-row>
+      <ion-col>
         <p>{{ util.formatarDataHora(cada.data) }}</p>
       </ion-col>
-      <ion-col col-6>
-        <p>R$ {{ util.formatarMoeda(cada.valor) }}</p>
+      <ion-col>
+        <p>{{ util.formatarMoeda(cada.valor) }}</p>
       </ion-col>
-      <ion-col col-12>
-        <ion-button (click)="editar(cada)" color="secondary" small expand="block">
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-button (click)="editar(cada)" color="secondary" fill="outline" expand="block">
           <ion-icon name="create" slot="start"></ion-icon>
           EDITAR
         </ion-button>

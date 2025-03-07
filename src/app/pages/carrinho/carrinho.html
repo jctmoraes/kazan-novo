@@ -1,55 +1,86 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>PRODUTOS ADICIONADOS</ion-title>
-  </ion-navbar>
-</ion-header>
+<app-header title="PRODUTOS ADICIONADOS" (backButtonClick)="voltar()"></app-header>
 
 <ion-content padding>
 
-  <ion-buttons *ngIf="_lstPedidosItens != null && _lstPedidosItens.length > 0" padding>
-    <ion-button color="primary" padding ion-button icon-left block (click)="finalizarPedido()">
-      <ion-icon name="checkbox"></ion-icon>CONCLUIR PEDIDO
+  <ng-container *ngIf="_lstPedidosItens != null && _lstPedidosItens.length > 0" padding>
+    <ion-button color="primary" expand="block" fill="outline" (click)="finalizarPedido()">
+      <ion-icon name="checkbox" slot="start"></ion-icon>CONCLUIR PEDIDO
     </ion-button>
-  </ion-buttons>
+  </ng-container>
 
   <!-- <ion-content [hidden]="_lstItens.length > 0"> -->
     <!-- <ion-nav style="margin-bottom: 60px;" #navPagina></ion-nav> -->
-  <ion-grid class="tabela tbl-responsiva">
-    <ion-row class="tbl-cabecalho">
-      <ion-col>PRODUTO</ion-col>
-      <ion-col>QTDE</ion-col>
-      <ion-col>DESC. (%)</ion-col>
-      <ion-col>UNITÁRIO (R$)</ion-col>
-      <ion-col>TOTAL (R$)</ion-col>
-      <ion-col>IPI (R$)</ion-col>
-      <ion-col>ST (R$)</ion-col>
-    </ion-row>
-
-    <ion-row class="tbl-linha" *ngFor="let cada of _lstPedidosItens">
-      <ion-col>{{ cada.item.codigo + ' - ' + cada.item.nome }}</ion-col>
-      <ion-col>{{ cada.quantidade }}</ion-col>
-      <ion-col>{{ util.formatarMoeda(cada.desconto) }}</ion-col>
-      <ion-col>{{ util.formatarMoeda(cada.valorUnitario) }}</ion-col>
-      <ion-col>{{ util.formatarMoeda(cada.total) }}</ion-col>
-      <ion-col>{{ util.formatarMoeda(cada.valorIpi) }}</ion-col>
-      <ion-col>{{ util.formatarMoeda(cada.valorSt) }}</ion-col>
-      <ion-col>
-        <ion-buttons>
-          <ion-button (click)="excluir(cada)" color="secondary" ion-button small icon-left outline float-left>
-            <ion-icon name="trash"></ion-icon>
+  <ion-card *ngFor="let cada of _lstPedidosItens" lines="full">
+    <!-- <ion-item lines="full">
+      <ion-label>PRODUTO</ion-item>
+      <ion-label>QTDE</ion-item>
+      <ion-label>DESC. (%)</ion-item>
+      <ion-label>UNITÁRIO (R$)</ion-item>
+      <ion-label>TOTAL (R$)</ion-item>
+      <ion-label>IPI (R$)</ion-item>
+      <ion-label>ST (R$)</ion-item>
+    </ion-item> -->
+    <ion-item>
+      <ion-label>
+        <h2>{{ cada.item.codigo + ' - ' + cada.item.nome }}</h2>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <h2>{{ cada.quantidade }}</h2>
+        <p>QTDE</p>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <h2>{{ util.formatarMoeda(cada.desconto) }}</h2>
+        <p>DESC. (%)</p>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <h2>{{ util.formatarMoeda(cada.valorUnitario) }}</h2>
+        <p>UNITÁRIO</p>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <h2>{{ util.formatarMoeda(cada.total) }}</h2>
+        <p>TOTAL</p>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <h2>{{ util.formatarMoeda(cada.valorIpi) }}</h2>
+        <p>IPI</p>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <h2>{{ util.formatarMoeda(cada.valorSt) }}</h2>
+        <p>ST</p>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-toolbar>
+        <ion-buttons slot="secondary">
+          <ion-button (click)="excluir(cada)" color="secondary" fill="outline">
+            <ion-icon name="trash" slot="start"></ion-icon>
             EXCLUIR
           </ion-button>
-          <ion-button (click)="editar(cada)" color="secondary" ion-button small icon-left float-right>
-            <ion-icon name="create"></ion-icon>
+        </ion-buttons>
+        <ion-buttons slot="primary">
+          <ion-button (click)="editar(cada)" color="secondary" fill="outline">
+            <ion-icon name="create" slot="start"></ion-icon>
             EDITAR
           </ion-button>
         </ion-buttons>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+      </ion-toolbar>
+    </ion-item>
+  </ion-card>
 </ion-content>
 <ion-footer [hidden]="false">
   <ion-toolbar>
-    <ion-title text-center>TOTAL: R$ {{ util.formatarMoeda(_total) }}</ion-title>
+    <ion-title text-center>TOTAL: {{ util.formatarMoeda(_total) }}</ion-title>
   </ion-toolbar>
 </ion-footer>

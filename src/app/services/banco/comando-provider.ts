@@ -131,7 +131,7 @@ export class ComandoProvider extends ConexaoProvider {
         order += `${arrKeyOrdem[i]} ${ordem[arrKeyOrdem[i]]}`;
       }
     }
-    console.log(`SELECT ${this.obterCampo()[0]} FROM ${this.nomeTabela}${condicaoValor[0]}${order}`);
+    // console.log(`SELECT ${this.obterCampo()[0]} FROM ${this.nomeTabela}${condicaoValor[0]}${order}`);
     return await conexao.executeSql(
       `SELECT ${this.obterCampo()[0]} FROM ${this.nomeTabela}${condicaoValor[0]}${order}`,
       condicaoValor[1],

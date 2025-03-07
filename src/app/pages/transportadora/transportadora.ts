@@ -1,9 +1,8 @@
 import { Component } from "@angular/core";
 import { ChangeDetectorRef } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ITransportadoras } from "@interfaces/transportadoras.interface";
-import { InfiniteScrollCustomEvent } from "@ionic/angular";
+import { InfiniteScrollCustomEvent, ModalController, Platform } from "@ionic/angular";
 import { IvaProvider } from "@services/iva-provider";
 import { PedidosItensProvider } from "@services/pedidos-itens-provider";
 import { PedidosProvider } from "@services/pedidos-provider";
@@ -24,11 +23,11 @@ export class TransportadoraPage {
   _filtro: string = "";
   _qtdTotal: number = -1;
   _iniciarPedido: boolean = true;
+  _editarPedido: boolean = false;
   _traPadrao: ITransportadoras | null = null;
   _traCodigo: number = 0;
 
   constructor(
-    public route: ActivatedRoute,
     private router: Router,
     private transportadoraProvider: TransportadorasProvider,
     private pedidosProvider: PedidosProvider,
@@ -36,14 +35,17 @@ export class TransportadoraPage {
     private ivaProvider: IvaProvider,
     private utilProvider: UtilProvider,
     private cdr: ChangeDetectorRef,
+    private route: ActivatedRoute,
+    private modalCtrl: ModalController,
   ) {
   }
 
-  ionViewDidLoad() {
-    const navigation = this.router.getCurrentNavigation();
-    console.log('navigation.extras.state', navigation);
-    this._iniciarPedido = navigation.extras.state['iniciarPedido'] as boolean;
-    console.log("Iniciar Pedido: ", this._iniciarPedido);
+  ngOnInit() {
+    this._iniciarPedido = this.route.snapshot.queryParamMap.get('iniciarPedido') as unknown as boolean;
+    this._editarPedido = this.route.snapshot.queryParamMap.get('editarPedido') as unknown as boolean;
+    if (!UtilProvider.objPedido?.traCodigo) {
+      return;
+    }
     this.transportadoraProvider
       .porCodigo(UtilProvider.objPedido.traCodigo)
       .subscribe((transportadora) => {
@@ -100,11 +102,13 @@ export class TransportadoraPage {
   // Este é o método que deve ser chamado pelo evento ionChange
   onTransportadoraChange(event: any) {
     console.log("Evento ionChange detectado:", event);
-    this._traCodigo = event;
+    console.log("Evento ionChange detectado:", event.targe.value);
+    this._traCodigo = event.target.value;
     this.cdr.detectChanges(); // Força a atualização imediata da interface
   }
 
   async salvar() {
+    console.log("Transportadora selecionada:", this._traCodigo);
     if (this._traCodigo > 0) {
       let loading = await this.utilProvider.mostrarCarregando("SELECIONANDO...");
       let transportadora = this._traPadrao;
@@ -119,7 +123,7 @@ export class TransportadoraPage {
       UtilProvider.objPedido.transportadora = transportadora;
       if (this._iniciarPedido) {
         this.utilProvider.esconderCarregando(loading);
-        this.router.navigate(["/condicao-pagto"], { queryParams: { iniciarPedido: true } });
+        this.router.navigate(["/pedido/condicao-pagto"], { queryParams: { iniciarPedido: true } });
       } else {
         UtilProvider.recalcularValorItem(
           this.ivaProvider,
@@ -127,7 +131,7 @@ export class TransportadoraPage {
         ).then(() => {
           this.pedidosProvider.salvar(UtilProvider.objPedido).subscribe(() => {
             this.utilProvider.esconderCarregando(loading);
-            this.router.navigate(["/previous-page"]); // Substitua "/previous-page" pela rota correta
+            this.modalCtrl.dismiss(transportadora);
           });
         });
       }
@@ -138,10 +142,6 @@ export class TransportadoraPage {
         "center",
       );
     }
-  }
-
-  cancelar() {
-    this.router.navigate(["/previous-page"]); // Substitua "/previous-page" pela rota correta
   }
 
   keypress(event: { keyCode: number; }) {
@@ -155,5 +155,17 @@ export class TransportadoraPage {
     this._carregando = true;
     this.proxima();
     infiniteScroll.target.complete();
+  }
+
+  compareWith(o1: number, o2: number): boolean {
+    return o1 === o2;
+  }
+
+  voltar() {
+    if (this._editarPedido) {
+      this.router.navigate(["/master"]);
+      return;
+    }
+    this.router.navigate(["/pedido/clientes"]);
   }
 }

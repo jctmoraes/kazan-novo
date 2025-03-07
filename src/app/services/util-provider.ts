@@ -36,22 +36,7 @@ export class UtilProvider {
   }
 
   formatarMoeda(valor: number) {
-    const valorFormatado = valor.toFixed(2);
-
-    var formatacao = valorFormatado.split(".");
-
-    if (formatacao.length > 1) {
-      if (formatacao[1].length == 1) {
-        formatacao[1] += "0";
-      }
-    } else {
-      formatacao[1] = "00";
-    }
-
-    return this.mascaraGlobal(
-      "[###.]###,##",
-      formatacao[0] + "," + formatacao[1],
-    );
+    return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
   }
 
   mascaraGlobal(mascara: string, valor: string) : string {
@@ -398,6 +383,7 @@ export class UtilProvider {
     ) {
       // valor -= (valor * 0.08);
       //console.log('por', (UtilProvider.configuracao.descInterestadual / 100));
+      console.log('UtilProvider.configuracao', UtilProvider.configuracao);
       valor -= valor * (UtilProvider.configuracao.descInterestadual / 100);
     }
     return this.round(valor);

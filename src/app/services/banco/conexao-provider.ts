@@ -7,7 +7,7 @@ export abstract class ConexaoProvider {
   constructor(private _banco: SQLite) { }
 
   protected async conectar(): Promise<SQLiteObject> {
-    console.log('_conexao', this._conexao);
+    // console.log('_conexao', this._conexao);
     if (!(this._conexao instanceof SQLiteObject)) {
       this._conexao = await this._banco
         .create({
@@ -15,7 +15,7 @@ export abstract class ConexaoProvider {
           location: 'default'
         });
     }
-    console.log('conectar', this._conexao);
+    // console.log('conectar', this._conexao);
     return this._conexao;
   }
 }

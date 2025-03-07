@@ -101,6 +101,7 @@ export class SincronizacaoProvider {
   }
 
   sincronizarConfiguracao() {
+    console.log('Sincronizando configuração...');
     this.configuracaoProvider.sincronizar().subscribe(
       (configuracao) => {
         UtilProvider.configuracao = configuracao;
@@ -166,6 +167,7 @@ export class SincronizacaoProvider {
       () => {
         this._mensagem += "<br>TODAS AS SINCRONIZAÇÕES CONCLUÍDAS";
         this.sincronizarEstoque(); // Sincroniza o estoque, se necessário
+        this.sincronizarConfiguracao();
       },
       (err) => {
         alert("Erro em uma ou mais sincronizações: " + err);

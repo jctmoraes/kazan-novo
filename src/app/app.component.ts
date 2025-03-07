@@ -9,6 +9,7 @@ import { App } from '@capacitor/app';
 import { IPedidos } from '@interfaces/pedidos.interface';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { StatusBar } from '@capacitor/status-bar';
+import { ConfiguracaoProvider } from '@services/configuracao-provider';
 
 @Component({
   selector: 'app-root',
@@ -26,17 +27,19 @@ export class AppComponent {
     private menuCtrl: MenuController,
     private bancoProvider: BancoProvider,
     private funcionarioProvider: FuncionariosProvider,
+    private configuracaoProvider: ConfiguracaoProvider,
     private utilProvider: UtilProvider) {}
 
   ngOnInit() {
     this.platform.ready().then(() => {
-      console.log('Plataforma pronta');
       this.bancoProvider.criarTabela().then(() => {
-        console.log('AQUIIIIIIIIIIII');
         this.funcionarioProvider.buscarLogado().subscribe((retorno) => {
-          console.log('retorno', retorno);
           this.funcionarioLogado = retorno;
           UtilProvider.funCodigo = retorno.codigo;
+          this.configuracaoProvider.buscar().subscribe((configuracao) => {
+            console.log('configuracao', configuracao);
+            UtilProvider.configuracao = configuracao;
+          });
         });
         this.utilProvider.obterVersao().then((versao) => {
           this._versao = versao;
@@ -44,9 +47,8 @@ export class AppComponent {
       });
       SplashScreen.hide();
       StatusBar.setBackgroundColor({ color: '#044fa2' });
-      // StatusBar.hide();
+      StatusBar.hide();
       // StatusBar.setOverlaysWebView({ overlay: true });
-      this.setScreenMode();
     });
   }
 
@@ -82,18 +84,10 @@ export class AppComponent {
 
   iniciarPedido() {
     UtilProvider.pedido = true;
-    this.mudarPagina('cliente', 'NOVO PEDIDO');
+    this.mudarPagina('pedido/clientes', 'NOVO PEDIDO');
   }
 
   fecharMenu() {
     this.menuCtrl.close();
-  }
-
-  setScreenMode() {
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
-    document.body.classList.toggle('dark', prefersDark.matches);
-    prefersDark.addEventListener('change', (mediaQuery) => {
-      document.body.classList.toggle('dark', mediaQuery.matches);
-    });
   }
 }

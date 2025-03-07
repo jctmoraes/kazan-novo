@@ -5,19 +5,14 @@
     <img src="./assets/logo/kazan.png" />
     <ion-item>
       <ion-input type="number" [(ngModel)]="_login.codigo" labelPlacement="stacked" label="Usuário">
-        <ion-icon slot="start" name="lock-closed" aria-hidden="true"></ion-icon>
-        <ion-button fill="clear" slot="end" aria-label="Show/hide">
-          <ion-icon slot="icon-only" name="eye" aria-hidden="true"></ion-icon>
-        </ion-button>
+        <ion-icon slot="start" name="person" aria-hidden="true"></ion-icon>
       </ion-input>
     </ion-item>
 
     <ion-item>
       <ion-input type="password" [(ngModel)]="_login.senha" labelPlacement="stacked" label="Senha">
         <ion-icon slot="start" name="key" aria-hidden="true"></ion-icon>
-        <ion-button fill="clear" slot="end" aria-label="Show/hide">
-          <ion-icon slot="icon-only" name="eye" aria-hidden="true"></ion-icon>
-        </ion-button>
+        <ion-input-password-toggle slot="end"></ion-input-password-toggle>
       </ion-input>
     </ion-item>
   </ion-list>
@@ -27,6 +22,6 @@
 </ion-content>
 <ion-footer>
   <ion-toolbar>
-    <ion-title>Versão: <b>{{ _versao }}</b></ion-title>
+    <ion-label>Versão: <b>{{ _versao }}</b></ion-label>
   </ion-toolbar>
 </ion-footer>

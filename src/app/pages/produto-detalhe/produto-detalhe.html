@@ -1,11 +1,4 @@
-<ion-header>
-  <ion-toolbar color="primary">
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
-    </ion-buttons>
-    <ion-title>{{ _item?.nome }}</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-modal-header title="DETALHES DO PRODUTO"></app-modal-header>
 <ion-content>
   <ion-row>
     <ion-col [hidden]="_fotos == null  || _fotos?.imagem1 == ''">

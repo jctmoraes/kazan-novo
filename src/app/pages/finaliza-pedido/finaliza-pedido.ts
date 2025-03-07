@@ -14,6 +14,8 @@ import { IPedidosItens } from "@interfaces/pedidosItens.interface";
 import { ModalController } from "@ionic/angular";
 import { ICondicaoPagto } from "@interfaces/condicaoPagto.interface";
 import { AppComponent } from "src/app/app.component";
+import { CondicaoPagtoPage } from "../condicao-pagto/condicao-pagto";
+import { TransportadoraPage } from "../transportadora/transportadora";
 
 @Component({
   selector: "page-finaliza-pedido",
@@ -43,8 +45,9 @@ export class FinalizaPedidoPage {
     private myApp: AppComponent,
     private modalCtrl: ModalController,
   ) {
-    const navigation = this.router.getCurrentNavigation();
-    UtilProvider.objPedido.pedidosItens = navigation?.extras?.state['lstPedidosItens'];
+  }
+
+  ngOnInit() {
     this.calcularTotal();
   }
 
@@ -81,7 +84,7 @@ export class FinalizaPedidoPage {
 
   async mudarTransportadora() {
     let modal = await this.modalCtrl.create({
-      component: "TransportadoraPage",
+      component: TransportadoraPage,
       componentProps: {
         iniciarPedido: false,
       },
@@ -101,7 +104,7 @@ export class FinalizaPedidoPage {
 
   async mudarCondicao() {
     let modal = await this.modalCtrl.create({
-      component: "CondicaoPagtoPage",
+      component: CondicaoPagtoPage,
       componentProps: {
         iniciarPedido: false,
       },
@@ -144,13 +147,13 @@ export class FinalizaPedidoPage {
       this.pedidoProvider.salvarPedidoGeral(pedidoGeral).subscribe(() => {
         //this.navCtrl.popToRoot();
         // this.myApp.finalizarPedido();
-        this.router.navigate(["/home"]);
+        this.router.navigate(["/master"]);
         // this.navCtrl.push('PedidoPage', { atualizarMaster: true });
       });
     }
   }
 
   voltar() {
-    this.router.navigate(['..']);
+    this.router.navigate(['/pedido/produtos'], { queryParams: { iniciarPedido: true } });
   }
 }

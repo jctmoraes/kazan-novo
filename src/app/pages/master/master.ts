@@ -47,10 +47,11 @@ export class MasterPage {
     private filialProv: FiliaisProvider,
     private modalController: ModalController,
     private myApp: AppComponent,
+    private router: Router,
   ) {
     funcionario.buscarLogado().subscribe((retorno) => {
-      configuracaoProvider.buscar().subscribe((configuracao) => {
-        UtilProvider.configuracao = configuracao;
+      // configuracaoProvider.buscar().subscribe((configuracao) => {
+      //   UtilProvider.configuracao = configuracao;
         //chamar css específico da empresa
         this._funcionarioLogado = retorno;
         UtilProvider.funCodigo = retorno.codigo;
@@ -68,13 +69,15 @@ export class MasterPage {
           .buscar(this._funcionarioLogado.filial.toString())
           .subscribe(
             (y) => {
-              this._filial = y.nomeFantasia;
+              if (y?.nomeFantasia) {
+                this._filial = y.nomeFantasia;
+              }
             },
             (err) => {
               this._filial = "Filial";
             },
           );
-      });
+      // });
     });
     /* this.cliCadProvider.buscarClientesCad(UtilProvider.funCodigo).subscribe(x => {
       this._cliCad = x;
@@ -102,7 +105,7 @@ export class MasterPage {
   editar(pedido: IPedidos) {
     UtilProvider.pedido = true;
     UtilProvider.objPedido = pedido;
-    this.myApp.mudarPagina("TransportadoraPage", "NOVO PEDIDO");
+    this.router.navigate(['/pedido/transportadoras'], { queryParams: { iniciarPedido: true, editarPedido: true } });
   }
 
   iniciarPedido() {
@@ -159,7 +162,6 @@ export class MasterPage {
     });
 
     modal.onDidDismiss().then((detail) => {
-      console.log('detail', detail);
       if (detail.data) {
         this.filialSelectedCallback(detail.data);
       }

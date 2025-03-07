@@ -6,5 +6,10 @@ img {
   width: 200px;
 }
 ion-footer {
-  border: 1px solid #000;
+  ion-toolbar {
+    ion-label {
+      text-align: center;
+      display: block;
+    }
+  }
 }

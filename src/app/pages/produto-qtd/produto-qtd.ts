@@ -10,6 +10,8 @@ import { IvaProvider } from '@services/iva-provider';
 import { FuncionariosProvider } from '@services/funcionarios-provider';
 import { FaixaDescontosProvider } from '@services/faixaDescontos-provider';
 import { Router } from '@angular/router';
+import { AbstractModalComponent } from 'src/app/components/modal/abstract-modal.component';
+import { ModalController, Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-produto-qtd',
@@ -17,7 +19,7 @@ import { Router } from '@angular/router';
   styleUrls: ['produto-qtd.scss'],
   standalone: false,
 })
-export class ProdutoQtdPage {
+export class ProdutoQtdPage extends AbstractModalComponent {
   _totalAnterior: number = 0;
   _pedidoItens: IPedidosItens = new IPedidosItens();
   _item: IItens = new IItens();
@@ -34,16 +36,27 @@ export class ProdutoQtdPage {
     private pedidoProvider: PedidosProvider,
     private pedidoItensProvider: PedidosItensProvider,
     private ivaProvider: IvaProvider,
-    funcionarioProvider: FuncionariosProvider,
+    private funcionarioProvider: FuncionariosProvider,
     private faixaDescontosProvider: FaixaDescontosProvider,
     private router: Router,
-    @Inject('PEDIDO_ITENS') pedidoItens: IPedidosItens) {
-    funcionarioProvider.buscarLogado().subscribe(
+    modalCtrl: ModalController,
+    platform: Platform,
+  ) {
+    super(modalCtrl, platform);
+  }
+
+  async ionViewDidEnter() {
+    const htmlIonModalElement = await this.modalCtrl.getTop();
+    const componentProps = htmlIonModalElement?.componentProps as { pedidoItens: IPedidosItens };
+    console.log('componentProps', componentProps);
+    const pedidoItens = componentProps?.pedidoItens;
+    console.log('pedidoItens', pedidoItens);
+    this.funcionarioProvider.buscarLogado().subscribe(
       (retorno) => {
         this._funcionario = retorno;
       }
     );
-    pedidoItensProvider.porCodigo(pedidoItens.pedCodigo, pedidoItens.iteCodigo).subscribe(
+    this.pedidoItensProvider.porCodigo(pedidoItens.pedCodigo, pedidoItens.iteCodigo).subscribe(
       (retorno) => {
         retorno.item = pedidoItens.item;
         this._item = retorno.item;
@@ -193,12 +206,8 @@ export class ProdutoQtdPage {
             this.utilProvider.alertaBasico('PRODUTO ALTERADO');
           }
         );
-        this.router.navigate(['..']);
+        this.fechar(this._pedidoItens);
       }
     );
-  }
-
-  cancelar() {
-    this.router.navigate(['..']);
   }
 }

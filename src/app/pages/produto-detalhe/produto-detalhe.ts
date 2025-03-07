@@ -1,4 +1,5 @@
-import { Component, ViewChild } from "@angular/core";
+import { ModalController, Platform } from '@ionic/angular';
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { IFotos } from "../../interfaces/fotos.interface";
 import { IFilial } from "../../interfaces/filiais.interface";
 // import { ImageViewerController } from 'ionic-img-viewer';
@@ -8,9 +9,10 @@ import { FotosProvider } from "@services/fotos-provider";
 import { FiliaisProvider } from "@services/filiais-provider";
 import { UtilProvider } from "@services/util-provider";
 import { IEstoque } from "@interfaces/estoque.interface";
+import { AbstractModalComponent } from "src/app/components/modal/abstract-modal.component";
 
 @Component({
-  selector: "page-produto-detalhe",
+  selector: "app-produto-detalhe",
   templateUrl: "produto-detalhe.html",
   styleUrls: ["produto-detalhe.scss"],
   standalone: false,
@@ -29,20 +31,27 @@ export class ProdutoDetalhePage {
   _filial: IFilial[] = [];
 
   constructor(
-    private router: Router,
     // imageViewerCtrl: ImageViewerController,
-    fotosProvider: FotosProvider,
+    private fotosProvider: FotosProvider,
     public filialProv: FiliaisProvider,
-    public util: UtilProvider
+    public util: UtilProvider,
+    private modalCtrl: ModalController,
+    platform: Platform
   ) {
+    // super(modalCtrl, platform);
+  }
+
+  async ionViewDidEnter() {
+    const htmlIonModalElement = await this.modalCtrl.getTop();
+    const componentProps = htmlIonModalElement?.componentProps as { item: IItens };
+    this._item = componentProps?.item;
+
     // this._imageViewerCtrl = imageViewerCtrl;
-    const navigation = this.router.getCurrentNavigation();
-    console.log('navigation.extras.state', navigation.extras.state);
-    this._item = navigation.extras.state['item'] as IItens;
-    fotosProvider.buscar(this._item.codigo).subscribe((fotos) => {
+
+    this.fotosProvider.buscar(this._item.codigo).subscribe((fotos) => {
       //console.log('fotos', fotos);
-      if (fotos == null && util.internetConectada()) {
-        fotosProvider.sincronizar(this._item.codigo).subscribe((fotos) => {
+      if (fotos == null && this.util.internetConectada()) {
+        this.fotosProvider.sincronizar(this._item.codigo).subscribe((fotos) => {
           if (fotos != null) {
             this._fotos = fotos;
           }

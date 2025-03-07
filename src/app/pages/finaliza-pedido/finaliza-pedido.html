@@ -1,25 +1,23 @@
-<ion-header>
-  <ion-toolbar color="primary">
-    <ion-title>
-      RESUMO PEDIDO Nº {{ _pedido.codigo}}
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-header title="RESUMO PEDIDO Nº {{ _pedido.codigo}}" (backButtonClick)="voltar()"></app-header>
 <ion-content>
-  <ion-item-divider color="primary">
+  <ion-item-divider color="light">
     <h2>CLIENTE</h2>
   </ion-item-divider>
   <ion-list>
 
     <ion-item>
-      <p>NOME</p>
-      <h2>{{ _pedido.cliente.codigo }} - {{ _pedido.cliente.nome }}</h2>
+      <ion-label>
+        <h2>{{ _pedido.cliente.codigo }} - {{ _pedido.cliente.nome }}</h2>
+        <p>NOME</p>
+      </ion-label>
     </ion-item>
 
     <ion-item>
-      <p>ENDEREÇO</p>
-      <h2>{{ _pedido.cliente.endereco }}</h2>
-      <h2>{{ _pedido.cliente.bairro }}, {{ _pedido.cliente.cidade }} - {{ _pedido.cliente.estado }} - {{ _pedido.cliente.cep }}</h2>
+      <ion-label>
+        <h2>{{ _pedido.cliente.endereco }}</h2>
+        <h2>{{ _pedido.cliente.bairro }}, {{ _pedido.cliente.cidade }} - {{ _pedido.cliente.estado }} - {{ _pedido.cliente.cep }}</h2>
+        <p>ENDEREÇO</p>
+      </ion-label>
     </ion-item>
   </ion-list>
  <!--  <ng-container>
@@ -33,7 +31,7 @@
 
   </ng-container> -->
 
-  <ion-item-divider color="primary">
+  <ion-item-divider color="light">
     <h2>FORMA DE PAGAMENTO</h2>
   </ion-item-divider>
 
@@ -41,7 +39,7 @@
     <h2 (click)="mudarCondicao()">{{ _pedido.condicaoPagto.descricao }}</h2>
   </ion-item>
 
-  <ion-item-divider color="primary">
+  <ion-item-divider color="light">
     <h2>TRANSPORTADORA</h2>
   </ion-item-divider>
 
@@ -49,7 +47,7 @@
     <h2 (click)="mudarTransportadora()">{{ _pedido.transportadora.nome }}</h2>
   </ion-item>
 
-  <ion-item-divider color="primary">
+  <ion-item-divider color="light">
     <h2>FRETE</h2>
   </ion-item-divider>
 
@@ -60,33 +58,29 @@
     </ion-select>
   </ion-item>
 
-  <ion-item-divider color="primary">
+  <ion-item-divider color="light">
     <h2>VALOR</h2>
   </ion-item-divider>
 
   <ion-list>
     <ion-item>
-      <ion-label floating>SUB-TOTAL (R$)</ion-label>
-      <ion-input type="text" [(ngModel)]="_valorSubTotalFormat" disabled></ion-input>
+      <ion-input type="text" [(ngModel)]="_valorSubTotalFormat" label="SUB-TOTAL " disabled labelPlacement="keep"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label floating>IPI (R$)</ion-label>
-      <ion-input type="text" [(ngModel)]="_valorIpiFormat" disabled></ion-input>
+      <ion-input type="text" [(ngModel)]="_valorIpiFormat" label="IPI " disabled labelPlacement="keep"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label floating>ST (R$)</ion-label>
-      <ion-input type="text" [(ngModel)]="_valorStFormat" disabled></ion-input>
+      <ion-input type="text" [(ngModel)]="_valorStFormat" label="ST " disabled labelPlacement="keep"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label floating>TOTAL (R$)</ion-label>
-      <ion-input type="text" [(ngModel)]="_valorTotalFormat" disabled></ion-input>
+      <ion-input type="text" [(ngModel)]="_valorTotalFormat" label="TOTAL " disabled labelPlacement="keep"></ion-input>
     </ion-item>
   </ion-list>
 
-  <ion-item-divider color="primary">
+  <ion-item-divider color="light">
     <h2>OBSERVAÇÕES</h2>
   </ion-item-divider>
 
@@ -94,13 +88,10 @@
     <ion-textarea type="text" placeholder="DIGITE AQUI" [(ngModel)]="_pedido.observacao"></ion-textarea>
   </ion-item>
 
-  <ion-buttons padding>
-    <ion-button color="primary" padding ion-button icon-left block (click)="salvar()">
-      <ion-icon name="checkbox"></ion-icon>GRAVAR
-    </ion-button>
-
-    <ion-button color="primary" padding ion-button icon-left block outline (click)="voltar()">
-      <ion-icon name="return-left"></ion-icon>CANCELAR
-    </ion-button>
-  </ion-buttons>
+  <ion-button color="primary" expand="block" (click)="salvar()">
+    <ion-icon name="checkbox" slot="start"></ion-icon> SALVAR
+  </ion-button>
+  <ion-button color="primary" expand="block" fill="outline" (click)="voltar()">
+    <ion-icon name="return-left" slot="start"></ion-icon>CANCELAR
+  </ion-button>
 </ion-content>

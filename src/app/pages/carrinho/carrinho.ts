@@ -6,6 +6,7 @@ import { PedidosItensProvider } from '@services/pedidos-itens-provider';
 import { UtilProvider } from '@services/util-provider';
 import { PedidosProvider } from '@services/pedidos-provider';
 import { Router } from '@angular/router';
+import { ProdutoQtdPage } from '../produto-qtd/produto-qtd';
 
 @Component({
   selector: 'app-carrinho',
@@ -47,8 +48,9 @@ export class CarrinhoPage {
       //verificar se o produto já foi add
       pedidoItens = this._lstPedidosItens.find(x => x.iteCodigo == item.codigo);
     }
+    console.log('pedidoItens', pedidoItens);
     let modal = await this.modalCtrl.create({
-      component: 'ProdutoQtdPage',
+      component: ProdutoQtdPage,
       componentProps: {
         item: item,
         pedidoItens: pedidoItens,
@@ -57,6 +59,7 @@ export class CarrinhoPage {
     });
     modal.onDidDismiss().then((result) => {
       const pedidoItens: IPedidosItens = result.data;
+      console.log('pedidoItens', pedidoItens);
       //console.log('pedidoItens', pedidoItens);
       if (pedidoItens != null) {
         let index = this._lstPedidosItens.findIndex(x => x.sequencia == pedidoItens.sequencia
@@ -92,6 +95,10 @@ export class CarrinhoPage {
     });
   }
 
+  voltar(): void {
+    this.router.navigate(['/pedido/produtos'], { queryParams: { iniciarPedido: true } });
+  }
+
   salvarPedido(): void {
     UtilProvider.objPedido.valor = this._total;
     UtilProvider.objPedido.dtAlteracao = new Date();
@@ -102,6 +109,7 @@ export class CarrinhoPage {
 
   finalizarPedido(): void {
     if (this._lstPedidosItens.length > 0) {
+      UtilProvider.objPedido.pedidosItens = this._lstPedidosItens;
       this.router.navigate(['/finaliza-pedido'], { state: { lstPedidosItens: this._lstPedidosItens } });
     } else {
       this.util.alerta('CARRINHO VAZIO', 'ADICIONE AO MENOS UM PRODUTO PARA EFETUAR O PEDIDO', () => { });

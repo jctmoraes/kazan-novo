@@ -1,60 +1,45 @@
-<ion-header>
-  <ion-toolbar color="primary">
-    <ion-title>
-      SELECIONE A QUANTIDADE
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-modal-header title="SELECIONE A QUANTIDADE"></app-modal-header>
+
 <ion-content>
   <ion-list>
     <ion-item>
-      <ion-label floating>PRODUTO</ion-label>
-      <ion-input type="text" [(ngModel)]="_item.nome" disabled></ion-input>
+      <ion-input type="text" [(ngModel)]="_item.nome" label="PRODUTO " disabled labelPlacement="keep"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label floating>VALOR (R$)</ion-label>
-      <ion-input type="text" [(ngModel)]="_valorFormat" disabled></ion-input>
+      <ion-input type="text" [(ngModel)]="_valorFormat" label="VALOR " disabled labelPlacement="keep"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label floating>QTDE</ion-label>
-      <ion-input #tbxQtd type="number" [(ngModel)]="_pedidoItens.quantidade" (change)="change()"></ion-input>
+      <ion-input type="number" [(ngModel)]="_pedidoItens.quantidade" label="QTDE " (ionChange)="change()" labelPlacement="keep"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label floating>DESCONTO (%)</ion-label>
-      <ion-input type="number" [(ngModel)]="_pedidoItens.desconto" (change)="change()"></ion-input>
+      <ion-input type="number" [(ngModel)]="_pedidoItens.desconto" label="DESCONTO (%)" (ionChange)="change()" labelPlacement="keep"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label floating>UNITÁRIO (R$)</ion-label>
-      <ion-input type="text" [(ngModel)]="_valorUnitarioFormat" disabled></ion-input>
+      <ion-input type="text" [(ngModel)]="_valorUnitarioFormat" label="UNITÁRIO " disabled labelPlacement="keep"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label floating>TOTAL (R$)</ion-label>
-      <ion-input type="text" [(ngModel)]="_totalFormat" disabled></ion-input>
+      <ion-input type="text" [(ngModel)]="_totalFormat" label="TOTAL " disabled labelPlacement="keep"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label floating>VALOR IPI (R$)</ion-label>
-      <ion-input type="text" [(ngModel)]="_valorIpiFormat" disabled></ion-input>
+      <ion-input type="text" [(ngModel)]="_valorIpiFormat" label="VALOR IPI " disabled labelPlacement="keep"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label floating>VALOR ST (R$)</ion-label>
-      <ion-input type="text" [(ngModel)]="_valorStFormat" disabled></ion-input>
+      <ion-input type="text" [(ngModel)]="_valorStFormat" label="VALOR ST " disabled labelPlacement="keep"></ion-input>
     </ion-item>
   </ion-list>
 
-  <ion-buttons padding>
-    <ion-button color="primary" padding ion-button icon-left block (click)="salvar()">
-      <ion-icon name="checkmark-circle"></ion-icon>SALVAR
-    </ion-button>
+  <ion-button color="primary" expand="block" (click)="salvar()">
+    <ion-icon name="checkmark-circle" slot="start"></ion-icon> SALVAR
+  </ion-button>
 
-    <ion-button color="primary" padding ion-button icon-left block outline (click)="cancelar()">
-      <ion-icon name="close-circle"></ion-icon>CANCELAR
-    </ion-button>
-  </ion-buttons>
+  <ion-button color="secondary" expand="block" fill="outline" (click)="fechar()">
+    <ion-icon name="close-circle" slot="start"></ion-icon> CANCELAR
+  </ion-button>
 </ion-content>
