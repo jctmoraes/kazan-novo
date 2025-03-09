@@ -1,3 +1,4 @@
+import { ModalController, Platform } from '@ionic/angular';
 import { Component } from '@angular/core';
 import { IPedidos } from '../../interfaces/pedidos.interface';
 import { IPedidosItens } from '../../interfaces/pedidosItens.interface';
@@ -7,6 +8,7 @@ import { CondicaoPagtoProvider } from '@services/condicaoPagto-provider';
 import { TransportadorasProvider } from '@services/transportadoras-provider';
 import { PedidosItensProvider } from '@services/pedidos-itens-provider';
 import { Router } from '@angular/router';
+import { AbstractModalComponent } from 'src/app/components/modal/abstract-modal.component';
 
 @Component({
   selector: 'app-pedido-detalhe',
@@ -14,7 +16,7 @@ import { Router } from '@angular/router';
   styleUrls: ['pedido-detalhe.scss'],
   standalone: false,
 })
-export class PedidoDetalhePage {
+export class PedidoDetalhePage extends AbstractModalComponent {
   _pedido: IPedidos = null;
   _transportadora: string = '';
   _condicaoPagto: string = '';
@@ -32,17 +34,24 @@ export class PedidoDetalhePage {
     private pedidoItensProvider: PedidosItensProvider,
     private transportadoraProvider: TransportadorasProvider,
     private condicaoPagto: CondicaoPagtoProvider,
-    public utilProvider: UtilProvider
+    public utilProvider: UtilProvider,
+    modalCtrl: ModalController,
+    platform: Platform
   ) {
-    const navigation = this.router.getCurrentNavigation();
-    this._pedido = navigation?.extras?.state['pedido'];
+    super(modalCtrl, platform);
+  }
+
+  async ngOnInit() {
+    const htmlIonModalElement = await this.modalCtrl.getTop();
+    const componentProps = htmlIonModalElement?.componentProps as { pedido: IPedidos };
+    this._pedido = componentProps?.pedido;
 
     if (this._pedido.status == 1) {
       this._status = 'NÃO ENVIADO';
     } else {
       this._status = 'ENVIADO';
     }
-    pedidoItensProvider
+    this.pedidoItensProvider
       .buscar(this._pedido.codigo, false)
       .subscribe(lstPedidosItens => {
         this._lstPedidosItens = lstPedidosItens;
@@ -67,12 +76,12 @@ export class PedidoDetalhePage {
           this._pedido.valorSt
         );
       });
-    transportadoraProvider
+    this.transportadoraProvider
       .porCodigo(this._pedido.traCodigo)
       .subscribe(retorno => {
         this._transportadora = retorno.nome;
       });
-    condicaoPagto.porCodigo(this._pedido.cpgCodigo).subscribe(retorno => {
+    this.condicaoPagto.porCodigo(this._pedido.cpgCodigo).subscribe(retorno => {
       this._condicaoPagto = retorno.descricao;
     });
   }

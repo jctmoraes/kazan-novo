@@ -1,9 +1,6 @@
-<ion-header>
-  <ion-toolbar primary>
-    <ion-buttons slot="start"> </ion-buttons>
-    <ion-title>CADASTRO DE CLIENTE</ion-title>
-  </ion-toolbar>
-</ion-header>
+
+<app-header tile="CADASTRO DE CLIENTE" (backButtonClick)="sair()"></app-header>
+
 <ion-content padding>
   <form [formGroup]="_formGroup" (ngSubmit)="cadastrar()">
     <ion-segment formControlName="fisJur">
@@ -129,28 +126,24 @@
         <ion-input type="email" formControlName="email"></ion-input>
       </ion-item>
     </ion-list>
-    <ion-buttons padding>
-      <ion-button
-        ion-button
-        block
-        icon-left
-        item-right
-        [disabled]="_formGroup.invalid || isLoading"
-      >
-        <ion-icon name="checkmark"></ion-icon>
-        CADASTRAR
-      </ion-button>
-      <ion-button
-        color="secondary"
-        ion-button
-        block
-        icon-left
-        item-right
-        (click)="sair()"
-      >
-        <ion-icon name="close-circle"></ion-icon>
-        FECHAR
-      </ion-button>
-    </ion-buttons>
+
+    <ion-button
+      color="primary"
+      expand="block"
+      type="submit"
+      [disabled]="_formGroup.invalid || isLoading"
+    >
+      <ion-icon name="checkmark"></ion-icon>
+      CADASTRAR
+    </ion-button>
+    <ion-button
+      color="secondary"
+      expand="block"
+      fill="outline"
+      (click)="sair()"
+    >
+      <ion-icon name="close-circle"></ion-icon>
+      FECHAR
+    </ion-button>
   </form>
 </ion-content>

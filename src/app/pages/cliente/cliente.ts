@@ -174,14 +174,12 @@ export class ClientePage {
                   cliNome: cliente.nome,
                   status: 1,
                 };
-                this.router.navigate(["/pedido"], { state: { filtro: filtro } });
+                this.router.navigate(["/pedidos"], { state: { filtro: filtro } });
               } else {
                 lstPedido[0].cliente = cliente;
                 lstPedido[0].transportadora = new ITransportadoras();
                 UtilProvider.objPedido = lstPedido[0];
-                this.router.navigate(["/transportadora"], {
-                  state: { iniciarPedido: true, traCodigo: cliente.traCodigo },
-                });
+                this.abrirTransportadora();
               }
             },
             () => {

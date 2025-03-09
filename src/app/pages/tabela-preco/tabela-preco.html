@@ -10,8 +10,9 @@
   <form [formGroup]="_formGroup" (ngSubmit)="enviar()">
     <ion-list radio-group formControlName="estoque">
       <ion-item>
-        <ion-label>E-mail</ion-label>
-        <ion-input type="email" formControlName="email"></ion-input>
+        <ion-label>
+          <ion-input type="email" formControlName="email" label="E-mail"></ion-input>
+        </ion-label>
       </ion-item>
       <ion-item>
         <ion-label>Com estoque</ion-label>
@@ -22,79 +23,85 @@
         <ion-radio value="G"></ion-radio>
       </ion-item>
       <ion-item>
-        <ion-label>Estado de origem</ion-label>
-        <ion-select formControlName="ufOrigem">
-          <ion-option value="AC">Acre</ion-option>
-          <ion-option value="AL">Alagoas</ion-option>
-          <ion-option value="AP">Amapá</ion-option>
-          <ion-option value="AM">Amazonas</ion-option>
-          <ion-option value="BA">Bahia</ion-option>
-          <ion-option value="CE">Ceará</ion-option>
-          <ion-option value="DF">Distrito Federal</ion-option>
-          <ion-option value="ES">Espírito Santo</ion-option>
-          <ion-option value="GO">Goiás</ion-option>
-          <ion-option value="MA">Maranhão</ion-option>
-          <ion-option value="MT">Mato Grosso</ion-option>
-          <ion-option value="MS">Mato Grosso do Sul</ion-option>
-          <ion-option value="MG">Minas Gerais</ion-option>
-          <ion-option value="PA">Pará</ion-option>
-          <ion-option value="PB">Paraíba</ion-option>
-          <ion-option value="PR">Paraná</ion-option>
-          <ion-option value="PE">Pernambuco</ion-option>
-          <ion-option value="PI">Piauí</ion-option>
-          <ion-option value="RJ">Rio de Janeiro</ion-option>
-          <ion-option value="RN">Rio Grande do Norte</ion-option>
-          <ion-option value="RS">Rio Grande do Sul</ion-option>
-          <ion-option value="RO">Rondônia</ion-option>
-          <ion-option value="RR">Roraima</ion-option>
-          <ion-option value="SC">Santa Catarina</ion-option>
-          <ion-option value="SP">São Paulo</ion-option>
-          <ion-option value="SE">Sergipe</ion-option>
-          <ion-option value="TO">Tocantins</ion-option>
+        <ion-select label="Estado de origem" formControlName="ufOrigem">
+          <ion-select-option value="AC">Acre</ion-select-option>
+          <ion-select-option value="AL">Alagoas</ion-select-option>
+          <ion-select-option value="AP">Amapá</ion-select-option>
+          <ion-select-option value="AM">Amazonas</ion-select-option>
+          <ion-select-option value="BA">Bahia</ion-select-option>
+          <ion-select-option value="CE">Ceará</ion-select-option>
+          <ion-select-option value="DF">Distrito Federal</ion-select-option>
+          <ion-select-option value="ES">Espírito Santo</ion-select-option>
+          <ion-select-option value="GO">Goiás</ion-select-option>
+          <ion-select-option value="MA">Maranhão</ion-select-option>
+          <ion-select-option value="MT">Mato Grosso</ion-select-option>
+          <ion-select-option value="MS">Mato Grosso do Sul</ion-select-option>
+          <ion-select-option value="MG">Minas Gerais</ion-select-option>
+          <ion-select-option value="PA">Pará</ion-select-option>
+          <ion-select-option value="PB">Paraíba</ion-select-option>
+          <ion-select-option value="PR">Paraná</ion-select-option>
+          <ion-select-option value="PE">Pernambuco</ion-select-option>
+          <ion-select-option value="PI">Piauí</ion-select-option>
+          <ion-select-option value="RJ">Rio de Janeiro</ion-select-option>
+          <ion-select-option value="RN">Rio Grande do Norte</ion-select-option>
+          <ion-select-option value="RS">Rio Grande do Sul</ion-select-option>
+          <ion-select-option value="RO">Rondônia</ion-select-option>
+          <ion-select-option value="RR">Roraima</ion-select-option>
+          <ion-select-option value="SC">Santa Catarina</ion-select-option>
+          <ion-select-option value="SP">São Paulo</ion-select-option>
+          <ion-select-option value="SE">Sergipe</ion-select-option>
+          <ion-select-option value="TO">Tocantins</ion-select-option>
         </ion-select>
       </ion-item>
       <ion-item>
-        <ion-label>Estado de destino</ion-label>
-        <ion-select formControlName="ufDestino">
-          <ion-option value="AC">Acre</ion-option>
-          <ion-option value="AL">Alagoas</ion-option>
-          <ion-option value="AP">Amapá</ion-option>
-          <ion-option value="AM">Amazonas</ion-option>
-          <ion-option value="BA">Bahia</ion-option>
-          <ion-option value="CE">Ceará</ion-option>
-          <ion-option value="DF">Distrito Federal</ion-option>
-          <ion-option value="ES">Espírito Santo</ion-option>
-          <ion-option value="GO">Goiás</ion-option>
-          <ion-option value="MA">Maranhão</ion-option>
-          <ion-option value="MT">Mato Grosso</ion-option>
-          <ion-option value="MS">Mato Grosso do Sul</ion-option>
-          <ion-option value="MG">Minas Gerais</ion-option>
-          <ion-option value="PA">Pará</ion-option>
-          <ion-option value="PB">Paraíba</ion-option>
-          <ion-option value="PR">Paraná</ion-option>
-          <ion-option value="PE">Pernambuco</ion-option>
-          <ion-option value="PI">Piauí</ion-option>
-          <ion-option value="RJ">Rio de Janeiro</ion-option>
-          <ion-option value="RN">Rio Grande do Norte</ion-option>
-          <ion-option value="RS">Rio Grande do Sul</ion-option>
-          <ion-option value="RO">Rondônia</ion-option>
-          <ion-option value="RR">Roraima</ion-option>
-          <ion-option value="SC">Santa Catarina</ion-option>
-          <ion-option value="SP">São Paulo</ion-option>
-          <ion-option value="SE">Sergipe</ion-option>
-          <ion-option value="TO">Tocantins</ion-option>
+        <ion-select label="Estado de destino" formControlName="ufDestino">
+          <ion-select-option value="AC">Acre</ion-select-option>
+          <ion-select-option value="AL">Alagoas</ion-select-option>
+          <ion-select-option value="AP">Amapá</ion-select-option>
+          <ion-select-option value="AM">Amazonas</ion-select-option>
+          <ion-select-option value="BA">Bahia</ion-select-option>
+          <ion-select-option value="CE">Ceará</ion-select-option>
+          <ion-select-option value="DF">Distrito Federal</ion-select-option>
+          <ion-select-option value="ES">Espírito Santo</ion-select-option>
+          <ion-select-option value="GO">Goiás</ion-select-option>
+          <ion-select-option value="MA">Maranhão</ion-select-option>
+          <ion-select-option value="MT">Mato Grosso</ion-select-option>
+          <ion-select-option value="MS">Mato Grosso do Sul</ion-select-option>
+          <ion-select-option value="MG">Minas Gerais</ion-select-option>
+          <ion-select-option value="PA">Pará</ion-select-option>
+          <ion-select-option value="PB">Paraíba</ion-select-option>
+          <ion-select-option value="PR">Paraná</ion-select-option>
+          <ion-select-option value="PE">Pernambuco</ion-select-option>
+          <ion-select-option value="PI">Piauí</ion-select-option>
+          <ion-select-option value="RJ">Rio de Janeiro</ion-select-option>
+          <ion-select-option value="RN">Rio Grande do Norte</ion-select-option>
+          <ion-select-option value="RS">Rio Grande do Sul</ion-select-option>
+          <ion-select-option value="RO">Rondônia</ion-select-option>
+          <ion-select-option value="RR">Roraima</ion-select-option>
+          <ion-select-option value="SC">Santa Catarina</ion-select-option>
+          <ion-select-option value="SP">São Paulo</ion-select-option>
+          <ion-select-option value="SE">Sergipe</ion-select-option>
+          <ion-select-option value="TO">Tocantins</ion-select-option>
         </ion-select>
       </ion-item>
     </ion-list>
-    <ion-buttons padding>
-      <ion-button ion-button block icon-left item-right [disabled]=envio>
-        <ion-icon name="checkmark"></ion-icon>
-          ENVIAR
-      </ion-button>
-      <ion-button color="secondary" ion-button block icon-left item-right (click)="sair()">
-        <ion-icon name="close-circle"></ion-icon>
-          FECHAR
-      </ion-button>
-    </ion-buttons>
+    <ion-button
+      color="primary"
+      expand="block"
+      type="submit"
+      [disabled]="_formGroup.invalid"
+    >
+      <ion-icon name="checkmark" slot="start"></ion-icon>
+      ENVIAR
+    </ion-button>
+    <ion-button
+      color="secondary"
+      expand="block"
+      fill="outline"
+      (click)="sair()"
+    >
+      <ion-icon name="close-circle"></ion-icon>
+      FECHAR
+    </ion-button>
   </form>
 </ion-content>

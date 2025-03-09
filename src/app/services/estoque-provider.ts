@@ -42,7 +42,7 @@ export class EstoqueProvider extends ComandoProvider {
                 ["INSERT INTO estoque (cod_produto, cod_filial, quantidade) VALUES (?, ?, ?)", [
                   estoque.codProduto,
                   estoque.codFilial,
-                  estoque.estoque
+                  estoque.Estoque
                 ]]
               ]);
 
@@ -86,7 +86,7 @@ export class EstoqueProvider extends ComandoProvider {
         db.sqlBatch(
           estoques.map((estoque) => [
             "INSERT OR REPLACE INTO estoque (cod_produto, cod_filial, quantidade) VALUES (?, ?, ?)",
-            [estoque.codProduto, estoque.codFilial, estoque.estoque],
+            [estoque.codProduto, estoque.codFilial, estoque.Estoque],
           ]),
         )
           .then(() => {
@@ -106,6 +106,7 @@ export class EstoqueProvider extends ComandoProvider {
       const sql = `SELECT id, cod_produto, cod_filial, quantidade
                    FROM estoque
                    WHERE cod_produto = ${codProduto} AND cod_filial = ${codFilial}`;
+      console.log("SQL:", sql);
 
       super.executeSql(sql).subscribe((retorno) => {
         let obj: IEstoque | null = null;

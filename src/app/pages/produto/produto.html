@@ -25,7 +25,7 @@
 
     <ion-row>
       <ion-col class="titulo">
-        <h2 color="primary">{{ cada.codigo }} {{ cada.nome }} - {{ cada.fabricante.nome }} {{ cada.embalagem }}</h2>
+        {{ cada.codigo }} {{ cada.nome }} - {{ cada.fabricante.nome }} {{ cada.embalagem }}
       </ion-col>
     </ion-row>
     <ion-row *ngIf="_fotos != null && cada.codigo == _fotos?.proCodigo">
@@ -44,10 +44,10 @@
     </ion-row>
     <ion-row>
       <ion-col>
-        <h2 class="valor"> Cx.Master {{ cada.qtdMax }}</h2>
+        <p class="valor"> Cx.Master {{ cada.qtdMax }}</p>
       </ion-col>
       <ion-col>
-        <h2 class="valor">Estoque: {{ cada.estoque }}</h2>
+        <p class="valor">Estoque: {{ cada.estoque }}</p>
       </ion-col>
     </ion-row>
     <ion-row *ngIf="_pedido">
@@ -62,13 +62,6 @@
           fill="outline">
         </ion-input>
       </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-        <h2 class="valor">Valor {{ utilProvider.formatarMoeda(cada.valorTotal) }}</h2>
-      </ion-col>
-    </ion-row>
-    <ion-row *ngIf="_pedido">
       <ion-col>
         <ion-input
           type="number"
@@ -79,6 +72,11 @@
           label-placement="floating"
           fill="outline">
         </ion-input>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        Valor {{ utilProvider.formatarMoeda(cada.valorTotal) }}
       </ion-col>
     </ion-row>
     <!-- <ion-row>

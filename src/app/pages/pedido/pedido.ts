@@ -14,6 +14,8 @@ import { FotosProvider } from "@services/fotos-provider";
 import { IFotos } from "@interfaces/fotos.interface";
 import { FiliaisProvider } from "@services/filiais-provider";
 import { AppComponent } from "src/app/app.component";
+import { PedidoFiltroPage } from "../filtro/pedido-filtro/pedido-filtro";
+import { PedidoDetalhePage } from "../pedido-detalhe/pedido-detalhe";
 
 @Component({
   selector: "page-pedido",
@@ -131,7 +133,7 @@ export class PedidoPage implements OnDestroy {
 
   abrirDetalhe(pedido: IPedidos) {
     let profileModal = this.modalCtrl.create({
-      component: "PedidoDetalhePage",
+      component: PedidoDetalhePage,
       componentProps: { pedido: pedido },
     });
     profileModal.then(modal => modal.present());
@@ -139,7 +141,7 @@ export class PedidoPage implements OnDestroy {
 
   abrirFiltro() {
     let profileModal = this.modalCtrl.create({
-      component: "PedidoFiltroPage",
+      component: PedidoFiltroPage,
       componentProps: { filtro: this._filtro },
     });
     profileModal.then(modal => {
@@ -276,10 +278,15 @@ export class PedidoPage implements OnDestroy {
           this._qtdTotal = Number(qtdTotal);
         });
     }
+    console.log('inicio', inicio);
+    console.log('this._qtdPorPagina', this._qtdPorPagina);
+    console.log('this._filtro', this._filtro);
+    console.log('this._funCodigo', this._funCodigo);
     this.pedidoProvider
       .buscar(this._funCodigo, this._filtro, inicio, this._qtdPorPagina, false)
       .subscribe(
         (retorno: IPedidosGeral[]) => {
+          console.log("retorno", retorno);
           if (retorno.length > 0) {
             this._lstPedidos = this._lstPedidos.concat(retorno);
           } else {
@@ -358,5 +365,9 @@ export class PedidoPage implements OnDestroy {
   }
 
   imprimir(pedidosGeral: IPedidosGeral) {
+  }
+
+  voltar() {
+    this.router.navigate(["/master"]);
   }
 }

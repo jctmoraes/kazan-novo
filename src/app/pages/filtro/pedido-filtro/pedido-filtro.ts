@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { IPedidosFiltro } from "../../../interfaces/filtro/pedidos-filtro.interface";
 import { IClientes } from "../../../interfaces/clientes.interface";
-import { ModalController, NavParams } from '@ionic/angular';
+import { ModalController, NavParams, Platform } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { AbstractModalComponent } from 'src/app/components/modal/abstract-modal.component';
+import { ClienteSelecionaPage } from '../../cliente-seleciona/cliente-seleciona';
 
 @Component({
   selector: 'app-pedido-filtro',
@@ -10,23 +12,24 @@ import { Router } from '@angular/router';
   styleUrls: ['pedido-filtro.scss'],
   standalone: false,
 })
-export class PedidoFiltroPage {
+export class PedidoFiltroPage extends AbstractModalComponent {
   _buscar = false;
   _filtro: IPedidosFiltro = new IPedidosFiltro();
 
   constructor(
     private router: Router,
-    public navParams: NavParams,
-    public modalCtrl: ModalController
+    modalCtrl: ModalController,
+    platform: Platform
+
   ) {
-    this._filtro = navParams.get('filtro');
+    super(modalCtrl, platform);
     if (this._filtro.cliCodigo == 0)
       this._filtro.cliNome = 'TODOS OS CLIENTES';
   }
 
   async selecionarCliente() {
     let modal = await this.modalCtrl.create({
-      component: 'ClienteSelecionaPage'
+      component: ClienteSelecionaPage
     });
     modal.onDidDismiss().then((result) => {
       const cliente: IClientes = result.data;
@@ -40,10 +43,6 @@ export class PedidoFiltroPage {
 
   pesquisar() {
     this._buscar = true;
-    this.sair();
-  }
-
-  sair() {
-    this.router.navigate(['/previous-page'], { state: { buscar: this._buscar, filtro: this._filtro } });
+    this.fechar();
   }
 }

@@ -33,7 +33,7 @@
       </ion-col>
     </ion-row> -->
     <ion-row>
-      <ion-col [hidden]="_qtdTotal == -1" col-12>
+      <ion-col *ngIf="_qtdTotal > -1" col-12>
         {{ _qtdTotal }} ENCONTRADO(S)
       </ion-col>
     </ion-row>
@@ -42,7 +42,7 @@
   <ion-card *ngFor="let cada of _lstClientes">
     <ion-row>
       <ion-col class="titulo" col-12>
-        <h2 color="secondary">{{ cada.codigo + ' - ' + cada.nome }}</h2>
+        {{ cada.codigo + ' - ' + cada.nome }}
       </ion-col>
     </ion-row>
     <ion-row>

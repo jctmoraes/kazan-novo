@@ -62,7 +62,7 @@
     <ion-item>
       <p>ESTOQUE NAS FILIAIS</p>
       <ng-container *ngFor="let item of _estoque">
-        <h2>{{ item.estoque | number: '1.0-0' }}</h2>
+        <h2>{{ item.Estoque | number: '1.0-0' }}</h2>
         <p>{{ retNomeFilial(item.codFilial) }}</p>
       </ng-container>
     </ion-item>

@@ -1,13 +1,4 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>FILTRO</ion-title>
-    <ion-buttons end>
-      <ion-button ion-button icon-only (click)="sair()">
-        <ion-icon name="close"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
+<app-modal-header title="FILTRO DE PEDIDOS"></app-modal-header>
 
 <ion-content>
   <ion-list>
@@ -28,13 +19,11 @@
 
   </ion-list>
 
-  <ion-buttons padding>
-    <ion-button color="primary" ion-button icon-left block (click)="pesquisar()">
-      <ion-icon name="search"></ion-icon>PESQUISAR
-    </ion-button>
+  <ion-button color="primary" expand="block" (click)="pesquisar()">
+    <ion-icon name="search" slot="left"></ion-icon> PESQUISAR
+  </ion-button>
 
-    <ion-button color="primary" ion-button icon-left block ouline (click)="sair()">
-      <ion-icon name="close-circle"></ion-icon>CANCELAR
-    </ion-button>
-  </ion-buttons>
+  <ion-button color="primary" expand="block" fill="outline" (click)="fechar()">
+    <ion-icon name="close-circle" slot="left"></ion-icon> CANCELAR
+  </ion-button>
 </ion-content>

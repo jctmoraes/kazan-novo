@@ -18,6 +18,7 @@ import { ProdutoDetalhePage } from './pages/produto-detalhe/produto-detalhe';
 import { ProdutoQtdPage } from './pages/produto-qtd/produto-qtd';
 import { TabelaPrecoPage } from './pages/tabela-preco/tabela-preco';
 import { TransportadoraPage } from './pages/transportadora/transportadora';
+import { PedidoPage } from './pages/pedido/pedido';
 
 const routes: Routes = [
   {
@@ -71,7 +72,7 @@ const routes: Routes = [
   },
   {
     path: 'pedidos',
-    component: PedidoFiltroPage,
+    component: PedidoPage,
   },
   {
     path: 'pedido-detalhe/:pedido',

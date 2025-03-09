@@ -1,4 +1,4 @@
-package io.ionic.starter;
+package kazan.com.br;
 
 import com.getcapacitor.BridgeActivity;
 

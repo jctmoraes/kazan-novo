@@ -184,7 +184,7 @@ export class SincronizacaoProvider {
     try {
       // Obtém o estoque usando o método getEstoque
       const estoques: any = await this.itemProvider.getEstoque();
-      console.log("Dados recebidos do getEstoque:", JSON.stringify(estoques));
+      // console.log("Dados recebidos do getEstoque:", JSON.stringify(estoques));
 
       // Salva os estoques em massa no banco de dados
       const result = await this.estoqueProvider.salvar(estoques).toPromise();

@@ -10,6 +10,7 @@ import { IPedidos } from '@interfaces/pedidos.interface';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { StatusBar } from '@capacitor/status-bar';
 import { ConfiguracaoProvider } from '@services/configuracao-provider';
+import { AndroidFullScreen } from '@awesome-cordova-plugins/android-full-screen';
 
 @Component({
   selector: 'app-root',
@@ -32,10 +33,19 @@ export class AppComponent {
 
   ngOnInit() {
     this.platform.ready().then(() => {
+      AndroidFullScreen.isImmersiveModeSupported()
+        .then(() => AndroidFullScreen.immersiveMode())
+        .catch(console.warn);
+      this.menuCtrl.enable(false);
       this.bancoProvider.criarTabela().then(() => {
         this.funcionarioProvider.buscarLogado().subscribe((retorno) => {
-          this.funcionarioLogado = retorno;
-          UtilProvider.funCodigo = retorno.codigo;
+          console.log('buscarLogado', retorno);
+          if (retorno) {
+            this.funcionarioLogado = retorno;
+            UtilProvider.funCodigo = retorno.codigo;
+            this.menuCtrl.enable(true);
+            this.mudarPagina('/master');
+          }
           this.configuracaoProvider.buscar().subscribe((configuracao) => {
             console.log('configuracao', configuracao);
             UtilProvider.configuracao = configuracao;

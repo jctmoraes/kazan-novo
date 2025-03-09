@@ -1,6 +1,6 @@
 export class IEstoque {
   codProduto: number;
   codFilial: number;
-  estoque: number;
+  Estoque: number;
   filial: string;
 }

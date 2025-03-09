@@ -137,7 +137,7 @@ export class ClienteCadastroPage implements OnDestroy {
   }
 
   sair() {
-    this.router.navigate(["/cliente-cadastro"]); // Substituição de viewCtrl.dismiss por router.navigate
+    this.router.navigate(["/master"]); // Substituição de viewCtrl.dismiss por router.navigate
   }
 
   async onBlur() {
