@@ -34,8 +34,8 @@
 
   <ion-card *ngFor="let cada of _lstPedidos">
     <ion-card-header>
-      <ion-card-subtitle>{{ cada.cliente.nome }}</ion-card-subtitle>
-      <ion-card-title>{{ utilProvider.formatarDataHora(cada.data) }}</ion-card-title>
+      <ion-card-title>{{ cada.cliente.nome }}</ion-card-title>
+      <ion-card-subtitle>{{ utilProvider.formatarDataHora(cada.data) }}</ion-card-subtitle>
     </ion-card-header>
     <ion-card-content>
       <ion-row>
@@ -54,10 +54,6 @@
     </ion-card-content>
 
     <ion-footer>
-      <ion-button (click)="abrirDetalhe(cada)" color="secondary">
-        <ion-icon name="create" slot="start"></ion-icon>
-        DETALHES
-      </ion-button>
       <ion-button *ngIf="cada.status != 1" (click)="abrirDetalhe(cada)" color="secondary" ion-button icon-left outline item-start>
         <ion-icon name="information-circle" slot="start"></ion-icon>
         DETALHES

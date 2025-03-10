@@ -43,6 +43,7 @@ export class TransportadoraPage {
   ngOnInit() {
     this._iniciarPedido = this.route.snapshot.queryParamMap.get('iniciarPedido') as unknown as boolean;
     this._editarPedido = this.route.snapshot.queryParamMap.get('editarPedido') as unknown as boolean;
+    console.log("Iniciar _editarPedido: ", this._editarPedido);
     if (!UtilProvider.objPedido?.traCodigo) {
       return;
     }

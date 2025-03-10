@@ -19,6 +19,7 @@ import { ProdutoQtdPage } from './pages/produto-qtd/produto-qtd';
 import { TabelaPrecoPage } from './pages/tabela-preco/tabela-preco';
 import { TransportadoraPage } from './pages/transportadora/transportadora';
 import { PedidoPage } from './pages/pedido/pedido';
+import { PedidoPlanilhaPage } from './pages/pedido-planilha/pedido-planilha';
 
 const routes: Routes = [
   {
@@ -84,7 +85,7 @@ const routes: Routes = [
   },
   {
     path: 'pedido-panilha',
-    component: PedidoDetalhePage,
+    component: PedidoPlanilhaPage,
   },
   {
     path: 'produtos',

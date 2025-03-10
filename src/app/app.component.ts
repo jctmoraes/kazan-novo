@@ -38,17 +38,17 @@ export class AppComponent {
         .catch(console.warn);
       this.menuCtrl.enable(false);
       this.bancoProvider.criarTabela().then(() => {
-        this.funcionarioProvider.buscarLogado().subscribe((retorno) => {
-          console.log('buscarLogado', retorno);
-          if (retorno) {
-            this.funcionarioLogado = retorno;
-            UtilProvider.funCodigo = retorno.codigo;
-            this.menuCtrl.enable(true);
-            this.mudarPagina('/master');
-          }
+        this.funcionarioProvider.buscarLogado().subscribe((funcionario) => {
+          console.log('buscarLogado', funcionario);
           this.configuracaoProvider.buscar().subscribe((configuracao) => {
             console.log('configuracao', configuracao);
             UtilProvider.configuracao = configuracao;
+            if (funcionario) {
+              this.funcionarioLogado = funcionario;
+              UtilProvider.funCodigo = funcionario.codigo;
+              this.menuCtrl.enable(true);
+              this.mudarPagina('/master');
+            }
           });
         });
         this.utilProvider.obterVersao().then((versao) => {

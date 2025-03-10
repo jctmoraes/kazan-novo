@@ -16,6 +16,8 @@ import { FiliaisProvider } from "@services/filiais-provider";
 import { AppComponent } from "src/app/app.component";
 import { PedidoFiltroPage } from "../filtro/pedido-filtro/pedido-filtro";
 import { PedidoDetalhePage } from "../pedido-detalhe/pedido-detalhe";
+import { PedidoEmailPage } from "../pedido-email/pedido-email";
+import { PedidoPlanilhaPage } from "../pedido-planilha/pedido-planilha";
 
 @Component({
   selector: "page-pedido",
@@ -39,13 +41,15 @@ export class PedidoPage implements OnDestroy {
   constructor(
     private router: Router,
     public modalCtrl: ModalController,
-    // private printer: Printer,
     private pedidoProvider: PedidosProvider,
     private pedidoItensProvider: PedidosItensProvider,
     public utilProvider: UtilProvider,
     private statusPed: StatusPedidoProvider,
     public filialProv: FiliaisProvider,
     private myApp: AppComponent,
+    private http: HttpClient,
+    private fotosProvider: FotosProvider,
+    // private printer: Printer
   ) {
     this._atualizarMaster = this.router.getCurrentNavigation()?.extras.state?.['atualizarMaster'] || false;
     let filtro = this.router.getCurrentNavigation()?.extras.state?.['filtro'];
@@ -69,7 +73,7 @@ export class PedidoPage implements OnDestroy {
   editar(pedido: IPedidos) {
     UtilProvider.pedido = true;
     UtilProvider.objPedido = pedido;
-    this.router.navigate(["/transportadora"], { state: { iniciarPedido: "NOVO PEDIDO" } });
+    this.router.navigate(['/pedido/transportadoras'], { queryParams: { iniciarPedido: true, editarPedido: true } });
   }
 
   async copiar(pedido: IPedidos) {
@@ -231,31 +235,31 @@ export class PedidoPage implements OnDestroy {
   }
 
   async navegarParaPedidoEmailPage(pedido: IPedidos, incluirImagens: boolean) {
-    try {
-      const nomevendedor = this.myApp.funcionarioLogado.nome;
-      const contatoVendedor = this.myApp.funcionarioLogado.telefone;
-      const updatedPedido = {
-        ...pedido,
-        nomevendedor,
-        incluirImagens,
-        contatoVendedor,
-      };
-      this.router.navigate(["/pedido-email"], {
-        state: { pedido: updatedPedido, pdf: true },
-      });
-      this._atualizarMaster = true;
-    } catch (error) {
-      this.utilProvider.alerta(
-        "OPS, OCORREU UM ERRO",
-        JSON.stringify(error),
-        null,
-      );
-    }
+    const nomevendedor = this.myApp.funcionarioLogado.nome;
+    const contatoVendedor = this.myApp.funcionarioLogado.telefone;
+    const updatedPedido = {
+      ...pedido,
+      nomevendedor,
+      incluirImagens,
+      contatoVendedor,
+    };
+    // this.router.navigate(["/pedido-email"], {
+    //   state: { pedido: updatedPedido, pdf: true },
+    // });
+    //abrir modal PedidoEmailPage
+    const modal = await this.modalCtrl.create({
+      component: PedidoEmailPage,
+      componentProps: { pedido: updatedPedido, pdf: true },
+    });
+    modal.present();
   }
 
-  enviarPlanilha(pedido: IPedidos) {
-    this.router.navigate(["/pedido-planilha"], { state: { pedido: pedido, xlsx: true } });
-    this._atualizarMaster = true;
+  async enviarPlanilha(pedido: IPedidos) {
+    const modal = await this.modalCtrl.create({
+      component: PedidoPlanilhaPage,
+      componentProps: { pedido: pedido, xlsx: true },
+    });
+    modal.present();
   }
 
   pesquisar() {
@@ -364,7 +368,154 @@ export class PedidoPage implements OnDestroy {
     }
   }
 
-  imprimir(pedidosGeral: IPedidosGeral) {
+  imprimir(pedido: IPedidos) {
+    this.utilProvider.confirmacao(
+      "Deseja incluir imagens no PDF?",
+      "Imprimir",
+      () => this.processarImpressao(pedido, true),
+      () => this.processarImpressao(pedido, false),
+    );
+  }
+
+  async processarImpressao(pedido: IPedidos, incluirImagens: boolean) {
+    const codFilialFuncLogado = this.myApp.funcionarioLogado.filial.toString();
+    const codFilialStorage = localStorage.getItem("codFilialSet");
+    const numFilial = parseInt(
+      codFilialStorage ? codFilialStorage : codFilialFuncLogado,
+    );
+    let loading = await this.utilProvider.mostrarCarregando("IMPRIMINDO...");
+    let text = "";
+    try {
+      const htmlResponse = await this.http
+        .get("assets/impressao/pedido.html", { responseType: 'text' })
+        .toPromise();
+      let html = htmlResponse as string;
+
+      const lstPedidosItens = await this.pedidoItensProvider
+        .buscar(pedido.codigo, false)
+        .toPromise();
+      let itens = "";
+      let thIncluso =
+        "<th>Qtd</th><th>Emb</th><th>Cod</th><th>GTIN</th><th>Marca</th><th>Descrição</th><th>Vr IPI (+)</th><th>Vr ST</th><th>Vr Un</th><th>Vr Total</th>";
+
+      let valorIpiTotal = 0;
+      let valorStTotal = 0;
+      let fotoCount = 0; // Contador para fotos
+
+      for (const x of lstPedidosItens) {
+        valorIpiTotal += x.valorIpi;
+        valorStTotal += x.valorSt;
+
+        let fotos = await this.fotosProvider.buscar(x.iteCodigo).toPromise();
+        if (fotos == null && this.utilProvider.internetConectada()) {
+          fotos = await this.fotosProvider.sincronizar(x.iteCodigo).toPromise();
+        }
+        this._fotos = fotos || this._fotos;
+        let imagemHtml = "";
+
+        if (incluirImagens && fotoCount < 60) {
+          imagemHtml = `<td><img src="data:image/jpeg;base64,${this._fotos.imagem1 || ""}" alt="Imagem do Item" width="100"></td>`;
+          thIncluso =
+            "<th></th> <th>Qtd</th> <th>Emb</th> <th>Cod</th><th>Marca</th> <th>Descrição</th> <th>Vr IPI (+)</th> <th>Vr ST</th> <th>Vr Un</th> <th>Vr Total</th>";
+          fotoCount++; // Incrementa o contador de fotos
+        }
+
+        itens += `<tr>
+                  ${imagemHtml}
+                  <td>${x.quantidade}</td>
+                  <td>${x.item.embalagem}</td>
+                  <td>${x.iteCodigo}</td>
+                  <td>${x.item.fabricante.nome}</td>
+                  <td>${x.item.nome}</td>
+                  <td>${this.utilProvider.formatarMoeda(x.valorIpi)}</td>
+                  <td>${this.utilProvider.formatarMoeda(x.valorSt)}</td>
+                  <td>${this.utilProvider.formatarMoeda(
+                    x.valorUnitario +
+                      x.valorIpi / x.quantidade +
+                      x.valorSt / x.quantidade,
+                  )}</td>
+                  <td>${this.utilProvider.formatarMoeda(
+                    x.valorUnitario * x.quantidade + x.valorIpi + x.valorSt,
+                  )}</td>
+              </tr>`;
+      }
+
+      const valorIpiFormatado = this.utilProvider.formatarMoeda(valorIpiTotal);
+      const valorStFormatado = this.utilProvider.formatarMoeda(valorStTotal);
+      const valorMercadoria = pedido.valor - valorIpiTotal - valorStTotal;
+      const valorMercadoriaFormatado =
+        this.utilProvider.formatarMoeda(valorMercadoria);
+
+      // Calcular a data de validade
+      const dataValidade = new Date(pedido.data);
+      dataValidade.setDate(dataValidade.getDate() + 3);
+      const validadeFormatada = this.utilProvider.formatarData(dataValidade); // Método hipotético de formatação
+
+      // Verificar numFilial e definir CNPJ
+      let cnpjEmpresa = "";
+      if (numFilial === 4) {
+        cnpjEmpresa = "15.631.531/0001-50";
+      } else if (numFilial === 20) {
+        cnpjEmpresa = "15.631.531/0007-45";
+      }
+
+      html = html.replace("{TH-INCLUSA}", thIncluso);
+      html = html.replace(
+        "{NUMERO}",
+        (pedido.numero == null ? pedido.codigo : pedido.numero).toString(),
+      );
+      html = html.replace("{CONDICAO}", text);
+      html = html.replace(
+        "{DATA}",
+        this.utilProvider.formatarDataHora(pedido.data),
+      );
+      html = html.replace("{VALIDADE}", validadeFormatada); // Inserindo a data de validade no HTML
+      html = html.replace("{CNPJ_EMPRESA}", cnpjEmpresa); // Inserindo o CNPJ no HTML
+      html = html.replace("{VENDEDOR}", this.myApp.funcionarioLogado.nome);
+      html = html.replace(
+        "{VENDEDOR-CONTATO}",
+        this.myApp.funcionarioLogado.telefone,
+      );
+      html = html.replace("{NOME}", pedido.cliente.nome);
+      html = html.replace("{CNPJ}", pedido.cliente.cnpj);
+      html = html.replace("{ENDERECO}", pedido.cliente.endereco);
+      html = html.replace("{NUMERO_END}", pedido.cliente.numero);
+      html = html.replace("{BAIRRO}", pedido.cliente.bairro);
+      html = html.replace("{CIDADE}", pedido.cliente.cidade);
+      html = html.replace("{ESTADO}", pedido.cliente.estado);
+      html = html.replace("{TELEFONE}", pedido.cliente.telefone);
+      html = html.replace("{CEP}", pedido.cliente.cep);
+      html = html.replace("{CONTATO}", pedido.cliente.contato);
+      html = html.replace("{INSCRICAO_ESTADUAL}", pedido.cliente.ie);
+      html = html.replace("{COD_CLI}", pedido.cliente.codigo.toString());
+      html = html.replace("{ITENS}", itens);
+      html = html.replace("{TRANSPORTADORA}", pedido.transportadora.nome);
+      html = html.replace("{FRETE}", pedido.frete);
+      html = html.replace(
+        "{DESCONTO}",
+        this.utilProvider.formatarMoeda(pedido.desconto),
+      );
+      html = html.replace(
+        "{TOTAL}",
+        this.utilProvider.formatarMoeda(pedido.valor),
+      );
+      html = html.replace("{OBSERVACAO}", pedido.observacao);
+
+      // Adicionando as novas variáveis no HTML
+      html = html.replace("{VALOR_IPI}", valorIpiFormatado);
+      html = html.replace("{VALOR_ST}", valorStFormatado);
+      html = html.replace("{VALOR_MERCADORIA}", valorMercadoriaFormatado);
+
+      // let options: PrintOptions = {
+      //   duplex: true,
+      // };
+
+      // await this.printer.print(html, options);
+      this.utilProvider.esconderCarregando(loading);
+    } catch (error) {
+      this.utilProvider.esconderCarregando(loading);
+      console.error("Erro ao imprimir o pedido:", error);
+    }
   }
 
   voltar() {

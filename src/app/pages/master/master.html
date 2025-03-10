@@ -13,10 +13,10 @@
     </ion-buttons>
   </ion-toolbar>
   <ion-item-divider class="titulo-master" color="light">
-    <h2 color="primary" class="titulo">
+    <h3 color="primary" class="titulo">
       <ion-icon name="home"></ion-icon>
       {{ 'HOME - FILIAL: '+ _filial }}
-    </h2>
+    </h3>
   </ion-item-divider>
 </ion-header>
 
@@ -30,18 +30,21 @@
   </ion-button>
 
   <ion-item-divider color="light">
-    <h2>PEDIDOS ABERTOS</h2>
+    <h3>PEDIDOS ABERTOS</h3>
   </ion-item-divider>
 
   <ion-card *ngFor="let cada of _lstPedidos">
-    <ion-row>
+    <ion-card-header>
+      <ion-card-title>{{ cada.cliente.nome }}</ion-card-title>
+    </ion-card-header>
+    <!-- <ion-row>
       <ion-col class="titulo">
         <h3 color="secondary">{{ cada.cliente.nome }}</h3>
         <!-- <h2 *ngIf="cada.cliProspec != null && cada.cliProspec != '' && cada.cliProspec != undefined">{{
           retornarNomeCliente(cada.cliProspec) }} </h2>
-        <h2 *ngIf="cada.cliProspec != null && cada.cliProspec != '' && cada.cliProspec != undefined">{{ cada.cliProspec}} </h2> -->
+        <h2 *ngIf="cada.cliProspec != null && cada.cliProspec != '' && cada.cliProspec != undefined">{{ cada.cliProspec}} </h2>
       </ion-col>
-    </ion-row>
+    </ion-row> -->
     <ion-row>
       <ion-col>
         <p>{{ util.formatarDataHora(cada.data) }}</p>

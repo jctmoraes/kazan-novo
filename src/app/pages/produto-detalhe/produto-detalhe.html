@@ -30,42 +30,56 @@
   </ion-slides> -->
 
   <ion-item>
-    <h2>{{ _item?.codigo }}</h2>
-    <p>CÓDIGO</p>
+    <ion-label>
+      <h2>{{ _item?.codigo }}</h2>
+      <p>CÓDIGO</p>
+    </ion-label>
   </ion-item>
 
   <ion-item>
-    <h2>{{ _item?.nome }}</h2>
-    <p>DESCRIÇÃO</p>
+    <ion-label>
+      <h2>{{ _item?.nome }}</h2>
+      <p>DESCRIÇÃO</p>
+    </ion-label>
   </ion-item>
 
   <ion-item>
-    <h2>{{ _item?.codBarras }}</h2>
-    <p>CÓDIGO DE BARRAS</p>
+    <ion-label>
+      <h2>{{ _item?.codBarras }}</h2>
+      <p>CÓDIGO DE BARRAS</p>
+    </ion-label>
   </ion-item>
 
   <ion-item>
-    <h2>{{ _item?.fabricante.nome }}</h2>
-    <p>FABRICANTE</p>
+    <ion-label>
+      <h2>{{ _item?.fabricante.nome }}</h2>
+      <p>FABRICANTE</p>
+    </ion-label>
   </ion-item>
 
   <ion-item>
-    <h2>{{ _item?.embalagem }}</h2>
-    <p>EMBALAGEM</p>
+    <ion-label>
+      <h2>{{ _item?.embalagem }}</h2>
+      <p>EMBALAGEM</p>
+    </ion-label>
   </ion-item>
 
   <ion-item>
-    <h2>{{ _item?.estoque }}</h2>
-    <p>ESTOQUE TOTAL</p>
+    <ion-label>
+      <h2>{{ _item?.estoque }}</h2>
+      <p>ESTOQUE TOTAL</p>
+    </ion-label>
   </ion-item>
 
-    <ion-item>
+  <ion-item>
+    <ion-label>
       <p>ESTOQUE NAS FILIAIS</p>
       <ng-container *ngFor="let item of _estoque">
         <h2>{{ item.Estoque | number: '1.0-0' }}</h2>
         <p>{{ retNomeFilial(item.codFilial) }}</p>
       </ng-container>
-    </ion-item>
+    </ion-label>
+  </ion-item>
 
   <!-- <ng-container *ngFor="let item of _estoque">
     <ion-item>
@@ -82,37 +96,51 @@
   </ion-item> -->
 
   <ion-item>
-    <h2>R$ {{ util.formatarMoeda(_item?.valorUnitario) }}</h2>
-    <p>VALOR UNITÁRIO</p>
+    <ion-label>
+      <h2>R$ {{ util.formatarMoeda(_item?.valorUnitario) }}</h2>
+      <p>VALOR UNITÁRIO</p>
+    </ion-label>
   </ion-item>
 
   <ion-item>
-    <h2>R$ {{ util.formatarMoeda(_item?.valorTotal) }}</h2>
-    <p>VALOR TOTAL</p>
+    <ion-label>
+      <h2>R$ {{ util.formatarMoeda(_item?.valorTotal) }}</h2>
+      <p>VALOR TOTAL</p>
+    </ion-label>
   </ion-item>
 
   <ion-item *ngIf="_item.qtd != null">
-    <h2>{{ _item.qtd }}</h2>
-    <p>QTD</p>
+    <ion-label>
+      <h2>{{ _item.qtd }}</h2>
+      <p>QTD</p>
+    </ion-label>
   </ion-item>
 
   <ion-item>
-    <h2>{{ _item?.claFiscal }}</h2>
-    <p>NCM</p>
+    <ion-label>
+      <h2>{{ _item?.claFiscal }}</h2>
+      <p>NCM</p>
+    </ion-label>
   </ion-item>
 
   <ion-item *ngIf="_item?.iValor != null">
-    <h2>{{ this.util.formatarMoeda(_item?.ipi) }}%</h2>
-    <p>IPI</p>
+    <ion-label>
+      <h2>{{ this.util.formatarMoeda(_item?.ipi) }}%</h2>
+      <p>IPI</p>
+    </ion-label>
   </ion-item>
 
   <ion-item *ngIf="_item?.iValor != null">
-    <h2>R$ {{ this.util.formatarMoeda(_item?.iValor?.valorIpi) }}</h2>
-    <p>VALOR IPI</p>
+    <ion-label>
+      <h2>R$ {{ this.util.formatarMoeda(_item?.iValor?.valorIpi) }}</h2>
+      <p>VALOR IPI</p>
+    </ion-label>
   </ion-item>
 
   <ion-item *ngIf="_item?.iValor != null">
-    <h2>R$ {{ this.util.formatarMoeda(_item?.iValor?.valorSt) }}</h2>
-    <p>VALOR ST</p>
+    <ion-label>
+      <h2>R$ {{ this.util.formatarMoeda(_item?.iValor?.valorSt) }}</h2>
+      <p>VALOR ST</p>
+    </ion-label>
   </ion-item>
 </ion-content>

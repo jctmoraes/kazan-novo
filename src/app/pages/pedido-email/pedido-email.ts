@@ -1,11 +1,13 @@
 import { Component } from "@angular/core";
 import { Router } from "@angular/router";
 import { IPedidos } from "@interfaces/pedidos.interface";
+import { ModalController, Platform } from "@ionic/angular";
 import { FotosProvider } from "@services/fotos-provider";
 import { PedidoEmailProvider } from "@services/pedido-email.provider";
 import { PedidosItensProvider } from "@services/pedidos-itens-provider";
 import { PedidosProvider } from "@services/pedidos-provider";
 import { UtilProvider } from "@services/util-provider";
+import { AbstractModalComponent } from "src/app/components/modal/abstract-modal.component";
 
 @Component({
   selector: "page-pedido-email",
@@ -13,7 +15,7 @@ import { UtilProvider } from "@services/util-provider";
   styleUrls: ["pedido-email.scss"],
   standalone: false,
 })
-export class PedidoEmailPage {
+export class PedidoEmailPage extends AbstractModalComponent {
   _email = "";
   _pedido: IPedidos = null;
 
@@ -23,10 +25,18 @@ export class PedidoEmailPage {
     private utilProvider: UtilProvider,
     private fotosProvider: FotosProvider,
     private pedidoProvider: PedidosProvider,
-    private pedidoItensProvider: PedidosItensProvider
+    private pedidoItensProvider: PedidosItensProvider,
+    modalCtrl: ModalController,
+    platform: Platform
   ) {
-    const navigation = this.router.getCurrentNavigation();
-    this._pedido = navigation?.extras?.state['pedido'];
+    super(modalCtrl, platform);
+  }
+
+  async ionViewDidEnter() {
+    const htmlIonModalElement = await this.modalCtrl.getTop();
+    const componentProps = htmlIonModalElement?.componentProps as { pedido: IPedidos };
+    console.log('componentProps', componentProps);
+    this._pedido = componentProps?.pedido;
 
     this.pedidoEmailProvider.buscar(this._pedido.cliCodigo).subscribe((retorno) => {
       if (retorno != null) this._email = retorno;
@@ -84,7 +94,7 @@ export class PedidoEmailPage {
         () => {}
       );
       this.utilProvider.esconderCarregando(loading);
-      this.cancelar();
+      this.fechar();
     } catch (err) {
       this.utilProvider.alerta(
         "Ops, ocorreu um erro",
@@ -93,9 +103,5 @@ export class PedidoEmailPage {
       );
       this.utilProvider.esconderCarregando(loading);
     }
-  }
-
-  cancelar() {
-    this.router.navigate(['..']);
   }
 }

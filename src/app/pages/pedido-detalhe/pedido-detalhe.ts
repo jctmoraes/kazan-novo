@@ -41,9 +41,10 @@ export class PedidoDetalhePage extends AbstractModalComponent {
     super(modalCtrl, platform);
   }
 
-  async ngOnInit() {
+  async ionViewDidEnter() {
     const htmlIonModalElement = await this.modalCtrl.getTop();
     const componentProps = htmlIonModalElement?.componentProps as { pedido: IPedidos };
+    console.log('componentProps', componentProps);
     this._pedido = componentProps?.pedido;
 
     if (this._pedido.status == 1) {

@@ -3,18 +3,15 @@
 <ion-content>
   <ion-list>
     <ion-item>
-      <ion-label floating>E-MAIL</ion-label>
-      <ion-input type="email" [(ngModel)]="_email"></ion-input>
+      <ion-input type="email" [(ngModel)]="_email" label="E-MAIL" labelPlacement="floating" placeholder="E-MAIL"></ion-input>
     </ion-item>
   </ion-list>
 
-  <ion-buttons padding>
-    <ion-button color="primary" padding ion-button icon-left block (click)="enviar()">
-      <ion-icon name="cloud-upload"></ion-icon>ENVIAR PEDIDO
-    </ion-button>
+  <ion-button color="primary" expand="block" (click)="enviar()">
+    <ion-icon name="cloud-upload" slot="slot"></ion-icon> ENVIAR PEDIDO
+  </ion-button>
 
-    <ion-button color="primary" padding ion-button icon-left block outline (click)="cancelar()">
-      <ion-icon name="close-circle"></ion-icon>CANCELAR
-    </ion-button>
-  </ion-buttons>
+  <ion-button color="primary" expand="block" fill="outline" (click)="fechar()">
+    <ion-icon name="close-circle"></ion-icon> CANCELAR
+  </ion-button>
 </ion-content>

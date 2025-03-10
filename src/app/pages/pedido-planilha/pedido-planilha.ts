@@ -5,6 +5,8 @@ import { PedidosItensProvider } from '@services/pedidos-itens-provider';
 import { PedidosProvider } from '@services/pedidos-provider';
 import { UtilProvider } from '@services/util-provider';
 import { Router } from '@angular/router';
+import { ModalController, Platform } from '@ionic/angular';
+import { AbstractModalComponent } from 'src/app/components/modal/abstract-modal.component';
 
 @Component({
   selector: 'app-pedido-planilha',
@@ -12,7 +14,7 @@ import { Router } from '@angular/router';
   styleUrls: ['pedido-planilha.scss'],
   standalone: false,
 })
-export class PedidoPlanilhaPage {
+export class PedidoPlanilhaPage extends AbstractModalComponent {
   _planilha = '';
   _pedido: IPedidos = null;
   _email: string = '';
@@ -22,10 +24,18 @@ export class PedidoPlanilhaPage {
     private pedidoEmailProvider: PedidoEmailProvider,
     private utilProvider: UtilProvider,
     private pedidoProvider: PedidosProvider,
-    private pedidoItensProvider: PedidosItensProvider
+    private pedidoItensProvider: PedidosItensProvider,
+    modalCtrl: ModalController,
+    platform: Platform
   ) {
-    const navigation = this.router.getCurrentNavigation();
-    this._pedido = navigation?.extras?.state['pedido'];
+    super(modalCtrl, platform);
+  }
+
+  async ionViewDidEnter() {
+    const htmlIonModalElement = await this.modalCtrl.getTop();
+    const componentProps = htmlIonModalElement?.componentProps as { pedido: IPedidos };
+    console.log('componentProps', componentProps);
+    this._pedido = componentProps?.pedido;
 
     try {
       this.pedidoEmailProvider.buscarPlanilha(this._pedido.cliCodigo).subscribe(
@@ -71,10 +81,11 @@ export class PedidoPlanilhaPage {
             this._pedido.emailInformado = this._email;
 
             this.pedidoProvider.sincronizar(this._pedido, false, true).subscribe(
-              () => {
+              (retorno) => {
+                console.log('Pedido sincronizado:', retorno);
                 this.utilProvider.alerta('PEDIDO ENVIADO', 'PEDIDO ENVIADO COM SUCESSO!', () => { });
                 this.utilProvider.esconderCarregando(loading);
-                this.cancelar();
+                this.fechar();
               },
               err => {
                 console.error('Erro ao sincronizar pedido:', err);
@@ -93,11 +104,6 @@ export class PedidoPlanilhaPage {
         console.error('Erro ao salvar planilha:', err);
       }
     );
-  }
-
-  cancelar() {
-    console.log('Cancelando operação.');
-    this.router.navigate(['..']);
   }
 
   ionViewDidLoad() {

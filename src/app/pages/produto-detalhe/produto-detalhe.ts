@@ -17,7 +17,7 @@ import { AbstractModalComponent } from "src/app/components/modal/abstract-modal.
   styleUrls: ["produto-detalhe.scss"],
   standalone: false,
 })
-export class ProdutoDetalhePage {
+export class ProdutoDetalhePage extends AbstractModalComponent {
   // _imageViewerCtrl: ImageViewerController;
   _item: IItens = null;
   _fotos: IFotos = null;
@@ -35,10 +35,10 @@ export class ProdutoDetalhePage {
     private fotosProvider: FotosProvider,
     public filialProv: FiliaisProvider,
     public util: UtilProvider,
-    private modalCtrl: ModalController,
+    modalCtrl: ModalController,
     platform: Platform
   ) {
-    // super(modalCtrl, platform);
+    super(modalCtrl, platform);
   }
 
   async ionViewDidEnter() {

@@ -181,7 +181,7 @@ export class ItensProvider extends ComandoProvider {
       });
 
       const jsonData = JSON.parse(decompressedData);
-      console.log("get estoque antes da sinc" + jsonData);
+      // console.log("get estoque antes da sinc" + jsonData);
       return jsonData;
     } catch (error) {
       console.error("Erro ao buscar estoque:", error);
