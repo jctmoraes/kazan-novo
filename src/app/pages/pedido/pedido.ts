@@ -7,7 +7,6 @@ import { PedidosItensProvider } from "@services/pedidos-itens-provider";
 import { IPedidos, IPedidosGeral } from "@interfaces/pedidos.interface";
 import { IPedidosFiltro } from "@interfaces/filtro/pedidos-filtro.interface";
 import { UtilProvider } from "@services/util-provider";
-import { ServidorProvider } from "@services/servidor-provider";
 import { HttpClient } from "@angular/common/http";
 import { StatusPedidoProvider, IStatusPedido } from "@services/status-pedido";
 import { FotosProvider } from "@services/fotos-provider";
@@ -48,8 +47,7 @@ export class PedidoPage implements OnDestroy {
     public filialProv: FiliaisProvider,
     private myApp: AppComponent,
     private http: HttpClient,
-    private fotosProvider: FotosProvider,
-    // private printer: Printer
+    private fotosProvider: FotosProvider
   ) {
     this._atualizarMaster = this.router.getCurrentNavigation()?.extras.state?.['atualizarMaster'] || false;
     let filtro = this.router.getCurrentNavigation()?.extras.state?.['filtro'];
@@ -386,10 +384,9 @@ export class PedidoPage implements OnDestroy {
     let loading = await this.utilProvider.mostrarCarregando("IMPRIMINDO...");
     let text = "";
     try {
-      const htmlResponse = await this.http
+      let html = await this.http
         .get("assets/impressao/pedido.html", { responseType: 'text' })
         .toPromise();
-      let html = htmlResponse as string;
 
       const lstPedidosItens = await this.pedidoItensProvider
         .buscar(pedido.codigo, false)
@@ -508,6 +505,8 @@ export class PedidoPage implements OnDestroy {
 
       // let options: PrintOptions = {
       //   duplex: true,
+      //   // landscape: false,
+      //   // grayscale: true,
       // };
 
       // await this.printer.print(html, options);
@@ -515,6 +514,19 @@ export class PedidoPage implements OnDestroy {
     } catch (error) {
       this.utilProvider.esconderCarregando(loading);
       console.error("Erro ao imprimir o pedido:", error);
+    }
+  }
+
+  async imprimirHtml(html: string) {
+    const printWindow = window.open('', '_blank');
+    if (printWindow) {
+      printWindow.document.write(html);
+      printWindow.document.close();
+      printWindow.focus();
+      printWindow.print();
+      printWindow.close();
+    } else {
+      console.error('Failed to open print window');
     }
   }
 
