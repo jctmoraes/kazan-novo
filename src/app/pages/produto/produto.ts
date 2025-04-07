@@ -19,6 +19,7 @@ import { AppComponent } from "src/app/app.component";
 import { Router } from "@angular/router";
 import { ProdutoDetalhePage } from "../produto-detalhe/produto-detalhe";
 import { CapacitorBarcodeScanner, CapacitorBarcodeScannerTypeHint } from "@capacitor/barcode-scanner";
+import { FilialSelecionadaService } from "@services/filial-selecionada.service";
 
 @Component({
   selector: "app-produto",
@@ -63,6 +64,7 @@ export class ProdutoPage {
     private funcionarioProvider: FuncionariosProvider,
     private faixaDescontosProvider: FaixaDescontosProvider,
     private myApp: AppComponent,
+    private filialSelecionadaService: FilialSelecionadaService
   ) {
     funcionarioProvider.buscarLogado().subscribe((retorno) => {
       this._funcionario = retorno;
@@ -121,9 +123,7 @@ export class ProdutoPage {
     this._pagina++;
 
     const inicio = this._pagina * this._qtdPorPagina;
-    const codFilialFuncLogado = this.myApp.funcionarioLogado.filial.toString();
-    const codFilialStorage = localStorage.getItem("codFilialSet");
-    const numFilial = parseInt(codFilialStorage || codFilialFuncLogado);
+    const numFilial = this.filialSelecionadaService.getFilialSelecionada();
 
     if (this._pagina === 0) {
       try {

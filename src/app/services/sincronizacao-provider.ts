@@ -31,7 +31,6 @@ export class SincronizacaoProvider {
     cliCadastrados: false,
     filiais: false,
     estoque: false,
-    pedidos: false,
   };
   _codigo: number = 0;
   _loading: HTMLIonLoadingElement;
@@ -71,12 +70,14 @@ export class SincronizacaoProvider {
       console.log("Data da última sincronização:", dtm);
       let dtmAtual: Date = new Date();
       if (dtm != null) {
-        let horas: number =
+        let horasSemSincronizar: number =
           Math.abs(dtmAtual.getTime() - dtm.getTime()) / (1000 * 60 * 60);
         let tempoAtualizacao: number = 24;
-        if (horas >= tempoAtualizacao) {
+        console.log("Horas sem sincronizar:", horasSemSincronizar);
+        if (horasSemSincronizar >= tempoAtualizacao) {
+          this._forcar = true;
           this.continuarSincronizacao(vendaProdImp, cdr); // Passando o cdr
-        } else if (horas > 4) {
+        } else if (horasSemSincronizar > 4) {
           this._sincronizacao.clientes = true;
           this._sincronizacao.itens = true;
           this._sincronizacao.transportadoras = true;
@@ -88,6 +89,7 @@ export class SincronizacaoProvider {
           this._sincronizacao.faixadescontos = true;
           this._sincronizacao.cliCadastrados = true;
           this._sincronizacao.filiais = true;
+          this._sincronizacao.estoque = true;
           this._loading = await this.utilProvider.mostrarCarregando(
             this._mensagem,
           );
@@ -205,6 +207,18 @@ export class SincronizacaoProvider {
 
   verificarFinalizacao(mensagem: string) {
     this._loading.message = mensagem;
+    console.log('this._sincronizacao.clientes', this._sincronizacao.clientes);
+    console.log('this._sincronizacao.itens', this._sincronizacao.itens);
+    console.log('this._sincronizacao.transportadoras', this._sincronizacao.transportadoras);
+    console.log('this._sincronizacao.condicaoPagto', this._sincronizacao.condicaoPagto);
+    console.log('this._sincronizacao.codigoBarras', this._sincronizacao.codigoBarras);
+    console.log('this._sincronizacao.fabricantes', this._sincronizacao.fabricantes);
+    console.log('this._sincronizacao.iva', this._sincronizacao.iva);
+    console.log('this._sincronizacao.configuracao', this._sincronizacao.configuracao);
+    console.log('this._sincronizacao.faixadescontos', this._sincronizacao.faixadescontos);
+    console.log('this._sincronizacao.cliCadastrados', this._sincronizacao.cliCadastrados);
+    console.log('this._sincronizacao.filiais', this._sincronizacao.filiais);
+    console.log('this._sincronizacao.estoque', this._sincronizacao.estoque);
     if (
       this._sincronizacao.clientes &&
       this._sincronizacao.itens &&
@@ -217,31 +231,19 @@ export class SincronizacaoProvider {
       this._sincronizacao.faixadescontos &&
       this._sincronizacao.cliCadastrados &&
       this._sincronizacao.filiais &&
-      this._sincronizacao.estoque &&
-      this._sincronizacao.pedidos
+      this._sincronizacao.estoque
     ) {
-      this.inserirDtSincronizacao(
-        "UltSincronizacao" + this._codigo,
-        new Date(),
-      ).then(() => {
-        this._sincronizacao.clientes = false;
-        this._sincronizacao.itens = false;
-        this._sincronizacao.transportadoras = false;
-        this._sincronizacao.condicaoPagto = false;
-        this._sincronizacao.codigoBarras = false;
-        this._sincronizacao.fabricantes = false;
-        this._sincronizacao.iva = false;
-        this._sincronizacao.configuracao = false;
-        this._sincronizacao.faixadescontos = false;
-        this._sincronizacao.cliCadastrados = false;
-        this._sincronizacao.filiais = false;
-        this._sincronizacao.estoque = false;
-        this._sincronizacao.pedidos = false;
-        setTimeout(() => {
-          this.utilProvider.esconderCarregando(this._loading);
-          // UtilProvider.completarObservable(this._subscriber, "OK");
-        }, 2000);
-      });
+      console.log("Sincronização concluída.");
+      if (this._forcar) {
+        this.inserirDtSincronizacao(
+          "UltSincronizacao" + this._codigo,
+          new Date(),
+        ).then(() => {
+          this.finalizarSincronizacao();
+        });
+      } else {
+        this.finalizarSincronizacao();
+      }
     }
   }
 
@@ -253,6 +255,26 @@ export class SincronizacaoProvider {
 
   async inserirDtSincronizacao(chave: string, valor: Date): Promise<void> {
     await this.storageService.set("dtm" + chave, valor);
+  }
+
+  finalizarSincronizacao() {
+    this._sincronizacao.clientes = false;
+    this._sincronizacao.itens = false;
+    this._sincronizacao.transportadoras = false;
+    this._sincronizacao.condicaoPagto = false;
+    this._sincronizacao.codigoBarras = false;
+    this._sincronizacao.fabricantes = false;
+    this._sincronizacao.iva = false;
+    this._sincronizacao.configuracao = false;
+    this._sincronizacao.faixadescontos = false;
+    this._sincronizacao.cliCadastrados = false;
+    this._sincronizacao.filiais = false;
+    this._sincronizacao.estoque = false;
+    this._forcar = false;
+    setTimeout(() => {
+      this.utilProvider.esconderCarregando(this._loading);
+      // UtilProvider.completarObservable(this._subscriber, "OK");
+    }, 2000);
   }
 
   converteHora(h: string) {

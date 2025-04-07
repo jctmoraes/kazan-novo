@@ -16,12 +16,15 @@ export class TabelaPrecoPage {
   ufOrigem: string = 'SP';
 
   constructor(
-    formBuilder: FormBuilder,
+    private formBuilder: FormBuilder,
     private utilProvider: UtilProvider,
     private servidorProvider: ServidorProvider,
     private router: Router
   ) {
-    this._formGroup = formBuilder.group({
+  }
+
+  ngOnInit() {
+    this._formGroup = this.formBuilder.group({
       estoque: ['E', Validators.required],
       email: ['', Validators.required],
       ufOrigem: [this.ufOrigem ? this.ufOrigem : 'ufOrigem', Validators.required],
@@ -37,22 +40,22 @@ export class TabelaPrecoPage {
     if (this._formGroup.valid) {
       let loading = await this.utilProvider.mostrarCarregando('Gerando e-mail...');
       this.envio = true;
-
+      console.log(this._formGroup.value);
       this.servidorProvider
         .post('enviar-tabela.php', this._formGroup.value)
         .subscribe(() => {
           this.envio = false;
+          this.utilProvider.esconderCarregando(loading);
           this.utilProvider.alerta(
             "ENVIO POR EMAIL",
             "TABELA ENVIADA COM SUCESSO!",
             () => {
-              this.utilProvider.esconderCarregando(loading);
             })
         });
     }
   }
 
   sair() {
-    this.router.navigate(['..']);
+    this.router.navigate(['/master']);
   }
 }

@@ -3,35 +3,45 @@
 <ion-content>
   <ion-list>
     <ion-item>
-      <ion-input type="text" [(ngModel)]="_item.nome" label="PRODUTO " disabled labelPlacement="keep"></ion-input>
+      {{_item.nome}}
     </ion-item>
 
     <ion-item>
-      <ion-input type="text" [(ngModel)]="_valorFormat" label="VALOR " disabled labelPlacement="keep"></ion-input>
+      <ion-input type="text" [(ngModel)]="_valorFormat" label="VALOR" disabled></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-input type="number" [(ngModel)]="_pedidoItens.quantidade" label="QTDE " (ionChange)="change()" labelPlacement="keep"></ion-input>
+      <ion-input
+        type="number"
+        [(ngModel)]="_pedidoItens.quantidade"
+        label="QTDE"
+        (ionChange)="change()"
+      ></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-input type="number" [(ngModel)]="_pedidoItens.desconto" label="DESCONTO (%)" (ionChange)="change()" labelPlacement="keep"></ion-input>
+      <ion-input
+        type="number"
+        [(ngModel)]="_pedidoItens.desconto"
+        label="DESCONTO (%)"
+        (ionChange)="change()"
+      ></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-input type="text" [(ngModel)]="_valorUnitarioFormat" label="UNITÁRIO " disabled labelPlacement="keep"></ion-input>
+      <ion-input type="text" [(ngModel)]="_valorUnitarioFormat" label="UNITÁRIO" disabled></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-input type="text" [(ngModel)]="_totalFormat" label="TOTAL " disabled labelPlacement="keep"></ion-input>
+      <ion-input type="text" [(ngModel)]="_totalFormat" label="TOTAL" disabled></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-input type="text" [(ngModel)]="_valorIpiFormat" label="VALOR IPI " disabled labelPlacement="keep"></ion-input>
+      <ion-input type="text" [(ngModel)]="_valorIpiFormat" label="VALOR IPI" disabled></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-input type="text" [(ngModel)]="_valorStFormat" label="VALOR ST " disabled labelPlacement="keep"></ion-input>
+      <ion-input type="text" [(ngModel)]="_valorStFormat" label="VALOR ST" disabled></ion-input>
     </ion-item>
   </ion-list>
 

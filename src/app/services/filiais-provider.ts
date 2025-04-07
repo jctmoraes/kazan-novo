@@ -45,7 +45,7 @@ export class FiliaisProvider extends ComandoProvider {
     });
   }
 
-  buscar(nFilial: string): Observable<IFilial> {
+  buscar(nFilial: number): Observable<IFilial> {
     return new Observable((subs) => {
       let select = "SELECT *";
       let from = " FROM filiais";

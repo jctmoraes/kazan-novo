@@ -1,3 +1,4 @@
+import { FilialSelecionadaService } from './services/filial-selecionada.service';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { IFuncionarios } from '@interfaces/funcionarios.interface';
@@ -29,7 +30,9 @@ export class AppComponent {
     private bancoProvider: BancoProvider,
     private funcionarioProvider: FuncionariosProvider,
     private configuracaoProvider: ConfiguracaoProvider,
-    private utilProvider: UtilProvider) {}
+    private utilProvider: UtilProvider,
+    private filialSelecionadaService: FilialSelecionadaService
+  ) {}
 
   ngOnInit() {
     this.platform.ready().then(() => {
@@ -93,6 +96,14 @@ export class AppComponent {
   }
 
   iniciarPedido() {
+    const filialCodigo = this.filialSelecionadaService.getFilialSelecionada();
+    if (!filialCodigo) {
+      this.utilProvider.alerta(
+        'Ops',
+        'SELECIONE UMA FILIAL PARA INICIAR UM NOVO PEDIDO!'
+      );
+      return;
+    }
     UtilProvider.pedido = true;
     this.mudarPagina('pedido/clientes', 'NOVO PEDIDO');
   }

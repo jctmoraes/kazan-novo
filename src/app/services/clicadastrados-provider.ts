@@ -38,13 +38,13 @@ export class ClicadastradosProvider extends ComandoProvider {
   sincronizar(venCodigo: number): Observable<any> {
     return this.servidor.get(this._arquivo + venCodigo)
       .pipe(
-        mergeMap(data =>
-          from(this.excluir()).pipe(
+        mergeMap(data => {
+          return from(this.excluir()).pipe(
             mergeMap(() => from(this.importJson(data)).pipe(
               map(() => data)
             ))
-          )
-        )
+          );
+        })
       );
   }
 

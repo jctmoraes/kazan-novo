@@ -1,7 +1,9 @@
+import { FilialSelecionadaService } from './../../services/filial-selecionada.service';
 import { Component } from "@angular/core";
 import { Router } from "@angular/router";
 import {
   IPedidos,
+  IPedidosGeral,
   mapPedidosGeral,
 } from "../../interfaces/pedidos.interface";
 import { ITransportadoras } from "@interfaces/transportadoras.interface";
@@ -24,7 +26,7 @@ import { TransportadoraPage } from "../transportadora/transportadora";
   standalone: false,
 })
 export class FinalizaPedidoPage {
-  _pedido: IPedidos = new IPedidos();
+  _pedido: IPedidosGeral = new IPedidosGeral();
   _lstTransportadoras: ITransportadoras[] = [];
   _valorSubTotal: number = 0;
   _valorSubTotalFormat: string = "";
@@ -44,6 +46,7 @@ export class FinalizaPedidoPage {
     private cliCadProvider: ClienteCadastroProvider,
     private myApp: AppComponent,
     private modalCtrl: ModalController,
+    private filialSelecionadaService: FilialSelecionadaService,
   ) {
   }
 
@@ -124,11 +127,6 @@ export class FinalizaPedidoPage {
   }
 
   salvar() {
-    const codFilialFuncLogado = this.myApp.funcionarioLogado.filial.toString();
-    const codFilialStorage = localStorage.getItem("codFilialSet");
-    const numFilial = parseInt(
-      codFilialStorage ? codFilialStorage : codFilialFuncLogado,
-    );
     if (this._pedido.valor < this._pedido.condicaoPagto.valMinimo) {
       this.utilProvider.alerta(
         "VALOR ABAIXO DO MÍNIMO",
@@ -143,11 +141,12 @@ export class FinalizaPedidoPage {
         () => {},
       );
       this._pedido.valor = parseFloat(this._pedido.valor.toFixed(2));
-      const pedidoGeral = mapPedidosGeral(this._pedido, numFilial);
+      const pedidoGeral = mapPedidosGeral(this._pedido, this._pedido.filial);
       this.pedidoProvider.salvarPedidoGeral(pedidoGeral).subscribe(() => {
         //this.navCtrl.popToRoot();
-        // this.myApp.finalizarPedido();
+        //chamar a master e atualizar a lista de pedidos
         this.router.navigate(["/master"]);
+
         // this.navCtrl.push('PedidoPage', { atualizarMaster: true });
       });
     }

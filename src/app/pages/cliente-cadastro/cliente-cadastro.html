@@ -1,5 +1,4 @@
-
-<app-header tile="CADASTRO DE CLIENTE" (backButtonClick)="sair()"></app-header>
+<app-header title="CADASTRO DE CLIENTE" (backButtonClick)="sair()"></app-header>
 
 <ion-content padding>
   <form [formGroup]="_formGroup" (ngSubmit)="cadastrar()">
@@ -10,120 +9,147 @@
 
     <ion-list margin-top>
       <ion-item>
-        <ion-label stacked>{{ _fisJur == 'F' ? 'CPF*' : 'CNPJ*' }}</ion-label>
         <ion-input
           type="tel"
           formControlName="cgcCpf"
           (ionBlur)="onBlur()"
           [maskito]="{ mask: _fisJur == 'F' ? '000.000.000-00' : '00.000.000/0000-00' }"
-        >
-        </ion-input>
+          [label]="_fisJur == 'F' ? 'CPF*' : 'CNPJ*'"
+        ></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label stacked
-          >{{ _fisJur == 'F' ? 'Nome*' : 'Razão social*' }}</ion-label
-        >
-        <ion-input type="text" formControlName="razao"></ion-input>
+        <ion-input
+          type="text"
+          formControlName="razao"
+          [label]="_fisJur == 'F' ? 'Nome*' : 'Razão social*'"
+        ></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label stacked>{{ _fisJur == 'F' ? 'RG*' : 'IE*' }}</ion-label>
-        <ion-input type="text" formControlName="inscRg"></ion-input>
+        <ion-input
+          type="text"
+          formControlName="inscRg"
+          [label]="_fisJur == 'F' ? 'RG*' : 'IE*'"
+        ></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label stacked>Endereço*</ion-label>
-        <ion-input type="text" formControlName="endereco"></ion-input>
+        <ion-input
+          type="text"
+          formControlName="endereco"
+          label="Endereço*"
+        ></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label stacked>Número*</ion-label>
-        <ion-input type="number" formControlName="numEnd"></ion-input>
+        <ion-input
+          type="number"
+          formControlName="numEnd"
+          label="Número*"
+        ></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label stacked>Bairro*</ion-label>
-        <ion-input type="text" formControlName="bairro"></ion-input>
+        <ion-input
+          type="text"
+          formControlName="bairro"
+          label="Bairro*"
+        ></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label stacked>Cidade*</ion-label>
-        <ion-input type="text" formControlName="cidade"></ion-input>
+        <ion-input
+          type="text"
+          formControlName="cidade"
+          label="Cidade*"
+        ></ion-input>
       </ion-item>
       <ion-item>
         <ion-label stacked>Estado*</ion-label>
-        <ion-select formControlName="estado">
-          <ion-option value="AC">Acre</ion-option>
-          <ion-option value="AL">Alagoas</ion-option>
-          <ion-option value="AP">Amapá</ion-option>
-          <ion-option value="AM">Amazonas</ion-option>
-          <ion-option value="BA">Bahia</ion-option>
-          <ion-option value="CE">Ceará</ion-option>
-          <ion-option value="DF">Distrito Federal</ion-option>
-          <ion-option value="ES">Espírito Santo</ion-option>
-          <ion-option value="GO">Goiás</ion-option>
-          <ion-option value="MA">Maranhão</ion-option>
-          <ion-option value="MT">Mato Grosso</ion-option>
-          <ion-option value="MS">Mato Grosso do Sul</ion-option>
-          <ion-option value="MG">Minas Gerais</ion-option>
-          <ion-option value="PA">Pará</ion-option>
-          <ion-option value="PB">Paraíba</ion-option>
-          <ion-option value="PR">Paraná</ion-option>
-          <ion-option value="PE">Pernambuco</ion-option>
-          <ion-option value="PI">Piauí</ion-option>
-          <ion-option value="RJ">Rio de Janeiro</ion-option>
-          <ion-option value="RN">Rio Grande do Norte</ion-option>
-          <ion-option value="RS">Rio Grande do Sul</ion-option>
-          <ion-option value="RO">Rondônia</ion-option>
-          <ion-option value="RR">Roraima</ion-option>
-          <ion-option value="SC">Santa Catarina</ion-option>
-          <ion-option value="SP">São Paulo</ion-option>
-          <ion-option value="SE">Sergipe</ion-option>
-          <ion-option value="TO">Tocantins</ion-option>
+        <ion-select formControlName="estado" cancelText="CANCELAR" okText="SELECIONAR">
+          <ion-select-option value="AC">Acre</ion-select-option>
+          <ion-select-option value="AL">Alagoas</ion-select-option>
+          <ion-select-option value="AP">Amapá</ion-select-option>
+          <ion-select-option value="AM">Amazonas</ion-select-option>
+          <ion-select-option value="BA">Bahia</ion-select-option>
+          <ion-select-option value="CE">Ceará</ion-select-option>
+          <ion-select-option value="DF">Distrito Federal</ion-select-option>
+          <ion-select-option value="ES">Espírito Santo</ion-select-option>
+          <ion-select-option value="GO">Goiás</ion-select-option>
+          <ion-select-option value="MA">Maranhão</ion-select-option>
+          <ion-select-option value="MT">Mato Grosso</ion-select-option>
+          <ion-select-option value="MS">Mato Grosso do Sul</ion-select-option>
+          <ion-select-option value="MG">Minas Gerais</ion-select-option>
+          <ion-select-option value="PA">Pará</ion-select-option>
+          <ion-select-option value="PB">Paraíba</ion-select-option>
+          <ion-select-option value="PR">Paraná</ion-select-option>
+          <ion-select-option value="PE">Pernambuco</ion-select-option>
+          <ion-select-option value="PI">Piauí</ion-select-option>
+          <ion-select-option value="RJ">Rio de Janeiro</ion-select-option>
+          <ion-select-option value="RN">Rio Grande do Norte</ion-select-option>
+          <ion-select-option value="RS">Rio Grande do Sul</ion-select-option>
+          <ion-select-option value="RO">Rondônia</ion-select-option>
+          <ion-select-option value="RR">Roraima</ion-select-option>
+          <ion-select-option value="SC">Santa Catarina</ion-select-option>
+          <ion-select-option value="SP">São Paulo</ion-select-option>
+          <ion-select-option value="SE">Sergipe</ion-select-option>
+          <ion-select-option value="TO">Tocantins</ion-select-option>
         </ion-select>
       </ion-item>
       <ion-item>
-        <ion-label stacked>CEP*</ion-label>
         <ion-input
           type="tel"
           formControlName="cep"
           [maskito]="{ mask: '00.000-000' }"
+          label="CEP*"
         ></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label stacked>Complemento</ion-label>
-        <ion-input type="text" formControlName="complemento"></ion-input>
+        <ion-input
+          type="text"
+          formControlName="complemento"
+          label="Complemento"
+        ></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label stacked>Telefone*</ion-label>
         <ion-input
           type="tel"
           formControlName="fone1"
           [maskito]="{ mask: '(00) 0000-0000' }"
+          label="Telefone*"
         ></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label stacked>Celular</ion-label>
         <ion-input
           type="tel"
           formControlName="fone2"
           [maskito]="{ mask: '(00) 00000-0000' }"
+          label="Celular"
         ></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label stacked>Fax</ion-label>
         <ion-input
           type="tel"
           formControlName="fax"
           [maskito]="{ mask: '(00) 0000-0000' }"
+          label="Fax"
         ></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label stacked>Contato</ion-label>
-        <ion-input type="text" formControlName="contato"></ion-input>
+        <ion-input
+          type="text"
+          formControlName="contato"
+          label="Contato"
+        ></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label stacked>Código do Representante*</ion-label>
-        <ion-input type="text" formControlName="codVen"></ion-input>
+        <ion-input
+          type="text"
+          formControlName="codVen"
+          label="Código do Representante*"
+        ></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label stacked>E-mail*</ion-label>
-        <ion-input type="email" formControlName="email"></ion-input>
+        <ion-input
+          type="email"
+          formControlName="email"
+          label="E-mail*"
+        ></ion-input>
       </ion-item>
     </ion-list>
 

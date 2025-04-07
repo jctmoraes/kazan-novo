@@ -1,6 +1,6 @@
 import { Network } from '@capacitor/network';
 import { Injectable } from "@angular/core";
-import { IPedidos } from "../interfaces/pedidos.interface";
+import { IPedidos, IPedidosGeral } from "../interfaces/pedidos.interface";
 import { IConfiguracao } from "../interfaces/configuracao.interface";
 import { AlertController, LoadingController, ToastController } from "@ionic/angular";
 import { IIva } from "../interfaces/iva.interface";
@@ -14,7 +14,7 @@ import { App } from '@capacitor/app';
 @Injectable({ providedIn: 'root' })
 export class UtilProvider {
   public static pedido: boolean = false;
-  public static objPedido = new IPedidos();
+  public static objPedido = new IPedidosGeral();
   public static funCodigo: number = 0;
   public static versao: string = "";
   public static configuracao = new IConfiguracao();
@@ -282,14 +282,14 @@ export class UtilProvider {
     loading.dismiss();
   }
 
-  async alerta(titulo: string, texto: string, funcao: any = null) {
+  async alerta(titulo: string, texto: string, okCallBack: any = null) {
     let alert = await this.alertCtrl.create({
       header: titulo,
       subHeader: texto,
       buttons: [
         {
           text: "OK",
-          handler: funcao,
+          handler: okCallBack,
         },
       ],
     });

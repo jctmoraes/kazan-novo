@@ -57,6 +57,7 @@ import { PedidosProvider } from '@services/pedidos-provider';
 import { PedidosItensProvider } from '@services/pedidos-itens-provider';
 import { HomePage } from './pages/home/home.page';
 import { ReaisPipe } from './pipes/reais.pipe';
+import { FilialSelecionadaService } from '@services/filial-selecionada.service';
 
 @NgModule({
   declarations: [
@@ -144,6 +145,7 @@ import { ReaisPipe } from './pipes/reais.pipe';
     ItensProvider,
     IvaProvider,
     UtilProvider,
+    FilialSelecionadaService,
     provideHttpClient(),
   ],
   bootstrap: [AppComponent],

@@ -35,7 +35,6 @@ export class PedidoEmailPage extends AbstractModalComponent {
   async ionViewDidEnter() {
     const htmlIonModalElement = await this.modalCtrl.getTop();
     const componentProps = htmlIonModalElement?.componentProps as { pedido: IPedidos };
-    console.log('componentProps', componentProps);
     this._pedido = componentProps?.pedido;
 
     this.pedidoEmailProvider.buscar(this._pedido.cliCodigo).subscribe((retorno) => {
@@ -84,9 +83,11 @@ export class PedidoEmailPage extends AbstractModalComponent {
 
       this._pedido["pedidoEmail"] = this._email;
       this._pedido["emailInformado"] = this._pedido["cliente"]["email"];
-      await this.pedidoProvider
+      const retorno = await this.pedidoProvider
         .sincronizar(this._pedido, true, false)
         .toPromise();
+
+      console.log('retorno', retorno);
 
       this.utilProvider.alerta(
         "PEDIDO ENVIADO",

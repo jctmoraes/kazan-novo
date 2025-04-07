@@ -17,6 +17,7 @@ import { PedidoFiltroPage } from "../filtro/pedido-filtro/pedido-filtro";
 import { PedidoDetalhePage } from "../pedido-detalhe/pedido-detalhe";
 import { PedidoEmailPage } from "../pedido-email/pedido-email";
 import { PedidoPlanilhaPage } from "../pedido-planilha/pedido-planilha";
+import { FilialSelecionadaService } from "@services/filial-selecionada.service";
 
 @Component({
   selector: "page-pedido",
@@ -34,7 +35,7 @@ export class PedidoPage implements OnDestroy {
   _carregando: boolean = false;
   _qtdTotal: number = -1;
   _atualizarMaster = false;
-  _fimBusca: boolean = false;
+  _fimBusca: boolean = true;
   _fotos: IFotos | null = null;
 
   constructor(
@@ -47,7 +48,8 @@ export class PedidoPage implements OnDestroy {
     public filialProv: FiliaisProvider,
     private myApp: AppComponent,
     private http: HttpClient,
-    private fotosProvider: FotosProvider
+    private fotosProvider: FotosProvider,
+    private filialSelecionadaService: FilialSelecionadaService,
   ) {
     this._atualizarMaster = this.router.getCurrentNavigation()?.extras.state?.['atualizarMaster'] || false;
     let filtro = this.router.getCurrentNavigation()?.extras.state?.['filtro'];
@@ -65,6 +67,7 @@ export class PedidoPage implements OnDestroy {
   }
 
   change() {
+    console.log("change");
     this.pesquisar();
   }
 
@@ -196,11 +199,11 @@ export class PedidoPage implements OnDestroy {
                   pedido.numero = retorno;
 
                   this.pedidoProvider.salvar(pedido).subscribe(() => {
+                    this.utilProvider.esconderCarregando(loading);
                     this.utilProvider.alerta(
                       "PEDIDO ENVIADO",
                       "PEDIDO ENVIADO COM SUCESSO!",
                       () => {
-                        this.utilProvider.esconderCarregando(loading);
                       },
                     );
                     this._atualizarMaster = true;
@@ -262,14 +265,15 @@ export class PedidoPage implements OnDestroy {
 
   pesquisar() {
     this._qtdTotal = 0;
-    this._fimBusca = false;
+    this._fimBusca = true;
     this._pagina = -1;
     this._lstPedidos = [];
     this.proxima();
   }
 
   proxima() {
-    if (this._fimBusca) return;
+    console.log('this._fimBusca', this._fimBusca);
+    if (!this._fimBusca) return;
     this._carregando = true;
     this._pagina++;
     let inicio = this._pagina * this._qtdPorPagina;
@@ -277,18 +281,15 @@ export class PedidoPage implements OnDestroy {
       this.pedidoProvider
         .buscar(this._funCodigo, this._filtro, 0, 0, true)
         .subscribe((qtdTotal) => {
+          console.log("qtdTotal", qtdTotal);
           this._qtdTotal = Number(qtdTotal);
         });
     }
-    console.log('inicio', inicio);
-    console.log('this._qtdPorPagina', this._qtdPorPagina);
-    console.log('this._filtro', this._filtro);
-    console.log('this._funCodigo', this._funCodigo);
     this.pedidoProvider
       .buscar(this._funCodigo, this._filtro, inicio, this._qtdPorPagina, false)
       .subscribe(
         (retorno: IPedidosGeral[]) => {
-          console.log("retorno", retorno);
+          console.log('retorno', retorno);
           if (retorno.length > 0) {
             this._lstPedidos = this._lstPedidos.concat(retorno);
           } else {
@@ -298,7 +299,7 @@ export class PedidoPage implements OnDestroy {
 
           this._lstPedidos.forEach((pedido) => {
             if (pedido.filial && pedido.filial != 0) {
-              this.filialProv.buscar(pedido.filial.toString()).subscribe(
+              this.filialProv.buscar(pedido.filial).subscribe(
                 (filialEncontrada) => {
                   pedido.nomeFilial = filialEncontrada.nomeFantasia;
                 },
@@ -376,11 +377,7 @@ export class PedidoPage implements OnDestroy {
   }
 
   async processarImpressao(pedido: IPedidos, incluirImagens: boolean) {
-    const codFilialFuncLogado = this.myApp.funcionarioLogado.filial.toString();
-    const codFilialStorage = localStorage.getItem("codFilialSet");
-    const numFilial = parseInt(
-      codFilialStorage ? codFilialStorage : codFilialFuncLogado,
-    );
+    const numFilial = this.filialSelecionadaService.getFilialSelecionada();
     let loading = await this.utilProvider.mostrarCarregando("IMPRIMINDO...");
     let text = "";
     try {

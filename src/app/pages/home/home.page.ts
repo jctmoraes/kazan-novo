@@ -48,6 +48,7 @@ export class HomePage {
     if (internetConectada) {
       this.funcionarioProvider.autenticarApi(Number(this._login.codigo), this._login.senha).subscribe(
         (funcionario) => {
+          console.log('funcionario', funcionario);
           this.autenticarFuncionario(funcionario, loading);
         },
         err => {

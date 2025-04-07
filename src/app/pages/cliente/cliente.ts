@@ -8,9 +8,10 @@ import { FuncionariosProvider } from "@services/funcionarios-provider";
 import { PedidosProvider } from "@services/pedidos-provider";
 import { UtilProvider } from "@services/util-provider";
 import { Router } from "@angular/router";
-import { IPedidos } from "@interfaces/pedidos.interface";
+import { IPedidos, IPedidosGeral } from "@interfaces/pedidos.interface";
 import { TransportadoraPage } from "../transportadora/transportadora";
 import { ClienteDetalhePage } from "../cliente-detalhe/cliente-detalhe";
+import { FilialSelecionadaService } from "@services/filial-selecionada.service";
 
 @Component({
   selector: "page-cliente",
@@ -36,7 +37,8 @@ export class ClientePage {
     public util: UtilProvider,
     private funcionario: FuncionariosProvider,
     public alertController: AlertController,
-    private pedido: PedidosProvider
+    private pedido: PedidosProvider,
+    private filialSelecionadaService: FilialSelecionadaService
   ) {
   }
 
@@ -193,10 +195,10 @@ export class ClientePage {
   }
 
   async novoPedido(cliente: IClientes) {
-    console.log('novoPedido', cliente);
+    const filialSelecionada = this.filialSelecionadaService.getFilialSelecionada();
     const func = await this.funcionario.buscarLogado().toPromise();
 
-    let pedido: IPedidos = <IPedidos>{
+    let pedido: IPedidosGeral = <IPedidosGeral>{
       codigo: 0,
       cliCodigo: cliente.codigo,
       valor: 0,
@@ -209,6 +211,7 @@ export class ClientePage {
       traCodigo: cliente.traCodigo,
       dtAlteracao: new Date(),
       cliente: cliente,
+      filial: func.filial,
     };
     UtilProvider.objPedido = pedido;
     console.log('escolher transportadora');

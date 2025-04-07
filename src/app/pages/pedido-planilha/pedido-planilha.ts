@@ -34,7 +34,6 @@ export class PedidoPlanilhaPage extends AbstractModalComponent {
   async ionViewDidEnter() {
     const htmlIonModalElement = await this.modalCtrl.getTop();
     const componentProps = htmlIonModalElement?.componentProps as { pedido: IPedidos };
-    console.log('componentProps', componentProps);
     this._pedido = componentProps?.pedido;
 
     try {
@@ -42,6 +41,7 @@ export class PedidoPlanilhaPage extends AbstractModalComponent {
         (retorno) => {
           if (retorno != null) {
             this._planilha = retorno;
+            this._email = retorno;
           } else {
             this._planilha = this._pedido.cliente.email;
           }
@@ -56,7 +56,7 @@ export class PedidoPlanilhaPage extends AbstractModalComponent {
   }
 
   enviar() {
-    this.pedidoEmailProvider.salvarPlanilha(this._pedido.cliCodigo, this._planilha).subscribe(
+    this.pedidoEmailProvider.salvarPlanilha(this._pedido.cliCodigo, this._email).subscribe(
       async () => {
         let loading = await this.utilProvider.mostrarCarregando('ENVIANDO...');
 
@@ -70,7 +70,7 @@ export class PedidoPlanilhaPage extends AbstractModalComponent {
             this._pedido.valorDesconto = 0;
 
             lstPedidosItens.forEach(x => {
-              this._pedido.valorSubTotal += UtilProvider.round(x.valor) * x.quantidade;
+              this._pedido.valorSubTotal += UtilProvider.round(x.valorUnitario) * x.quantidade;
               this._pedido.valorIpi += x.valorIpi;
               this._pedido.valorSt += x.valorSt;
               this._pedido.baseSt += x.baseSt;
@@ -80,9 +80,10 @@ export class PedidoPlanilhaPage extends AbstractModalComponent {
             this._pedido['pedidoEmail'] = this._planilha;
             this._pedido.emailInformado = this._email;
 
+            console.log('Pedido antes de enviar:', this._pedido);
+
             this.pedidoProvider.sincronizar(this._pedido, false, true).subscribe(
               (retorno) => {
-                console.log('Pedido sincronizado:', retorno);
                 this.utilProvider.alerta('PEDIDO ENVIADO', 'PEDIDO ENVIADO COM SUCESSO!', () => { });
                 this.utilProvider.esconderCarregando(loading);
                 this.fechar();

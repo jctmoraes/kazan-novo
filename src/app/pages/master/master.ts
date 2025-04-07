@@ -1,3 +1,4 @@
+import { FilialSelecionadaService } from './../../services/filial-selecionada.service';
 import { IClienteCadastro } from './../../interfaces/cliente-cadastro.interface';
 import { ChangeDetectorRef, Component } from "@angular/core";
 import { NavController, ModalController } from "@ionic/angular";
@@ -40,16 +41,19 @@ export class MasterPage {
     private sincronizacao: SincronizacaoProvider,
     public util: UtilProvider,
     private pedido: PedidosProvider,
-    private pedidoItens: PedidosItensProvider,
     private cdr: ChangeDetectorRef,
-    private configuracaoProvider: ConfiguracaoProvider,
     private cliCadProvider: ClienteCadastroProvider,
     private filialProv: FiliaisProvider,
     private modalController: ModalController,
     private myApp: AppComponent,
     private router: Router,
+    private filialSelecionadaService: FilialSelecionadaService
   ) {
-    funcionario.buscarLogado().subscribe((retorno) => {
+  }
+
+  ionViewWillEnter() {
+    this.funcionario.buscarLogado().subscribe((retorno) => {
+      this.filialSelecionadaService.setFilialSelecionadaSeNaoExistir(retorno.filial);
       // configuracaoProvider.buscar().subscribe((configuracao) => {
       //   UtilProvider.configuracao = configuracao;
         //chamar css específico da empresa
@@ -63,10 +67,9 @@ export class MasterPage {
             this._cliCad = x;
             console.log("Busca de Clientes Cadastrados; ", this._cliCad);
           });
-        if (funcionario.filialCod != null)
-          this._funcionarioLogado.filial = funcionario.filialCod;
+        const filialSelecionada = this.filialSelecionadaService.getFilialSelecionada();
         this.filialProv
-          .buscar(this._funcionarioLogado.filial.toString())
+          .buscar(filialSelecionada)
           .subscribe(
             (y) => {
               if (y?.nomeFantasia) {

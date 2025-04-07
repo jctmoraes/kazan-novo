@@ -216,11 +216,14 @@ export class PedidosProvider extends ComandoProvider {
   }
 
   private preencherObjetoList(linhas: any, subscriber: any) {
+    console.log("preencherObjetoList");
     if (linhas.length > 0) {
       let lstRetorno = new Array<IPedidos>();
       for (let i = 0; i < linhas.length; i++) {
         let obj = this.preencherObjeto(linhas.item(i));
+        console.log('obj.cliCodigo', obj.cliCodigo);
         this.clienteProvider.porCodigo(obj.cliCodigo).subscribe((cliente) => {
+          console.log('cliente', cliente);
           obj.cliente = cliente;
           this.transportadoraProvider
             .porCodigo(obj.traCodigo)

@@ -8,6 +8,24 @@ export class BancoProvider extends ComandoProvider {
     super("", null, banco);
   }
 
+  private async adicionarColuna(
+    tabela: string,
+    coluna: string,
+    tipo: string
+  ): Promise<void> {
+    const result = await super.selectPersonalizadoPromise(
+      "name",
+      `pragma_table_info('${tabela}')`,
+      `name='${coluna}'`
+    );
+
+    if (result.rows.length === 0) {
+      await super.importSqlPromise(
+        `ALTER TABLE ${tabela} ADD COLUMN ${coluna} ${tipo};`
+      );
+    }
+  }
+
   async criarTabela(): Promise<void> {
     await super
       .importSqlPromise(
@@ -30,19 +48,9 @@ export class BancoProvider extends ComandoProvider {
           "CREATE TABLE IF NOT EXISTS filiais (codigo INTEGER, codEmp INTEGER, razao TEXT, nomeFantasia TEXT);",
       );
 
-    // Check if 'qtdFat' column exists in 'pedidosItens' table
-    const result = await super.selectPersonalizadoPromise(
-      "name",
-      "pragma_table_info('pedidosItens')",
-      "name='qtdFat'"
-    );
-
-    if (result.rows.length === 0) {
-      // Add 'qtdFat' column if it does not exist
-      await super.importSqlPromise(
-        "ALTER TABLE pedidosItens ADD COLUMN qtdFat INTEGER;"
-      );
-    }
+    await this.adicionarColuna('pedidosItens', 'qtdFat', 'INTEGER');
+    await this.adicionarColuna('clientes', 'cupomAtivo', 'INTEGER');
+    await this.adicionarColuna('clientes', 'cupomDataLimite', 'NUMERIC');
   }
 
   async verificarTabelas(): Promise<boolean> {

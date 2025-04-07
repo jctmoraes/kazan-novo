@@ -1,90 +1,79 @@
-<ion-header>
-  <ion-navbar primary>
-    <ion-buttons left>
-
-    </ion-buttons>
-    <ion-title>ENVIAR TABELA DE PREÇO</ion-title>
-  </ion-navbar>
-</ion-header>
+<app-header title="ENVIAR TABELA DE PREÇO" (backButtonClick)="sair()"></app-header>
 <ion-content padding>
   <form [formGroup]="_formGroup" (ngSubmit)="enviar()">
-    <ion-list radio-group formControlName="estoque">
-      <ion-item>
-        <ion-label>
-          <ion-input type="email" formControlName="email" label="E-mail"></ion-input>
-        </ion-label>
-      </ion-item>
-      <ion-item>
-        <ion-label>Com estoque</ion-label>
-        <ion-radio value="E"></ion-radio>
-      </ion-item>
-      <ion-item>
-        <ion-label>Geral</ion-label>
-        <ion-radio value="G"></ion-radio>
-      </ion-item>
-      <ion-item>
-        <ion-select label="Estado de origem" formControlName="ufOrigem">
-          <ion-select-option value="AC">Acre</ion-select-option>
-          <ion-select-option value="AL">Alagoas</ion-select-option>
-          <ion-select-option value="AP">Amapá</ion-select-option>
-          <ion-select-option value="AM">Amazonas</ion-select-option>
-          <ion-select-option value="BA">Bahia</ion-select-option>
-          <ion-select-option value="CE">Ceará</ion-select-option>
-          <ion-select-option value="DF">Distrito Federal</ion-select-option>
-          <ion-select-option value="ES">Espírito Santo</ion-select-option>
-          <ion-select-option value="GO">Goiás</ion-select-option>
-          <ion-select-option value="MA">Maranhão</ion-select-option>
-          <ion-select-option value="MT">Mato Grosso</ion-select-option>
-          <ion-select-option value="MS">Mato Grosso do Sul</ion-select-option>
-          <ion-select-option value="MG">Minas Gerais</ion-select-option>
-          <ion-select-option value="PA">Pará</ion-select-option>
-          <ion-select-option value="PB">Paraíba</ion-select-option>
-          <ion-select-option value="PR">Paraná</ion-select-option>
-          <ion-select-option value="PE">Pernambuco</ion-select-option>
-          <ion-select-option value="PI">Piauí</ion-select-option>
-          <ion-select-option value="RJ">Rio de Janeiro</ion-select-option>
-          <ion-select-option value="RN">Rio Grande do Norte</ion-select-option>
-          <ion-select-option value="RS">Rio Grande do Sul</ion-select-option>
-          <ion-select-option value="RO">Rondônia</ion-select-option>
-          <ion-select-option value="RR">Roraima</ion-select-option>
-          <ion-select-option value="SC">Santa Catarina</ion-select-option>
-          <ion-select-option value="SP">São Paulo</ion-select-option>
-          <ion-select-option value="SE">Sergipe</ion-select-option>
-          <ion-select-option value="TO">Tocantins</ion-select-option>
-        </ion-select>
-      </ion-item>
-      <ion-item>
-        <ion-select label="Estado de destino" formControlName="ufDestino">
-          <ion-select-option value="AC">Acre</ion-select-option>
-          <ion-select-option value="AL">Alagoas</ion-select-option>
-          <ion-select-option value="AP">Amapá</ion-select-option>
-          <ion-select-option value="AM">Amazonas</ion-select-option>
-          <ion-select-option value="BA">Bahia</ion-select-option>
-          <ion-select-option value="CE">Ceará</ion-select-option>
-          <ion-select-option value="DF">Distrito Federal</ion-select-option>
-          <ion-select-option value="ES">Espírito Santo</ion-select-option>
-          <ion-select-option value="GO">Goiás</ion-select-option>
-          <ion-select-option value="MA">Maranhão</ion-select-option>
-          <ion-select-option value="MT">Mato Grosso</ion-select-option>
-          <ion-select-option value="MS">Mato Grosso do Sul</ion-select-option>
-          <ion-select-option value="MG">Minas Gerais</ion-select-option>
-          <ion-select-option value="PA">Pará</ion-select-option>
-          <ion-select-option value="PB">Paraíba</ion-select-option>
-          <ion-select-option value="PR">Paraná</ion-select-option>
-          <ion-select-option value="PE">Pernambuco</ion-select-option>
-          <ion-select-option value="PI">Piauí</ion-select-option>
-          <ion-select-option value="RJ">Rio de Janeiro</ion-select-option>
-          <ion-select-option value="RN">Rio Grande do Norte</ion-select-option>
-          <ion-select-option value="RS">Rio Grande do Sul</ion-select-option>
-          <ion-select-option value="RO">Rondônia</ion-select-option>
-          <ion-select-option value="RR">Roraima</ion-select-option>
-          <ion-select-option value="SC">Santa Catarina</ion-select-option>
-          <ion-select-option value="SP">São Paulo</ion-select-option>
-          <ion-select-option value="SE">Sergipe</ion-select-option>
-          <ion-select-option value="TO">Tocantins</ion-select-option>
-        </ion-select>
-      </ion-item>
-    </ion-list>
+    <ion-item>
+      <ion-label>
+        <ion-input type="email" formControlName="email" label="E-mail"></ion-input>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-radio-group formControlName="estoque">
+        <ion-radio value="E">Com estoque</ion-radio>
+        <ion-radio value="G">Geral</ion-radio>
+      </ion-radio-group>
+    </ion-item>
+    <ion-item>
+      <ion-select label="Estado de origem" formControlName="ufOrigem">
+        <ion-select-option value="AC">Acre</ion-select-option>
+        <ion-select-option value="AL">Alagoas</ion-select-option>
+        <ion-select-option value="AP">Amapá</ion-select-option>
+        <ion-select-option value="AM">Amazonas</ion-select-option>
+        <ion-select-option value="BA">Bahia</ion-select-option>
+        <ion-select-option value="CE">Ceará</ion-select-option>
+        <ion-select-option value="DF">Distrito Federal</ion-select-option>
+        <ion-select-option value="ES">Espírito Santo</ion-select-option>
+        <ion-select-option value="GO">Goiás</ion-select-option>
+        <ion-select-option value="MA">Maranhão</ion-select-option>
+        <ion-select-option value="MT">Mato Grosso</ion-select-option>
+        <ion-select-option value="MS">Mato Grosso do Sul</ion-select-option>
+        <ion-select-option value="MG">Minas Gerais</ion-select-option>
+        <ion-select-option value="PA">Pará</ion-select-option>
+        <ion-select-option value="PB">Paraíba</ion-select-option>
+        <ion-select-option value="PR">Paraná</ion-select-option>
+        <ion-select-option value="PE">Pernambuco</ion-select-option>
+        <ion-select-option value="PI">Piauí</ion-select-option>
+        <ion-select-option value="RJ">Rio de Janeiro</ion-select-option>
+        <ion-select-option value="RN">Rio Grande do Norte</ion-select-option>
+        <ion-select-option value="RS">Rio Grande do Sul</ion-select-option>
+        <ion-select-option value="RO">Rondônia</ion-select-option>
+        <ion-select-option value="RR">Roraima</ion-select-option>
+        <ion-select-option value="SC">Santa Catarina</ion-select-option>
+        <ion-select-option value="SP">São Paulo</ion-select-option>
+        <ion-select-option value="SE">Sergipe</ion-select-option>
+        <ion-select-option value="TO">Tocantins</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-select label="Estado de destino" formControlName="ufDestino">
+        <ion-select-option value="AC">Acre</ion-select-option>
+        <ion-select-option value="AL">Alagoas</ion-select-option>
+        <ion-select-option value="AP">Amapá</ion-select-option>
+        <ion-select-option value="AM">Amazonas</ion-select-option>
+        <ion-select-option value="BA">Bahia</ion-select-option>
+        <ion-select-option value="CE">Ceará</ion-select-option>
+        <ion-select-option value="DF">Distrito Federal</ion-select-option>
+        <ion-select-option value="ES">Espírito Santo</ion-select-option>
+        <ion-select-option value="GO">Goiás</ion-select-option>
+        <ion-select-option value="MA">Maranhão</ion-select-option>
+        <ion-select-option value="MT">Mato Grosso</ion-select-option>
+        <ion-select-option value="MS">Mato Grosso do Sul</ion-select-option>
+        <ion-select-option value="MG">Minas Gerais</ion-select-option>
+        <ion-select-option value="PA">Pará</ion-select-option>
+        <ion-select-option value="PB">Paraíba</ion-select-option>
+        <ion-select-option value="PR">Paraná</ion-select-option>
+        <ion-select-option value="PE">Pernambuco</ion-select-option>
+        <ion-select-option value="PI">Piauí</ion-select-option>
+        <ion-select-option value="RJ">Rio de Janeiro</ion-select-option>
+        <ion-select-option value="RN">Rio Grande do Norte</ion-select-option>
+        <ion-select-option value="RS">Rio Grande do Sul</ion-select-option>
+        <ion-select-option value="RO">Rondônia</ion-select-option>
+        <ion-select-option value="RR">Roraima</ion-select-option>
+        <ion-select-option value="SC">Santa Catarina</ion-select-option>
+        <ion-select-option value="SP">São Paulo</ion-select-option>
+        <ion-select-option value="SE">Sergipe</ion-select-option>
+        <ion-select-option value="TO">Tocantins</ion-select-option>
+      </ion-select>
+    </ion-item>
     <ion-button
       color="primary"
       expand="block"
