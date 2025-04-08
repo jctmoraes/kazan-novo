@@ -78,6 +78,13 @@
 
     <ion-item>
       <ion-label>
+        <h2>{{ _cupomDescontoPorcentagemFormat }}</h2>
+        <p>CUPOM DESCONTO (%)</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>
         <h2>{{ _valorIpiFormat }}</h2>
         <p>IPI (R$)</p>
       </ion-label>
@@ -92,7 +99,7 @@
 
     <ion-item>
       <ion-label>
-        <h2>{{ utilProvider.formatarMoeda(_pedido.valor) }}</h2>
+        <h2>{{ _valorTotalFormat }}</h2>
         <p>TOTAL (R$)</p>
       </ion-label>
     </ion-item>

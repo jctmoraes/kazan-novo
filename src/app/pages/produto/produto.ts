@@ -387,6 +387,10 @@ export class ProdutoPage {
         item.valor - UtilProvider.round((item.valor * item.desconto) / 100),
         item.fabCodigo,
       );
+      console.log('UtilProvider.objPedido?.porcentagemCupomDesconto', UtilProvider.objPedido?.porcentagemCupomDesconto);
+      if (UtilProvider.objPedido?.porcentagemCupomDesconto > 0) {
+        item.valor -= item.valor * (UtilProvider.objPedido.porcentagemCupomDesconto / 100);
+      }
       this.ivaProvider.buscar(item.claFiscal).subscribe((iva) => {
         let retorno: IValor = UtilProvider.calcularSt(
           valor * qtd,

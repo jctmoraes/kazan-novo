@@ -26,4 +26,6 @@ export class IClientes {
   totalCheque: number = 0;
   vencidoReceber: number = 0;
   vencidoCheque: number = 0;
+  cupomAtivo: number = 0;
+  cupomPorcentagem: number = 0;
 }

@@ -39,6 +39,10 @@ export class UtilProvider {
     return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
   }
 
+  formatarPorcentagem(valor: number) {
+    return valor.toLocaleString('pt-BR', { style: 'percent', minimumFractionDigits: 2 });
+  }
+
   mascaraGlobal(mascara: string, valor: string) : string {
     if (mascara == "###.###.###-##|##.###.###/####-##") {
       if (valor.length > 14) {

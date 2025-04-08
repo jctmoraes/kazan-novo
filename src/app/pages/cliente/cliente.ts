@@ -198,6 +198,8 @@ export class ClientePage {
     const filialSelecionada = this.filialSelecionadaService.getFilialSelecionada();
     const func = await this.funcionario.buscarLogado().toPromise();
 
+    console.log('cliente.cupomPorcentagem', cliente.cupomPorcentagem);
+
     let pedido: IPedidosGeral = <IPedidosGeral>{
       codigo: 0,
       cliCodigo: cliente.codigo,
@@ -212,6 +214,7 @@ export class ClientePage {
       dtAlteracao: new Date(),
       cliente: cliente,
       filial: func.filial,
+      porcentagemCupomDesconto: cliente.cupomPorcentagem,
     };
     UtilProvider.objPedido = pedido;
     console.log('escolher transportadora');

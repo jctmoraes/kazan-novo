@@ -51,6 +51,7 @@ export class BancoProvider extends ComandoProvider {
     await this.adicionarColuna('pedidosItens', 'qtdFat', 'INTEGER');
     await this.adicionarColuna('clientes', 'cupomAtivo', 'INTEGER');
     await this.adicionarColuna('clientes', 'cupomDataLimite', 'NUMERIC');
+    await this.adicionarColuna('clientes', 'cupomPorcentagem', 'NUMERIC');
   }
 
   async verificarTabelas(): Promise<boolean> {

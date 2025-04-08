@@ -21,6 +21,7 @@ export class PedidoDetalhePage extends AbstractModalComponent {
   _transportadora: string = '';
   _condicaoPagto: string = '';
   _valorSubTotalFormat: string = '';
+  _cupomDescontoPorcentagemFormat: string = '';
   _valorIpiFormat: string = '';
   _valorStFormat: string = '';
   _valorTotalFormat: string = '';
@@ -44,7 +45,6 @@ export class PedidoDetalhePage extends AbstractModalComponent {
   async ionViewDidEnter() {
     const htmlIonModalElement = await this.modalCtrl.getTop();
     const componentProps = htmlIonModalElement?.componentProps as { pedido: IPedidos };
-    console.log('componentProps', componentProps);
     this._pedido = componentProps?.pedido;
 
     if (this._pedido.status == 1) {
@@ -76,6 +76,12 @@ export class PedidoDetalhePage extends AbstractModalComponent {
         this._valorStFormat = this.utilProvider.formatarMoeda(
           this._pedido.valorSt
         );
+        this._cupomDescontoPorcentagemFormat = this.utilProvider.formatarPorcentagem(
+          this._pedido.porcentagemCupomDesconto
+        );
+        this._valorTotalFormat = this.utilProvider.formatarMoeda(
+          this._pedido.valor
+        );
       });
     this.transportadoraProvider
       .porCodigo(this._pedido.traCodigo)
@@ -85,10 +91,6 @@ export class PedidoDetalhePage extends AbstractModalComponent {
     this.condicaoPagto.porCodigo(this._pedido.cpgCodigo).subscribe(retorno => {
       this._condicaoPagto = retorno.descricao;
     });
-  }
-
-  ionViewDidLoad() {
-    //console.log('ionViewDidLoad PedidoDetalhePage');
   }
 
   sair() {

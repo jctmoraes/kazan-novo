@@ -112,7 +112,7 @@ export class ClientesProvider extends ComandoProvider {
   ): Observable<IClientes[]> {
     return new Observable((subs) => {
       let select =
-        "SELECT codigo, nome, endereco, bairro, cidade, estado, cep, cnpj, ie, tipoPessoa, venCodigo, limite, email, telefone, telefone2, fax, contato, telefoneContato, traCodigo, cpgCodigo, bloqueado, totalReceber, totalCheque, vencidoReceber, vencidoCheque";
+        "SELECT codigo, nome, endereco, bairro, cidade, estado, cep, cnpj, ie, tipoPessoa, venCodigo, limite, email, telefone, telefone2, fax, contato, telefoneContato, traCodigo, cpgCodigo, bloqueado, totalReceber, totalCheque, vencidoReceber, vencidoCheque, cupomPorcentagem";
       let from = " FROM clientes";
       let where = " WHERE venCodigo = " + venCodigo + " AND bloqueado = 0";
 

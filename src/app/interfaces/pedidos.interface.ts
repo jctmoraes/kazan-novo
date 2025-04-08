@@ -32,6 +32,7 @@ export class IPedidos {
   nomevendedor?: string;
   pedidoEmail?: string;
   emailInformado?: string;
+  porcentagemCupomDesconto?: number;
 }
 
 export class IPedidosGeral extends IPedidos {
